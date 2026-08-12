@@ -1,7 +1,8 @@
 import type { ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 
-export type Tone = 'petrol' | 'deep' | 'bone' | 'sand';
+/** Las cuatro tintas del Brand Book. No existen más superficies. */
+export type Tone = 'petrol' | 'forest' | 'sand' | 'mist';
 
 /**
  * Bloque de página con su propio contexto de color.

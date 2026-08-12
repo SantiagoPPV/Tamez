@@ -12,7 +12,7 @@ import { isPending } from '@/content/site';
  */
 export function ExperienceSteps() {
   return (
-    <Section tone="deep" aria-labelledby="experiencia-title">
+    <Section tone="forest" aria-labelledby="experiencia-title">
       <Container width="wide">
         <SectionHeading
           id="experiencia-title"

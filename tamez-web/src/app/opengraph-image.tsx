@@ -12,8 +12,8 @@ export const alt = 'TAMEZ Plastic Surgery — Precisión, proporción y naturali
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
-const PETROL = '#2d3e45';
-const BONE = '#ede6da';
+const PETROL = '#33464e'; // PANTONE 7545 C
+const SAND = '#e5dcd1'; // PANTONE 7534 C
 
 export default function OpenGraphImage() {
   return new ImageResponse(
@@ -27,7 +27,7 @@ export default function OpenGraphImage() {
           alignItems: 'center',
           justifyContent: 'center',
           backgroundColor: PETROL,
-          color: BONE,
+          color: SAND,
         }}
       >
         <div
@@ -60,7 +60,7 @@ export default function OpenGraphImage() {
           style={{
             width: 120,
             height: 1,
-            backgroundColor: BONE,
+            backgroundColor: SAND,
             opacity: 0.35,
             marginTop: 56,
             display: 'flex',

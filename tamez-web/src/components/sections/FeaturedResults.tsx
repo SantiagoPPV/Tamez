@@ -11,7 +11,7 @@ export function FeaturedResults() {
   const featured = getPublishableResults().slice(0, 4);
 
   return (
-    <Section tone="bone" aria-labelledby="resultados-title">
+    <Section tone="sand" aria-labelledby="resultados-title">
       <Container width="wide">
         <div className="flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
           <SectionHeading

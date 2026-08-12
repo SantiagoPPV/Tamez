@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="TAMEZ">
-  <rect width="64" height="64" fill="#2d3e45"/>
+  <rect width="64" height="64" fill="#33464e"/>
   <!-- Monograma "T" en serif de alto contraste, trazado como path para no
        depender de fuentes del sistema. -->
-  <g fill="#ede6da">
+  <g fill="#e5dcd1">
     <!-- Asta horizontal con remates -->
     <path d="M14 19h36v3.2H14z"/>
     <path d="M14 19h2.6v5.4H14zM47.4 19H50v5.4h-2.6z"/>

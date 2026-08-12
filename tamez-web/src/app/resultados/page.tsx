@@ -48,7 +48,7 @@ export default function ResultsPage() {
         lead="Cada caso se publica con consentimiento del paciente y con la misma iluminación, encuadre y distancia en el antes y el después."
       />
 
-      <Section tone="bone">
+      <Section tone="sand">
         <Container width="wide">
           {showFilter ? (
             <ResultsFilter results={results} />

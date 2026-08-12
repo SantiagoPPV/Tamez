@@ -107,7 +107,7 @@ export default async function ProcedurePage({ params }: PageProps) {
       </PageHero>
 
       {/* Introducción + objetivo -------------------------------------------- */}
-      <Section tone="bone" aria-labelledby="intro-title">
+      <Section tone="sand" aria-labelledby="intro-title">
         <Container width="wide">
           <div className="grid gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
             <Reveal>
@@ -203,7 +203,7 @@ export default async function ProcedurePage({ params }: PageProps) {
       </Section>
 
       {/* Recuperación ------------------------------------------------------- */}
-      <Section tone="deep" size="compact" aria-labelledby="recuperacion-title">
+      <Section tone="forest" size="compact" aria-labelledby="recuperacion-title">
         <Container width="default">
           <SectionHeading
             id="recuperacion-title"
@@ -221,7 +221,7 @@ export default async function ProcedurePage({ params }: PageProps) {
       </Section>
 
       {/* Resultados relacionados -------------------------------------------- */}
-      <Section tone="bone" aria-labelledby="resultados-proc-title">
+      <Section tone="sand" aria-labelledby="resultados-proc-title">
         <Container width="wide">
           <SectionHeading
             id="resultados-proc-title"
@@ -246,7 +246,7 @@ export default async function ProcedurePage({ params }: PageProps) {
 
       {/* Otros procedimientos ----------------------------------------------- */}
       {related.length > 0 && (
-        <Section tone="deep" size="compact" aria-labelledby="relacionados-title">
+        <Section tone="forest" size="compact" aria-labelledby="relacionados-title">
           <Container width="wide">
             <h2
               id="relacionados-title"

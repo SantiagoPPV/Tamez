@@ -7,7 +7,7 @@ import { philosophy } from '@/content/home';
 /** Bloque de filosofía: técnica + proporción + identidad (brief §4.1). */
 export function Philosophy() {
   return (
-    <Section tone="sand" aria-labelledby="filosofia-title">
+    <Section tone="mist" aria-labelledby="filosofia-title">
       <Container width="wide">
         <SectionHeading
           id="filosofia-title"

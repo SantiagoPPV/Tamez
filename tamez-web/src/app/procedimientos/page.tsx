@@ -46,7 +46,7 @@ export default function ProceduresIndexPage() {
         return (
           <Section
             key={category}
-            tone={index % 2 === 0 ? 'bone' : 'petrol'}
+            tone={index % 2 === 0 ? 'sand' : 'petrol'}
             id={category}
             aria-labelledby={`${category}-title`}
           >

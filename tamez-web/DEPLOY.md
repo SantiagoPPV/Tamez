@@ -53,6 +53,23 @@ entorno**. El sitio se ve completo; sólo el formulario responde con
 
 Detalle de cada una en [`.env.example`](.env.example).
 
+> ### ⚠️ Los nombres tienen que ser exactos
+>
+> Este proyecto es **Next.js**, no Vite. El prefijo es `NEXT_PUBLIC_`, no
+> `VITE_`. Una variable llamada `VITE_SUPABASE_URL` no la lee nadie: el sitio
+> compila igual, se despliega igual y el formulario responde
+> `not_configured` sin ningún error visible en el log de build.
+>
+> | ❌ No sirve              | ✅ Correcto                             |
+> | ------------------------ | --------------------------------------- |
+> | `VITE_SUPABASE_URL`      | `NEXT_PUBLIC_SUPABASE_URL`              |
+> | `VITE_SUPABASE_ANON_KEY` | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`  |
+>
+> Tampoco basta con la URL y la clave publicable: sin `SUPABASE_SECRET_KEY`
+> el servidor no puede escribir en la tabla, porque `leads` tiene RLS activo
+> y ninguna política pública. Esa es la clave que hace funcionar el
+> formulario.
+
 Dos advertencias que importan:
 
 - Las variables `NEXT_PUBLIC_*` se **incrustan en el JavaScript del navegador**

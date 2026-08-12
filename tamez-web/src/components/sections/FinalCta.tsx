@@ -26,7 +26,7 @@ export function FinalCta({
   procedure?: string;
 }) {
   return (
-    <Section tone="sand" aria-labelledby="cta-final-title">
+    <Section tone="mist" aria-labelledby="cta-final-title">
       <Container width="narrow" className="text-center">
         <Eyebrow>{eyebrow}</Eyebrow>
         <h2

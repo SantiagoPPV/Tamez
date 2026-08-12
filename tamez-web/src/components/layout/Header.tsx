@@ -65,7 +65,7 @@ export function Header() {
       className={cn(
         'fixed inset-x-0 top-0 z-50 transition-colors duration-500',
         solid
-          ? 'bg-petrol-900/95 border-b border-line backdrop-blur-sm'
+          ? 'bg-forest/95 border-b border-line backdrop-blur-sm'
           : 'border-b border-transparent bg-transparent',
       )}
     >
@@ -150,8 +150,8 @@ export function Header() {
       <div
         id="menu-movil"
         hidden={!menuOpen}
-        data-tone="petrol"
-        className="bg-petrol-900 border-line h-[calc(100dvh-4.5rem)] overflow-y-auto border-t lg:hidden"
+        data-tone="forest"
+        className="bg-forest border-line h-[calc(100dvh-4.5rem)] overflow-y-auto border-t lg:hidden"
       >
         <nav
           aria-label="Navegación móvil"

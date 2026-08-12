@@ -8,7 +8,7 @@ export function FaqSection({
   items,
   eyebrow = 'Preguntas frecuentes',
   title = 'Antes de dar el siguiente paso.',
-  tone = 'bone',
+  tone = 'sand',
   id = 'faq',
 }: {
   items: readonly FaqEntry[];

@@ -6,7 +6,9 @@ Sitio institucional y *sales funnel* consultivo, construido según el brief
 **Stack:** Next.js 16 (App Router) · TypeScript estricto · Tailwind CSS 4 ·
 Supabase (prospectos) · Netlify (despliegue).
 
-Para publicar, ver [`DEPLOY.md`](DEPLOY.md).
+- [`docs/MARCA.md`](docs/MARCA.md) — contexto de marca, color, tipografía y
+  construcción del logotipo.
+- [`DEPLOY.md`](DEPLOY.md) — Netlify, Supabase y dominio, paso a paso.
 
 ---
 
@@ -94,18 +96,21 @@ supabase/migrations/          Esquema SQL
 
 ## Sistema visual
 
-Paleta y tipografía derivadas del Brand Book, en `src/app/globals.css`.
-La combinación elegida es la de la portada: **petróleo profundo + crema**.
+Valores oficiales del Brand Book, en `src/app/globals.css`. Cuatro tintas,
+ni una más. El detalle completo —CMYK, Pantone, contraste— está en
+[`docs/MARCA.md`](docs/MARCA.md).
 
-| Token       | Petróleo  | Hueso     | Arena     | Profundo  |
-| ----------- | --------- | --------- | --------- | --------- |
-| Superficie  | `#2d3e45` | `#f3ede4` | `#d9cec0` | `#101c21` |
-| Texto       | `#ede6da` | `#16242a` | `#101c21` | `#ede6da` |
+| Tono       | Superficie          | Texto     | Pantone |
+| ---------- | ------------------- | --------- | ------- |
+| `petrol`   | `#33464E` (firma)   | `#E5DCD1` | 7545 C  |
+| `forest`   | `#0C2D2C`           | `#E5DCD1` | 547 C   |
+| `sand`     | `#E5DCD1`           | `#0C2D2C` | 7534 C  |
+| `mist`     | `#B9BEC0`           | `#0C2D2C` | 428 C   |
 
 Cada sección declara su tono y los hijos usan tokens semánticos:
 
 ```tsx
-<Section tone="bone">        {/* pone data-tone="bone" */}
+<Section tone="sand">        {/* pone data-tone="sand" */}
   <p className="text-fg-muted">…</p>   {/* se adapta solo */}
 </Section>
 ```
@@ -116,15 +121,16 @@ se redefinen por `[data-tone]` con su **valor final**, no como
 que la indirección congelaría el valor de `:root` y todos los bloques heredarían
 el mismo tono.
 
-**Tipografía:** Cormorant Garamond (serif editorial de alto contraste) + Jost
-(sans geométrica). Son sustitutas mientras llegan las familias con licencia del
-Brand Book; para cambiarlas basta editar `src/app/layout.tsx` — las variables
-CSS no cambian.
+**Tipografía:** Cormorant Garamond (principal, del manual, licencia libre) +
+Avenir LT Std (secundaria). Avenir es de licencia comercial y no puede
+servirse desde el repositorio; mientras el cliente no entregue los archivos, la
+sustituta es Nunito Sans. El cambio son tres líneas en `src/app/layout.tsx`.
 
 **Logotipo:** compuesto tipográficamente en
-`src/components/brand/Wordmark.tsx`. Cuando llegue el SVG final, se sustituye el
-interior del componente; su API (`variant`, `size`) no cambia y el resto del
-sitio no se toca.
+`src/components/brand/Wordmark.tsx` sobre la retícula del manual — la unidad X
+es la altura de mayúscula, TAMEZ mide 7.5 X y el descriptor 5.2 X, medido y
+verificado en navegador. Cuando llegue el SVG final se sustituye el interior
+del componente; su API no cambia.
 
 ---
 

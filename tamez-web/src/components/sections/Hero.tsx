@@ -26,7 +26,7 @@ export function Hero() {
         className="pointer-events-none absolute -top-1/3 -right-1/4 h-[42rem] w-[42rem] rounded-full opacity-[0.07]"
         style={{
           background:
-            'radial-gradient(circle, var(--color-bone-200) 0%, transparent 65%)',
+            'radial-gradient(circle, var(--color-sand) 0%, transparent 65%)',
         }}
       />
 

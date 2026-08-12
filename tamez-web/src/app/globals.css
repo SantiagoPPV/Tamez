@@ -2,34 +2,30 @@
 
 /* ==========================================================================
    TAMEZ — Design tokens
-   Derivados del Brand Book. Paleta principal: la portada del brand book
-   (petróleo profundo + crema/hueso), con arena y gris cálido como apoyo.
-   [PENDIENTE: validar HEX finales contra el archivo vectorial del Brand Book]
+   Valores oficiales del Brand Book (ver docs/MARCA.md).
+
+   Paleta de marca — cuatro tintas, ni una más:
+     PANTONE 7545 C  #33464E  petróleo   (color firma, portada)
+     PANTONE 547  C  #0C2D2C  bosque     (verde profundo)
+     PANTONE 7534 C  #E5DCD1  arena      (crema del logotipo)
+     PANTONE 428  C  #B9BEC0  niebla     (gris cálido)
    ========================================================================== */
 
 @theme {
-  /* --- Petróleo / azul-verde profundo (color firma) --- */
-  --color-petrol-950: #101c21;
-  --color-petrol-900: #16242a;
-  --color-petrol-800: #1e2f35;
-  --color-petrol-700: #26363d;
-  --color-petrol-600: #2d3e45; /* base — fondo de portada */
-  --color-petrol-500: #3b4e56;
-  --color-petrol-400: #53676f;
+  /* --- Tintas de marca (valores exactos del Brand Book) --- */
+  --color-petrol: #33464e; /* PANTONE 7545 C · R51  G70  B78  */
+  --color-forest: #0c2d2c; /* PANTONE 547  C · R12  G45  B44  */
+  --color-sand: #e5dcd1; /* PANTONE 7534 C · R229 G220 B209 */
+  --color-mist: #b9bec0; /* PANTONE 428  C · R185 G190 B192 */
 
-  /* --- Hueso / crema / arena --- */
-  --color-bone-50: #faf7f2;
-  --color-bone-100: #f3ede4;
-  --color-bone-200: #ede6da; /* crema del logotipo */
-  --color-bone-300: #e2d8c9;
-  --color-bone-400: #d9cec0; /* arena */
-  --color-bone-500: #c6b8a5;
-
-  /* --- Gris cálido y verde profundo (secundarios del brand book) --- */
-  --color-warmgray-300: #b6bdba;
-  --color-warmgray-400: #a3aba8;
-  --color-warmgray-500: #869089;
-  --color-forest-900: #14231f;
+  /* --- Derivados funcionales ---
+     NO son colores de marca: sirven sólo para elevación y bordes dentro de
+     cada tono (marcos de imagen, campos, superficies secundarias). Nunca
+     deben usarse como color principal de una pieza. */
+  --color-petrol-soft: #3d525b;
+  --color-forest-soft: #143b3a;
+  --color-sand-soft: #d7ccbe;
+  --color-mist-soft: #a9afb1;
 
   /* --- Tokens semánticos ---
      Valores por defecto (tono petróleo). Cada bloque `[data-tone]` los
@@ -39,19 +35,27 @@
      apuntando a una variable de `:root`. Una custom property se sustituye
      allí donde se declara, así que esa indirección congelaría el valor de
      `:root` y los hijos heredarían siempre el tono oscuro. */
-  --color-surface: #2d3e45;
-  --color-surface-2: #26363d;
-  --color-fg: #ede6da;
-  --color-fg-muted: color-mix(in oklab, #ede6da 74%, transparent);
-  --color-fg-subtle: color-mix(in oklab, #ede6da 52%, transparent);
-  --color-line: color-mix(in oklab, #ede6da 18%, transparent);
-  --color-accent: #d9cec0;
+  --color-surface: #33464e;
+  --color-surface-2: #3d525b;
+  --color-fg: #e5dcd1;
+  --color-fg-muted: color-mix(in oklab, #e5dcd1 88%, transparent);
+  --color-fg-subtle: color-mix(in oklab, #e5dcd1 72%, transparent);
+  --color-line: color-mix(in oklab, #e5dcd1 20%, transparent);
+  --color-accent: #e5dcd1;
 
-  /* --- Tipografía --- */
+  /* --- Tipografía (Brand Book) ---
+     Principal:  Cormorant Garamond — títulos y logotipo.
+     Secundaria: Avenir LT Std — texto e interfaz.
+
+     Avenir LT Std es de licencia comercial y no puede servirse desde este
+     repositorio. Mientras el cliente no entregue los archivos con licencia,
+     la sustituta es Nunito Sans: mismo esqueleto geométrico, 'a' de doble
+     piso y 'g' de un piso, y altura de x alta. Ver docs/MARCA.md para el
+     procedimiento exacto de sustitución. */
   --font-display: var(--font-cormorant), 'Cormorant Garamond', 'Didot',
     'Times New Roman', serif;
-  --font-sans: var(--font-jost), 'Jost', ui-sans-serif, system-ui, -apple-system,
-    'Segoe UI', sans-serif;
+  --font-sans: var(--font-avenir-fallback), 'Nunito Sans', ui-sans-serif,
+    system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   /* --- Ritmo editorial --- */
   --spacing-section: 6.5rem;
@@ -64,49 +68,54 @@
 /* --------------------------------------------------------------------------
    Tonos de sección. Cada bloque declara su propio contexto de color, así los
    componentes usan `bg-surface` / `text-fg` y funcionan en cualquier fondo.
+
+   Contraste verificado (WCAG AA, texto normal necesita 4.5:1):
+     arena sobre petróleo  7.3:1     petróleo sobre arena  7.3:1
+     arena sobre bosque   10.8:1     bosque sobre niebla   7.8:1
+   Los niveles `muted` y `subtle` están calibrados para no bajar de 4.5:1.
    -------------------------------------------------------------------------- */
 
 [data-tone='petrol'] {
-  --color-surface: #2d3e45;
-  --color-surface-2: #26363d;
-  --color-fg: #ede6da;
-  --color-fg-muted: color-mix(in oklab, #ede6da 74%, transparent);
-  --color-fg-subtle: color-mix(in oklab, #ede6da 52%, transparent);
-  --color-line: color-mix(in oklab, #ede6da 18%, transparent);
-  --color-accent: #d9cec0;
+  --color-surface: #33464e;
+  --color-surface-2: #3d525b;
+  --color-fg: #e5dcd1;
+  --color-fg-muted: color-mix(in oklab, #e5dcd1 88%, transparent);
+  --color-fg-subtle: color-mix(in oklab, #e5dcd1 72%, transparent);
+  --color-line: color-mix(in oklab, #e5dcd1 20%, transparent);
+  --color-accent: #e5dcd1;
   color-scheme: dark;
 }
 
-[data-tone='deep'] {
-  --color-surface: #101c21;
-  --color-surface-2: #16242a;
-  --color-fg: #ede6da;
-  --color-fg-muted: color-mix(in oklab, #ede6da 72%, transparent);
-  --color-fg-subtle: color-mix(in oklab, #ede6da 50%, transparent);
-  --color-line: color-mix(in oklab, #ede6da 16%, transparent);
-  --color-accent: #d9cec0;
+[data-tone='forest'] {
+  --color-surface: #0c2d2c;
+  --color-surface-2: #143b3a;
+  --color-fg: #e5dcd1;
+  --color-fg-muted: color-mix(in oklab, #e5dcd1 86%, transparent);
+  --color-fg-subtle: color-mix(in oklab, #e5dcd1 70%, transparent);
+  --color-line: color-mix(in oklab, #e5dcd1 18%, transparent);
+  --color-accent: #e5dcd1;
   color-scheme: dark;
-}
-
-[data-tone='bone'] {
-  --color-surface: #f3ede4;
-  --color-surface-2: #e7ded1;
-  --color-fg: #16242a;
-  --color-fg-muted: color-mix(in oklab, #16242a 76%, transparent);
-  --color-fg-subtle: color-mix(in oklab, #16242a 55%, transparent);
-  --color-line: color-mix(in oklab, #16242a 15%, transparent);
-  --color-accent: #2d3e45;
-  color-scheme: light;
 }
 
 [data-tone='sand'] {
-  --color-surface: #d9cec0;
-  --color-surface-2: #cdc0af;
-  --color-fg: #101c21;
-  --color-fg-muted: color-mix(in oklab, #101c21 78%, transparent);
-  --color-fg-subtle: color-mix(in oklab, #101c21 58%, transparent);
-  --color-line: color-mix(in oklab, #101c21 16%, transparent);
-  --color-accent: #26363d;
+  --color-surface: #e5dcd1;
+  --color-surface-2: #d7ccbe;
+  --color-fg: #0c2d2c;
+  --color-fg-muted: color-mix(in oklab, #0c2d2c 84%, transparent);
+  --color-fg-subtle: color-mix(in oklab, #0c2d2c 70%, transparent);
+  --color-line: color-mix(in oklab, #0c2d2c 18%, transparent);
+  --color-accent: #33464e;
+  color-scheme: light;
+}
+
+[data-tone='mist'] {
+  --color-surface: #b9bec0;
+  --color-surface-2: #a9afb1;
+  --color-fg: #0c2d2c;
+  --color-fg-muted: color-mix(in oklab, #0c2d2c 86%, transparent);
+  --color-fg-subtle: color-mix(in oklab, #0c2d2c 72%, transparent);
+  --color-line: color-mix(in oklab, #0c2d2c 22%, transparent);
+  --color-accent: #0c2d2c;
   color-scheme: light;
 }
 
@@ -125,7 +134,7 @@
   }
 
   body {
-    background-color: var(--color-petrol-600);
+    background-color: var(--color-petrol);
     color: var(--color-fg);
     font-family: var(--font-sans);
     font-weight: 300;
@@ -158,8 +167,8 @@
   }
 
   ::selection {
-    background-color: var(--color-bone-400);
-    color: var(--color-petrol-950);
+    background-color: var(--color-sand);
+    color: var(--color-forest);
   }
 
   /* Brief §8 — respetar preferencias de movimiento reducido. */
@@ -180,18 +189,27 @@
 
 /* --------------------------------------------------------------------------
    Utilidades editoriales
+
+   El Brand Book fija para la tipografía secundaria un espaciado entre
+   caracteres de 200 a 400 unidades, es decir 0.20em – 0.40em. Estas dos
+   utilidades codifican esa regla y son las únicas que deben usarse para
+   texto en versalitas (antetítulos, botones, navegación, etiquetas).
+
+   El texto corrido de párrafo se deja con espaciado normal: aplicarle 0.20em
+   destruiría la legibilidad en pantalla, y el brief pone la legibilidad por
+   encima de la estética (§8). Ver docs/MARCA.md.
    -------------------------------------------------------------------------- */
 
-@utility tracking-wordmark {
-  letter-spacing: 0.28em;
-}
-
 @utility tracking-eyebrow {
-  letter-spacing: 0.22em;
+  letter-spacing: 0.22em; /* 220 unidades */
 }
 
-/* Reveal suave al entrar en viewport (JS mínimo, ver <Reveal />). */
+@utility tracking-wordmark {
+  letter-spacing: 0.3em; /* 300 unidades */
+}
+
 @layer components {
+  /* Reveal suave al entrar en viewport (JS mínimo, ver <Reveal />). */
   .reveal {
     opacity: 0;
     transform: translateY(14px);

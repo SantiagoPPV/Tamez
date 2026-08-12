@@ -68,7 +68,7 @@ export default function DoctorPage() {
         </CtaLink>
       </PageHero>
 
-      <Section tone="bone" aria-labelledby="bio-title">
+      <Section tone="sand" aria-labelledby="bio-title">
         <Container width="wide">
           <div className="grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
             <Reveal>
@@ -120,7 +120,7 @@ export default function DoctorPage() {
         </Container>
       </Section>
 
-      <Section tone="deep" aria-labelledby="filosofia-doctor-title">
+      <Section tone="forest" aria-labelledby="filosofia-doctor-title">
         <Container width="wide">
           <SectionHeading
             id="filosofia-doctor-title"

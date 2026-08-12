@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Cormorant_Garamond, Jost } from 'next/font/google';
+import { Cormorant_Garamond, Nunito_Sans } from 'next/font/google';
 import './globals.css';
 
 import { Header } from '@/components/layout/Header';
@@ -12,13 +12,36 @@ import { siteConfig } from '@/content/site';
 import { localeTags, defaultLocale } from '@/i18n/config';
 
 /**
- * Tipografías (brief §7): serif editorial de alto contraste para títulos +
- * sans geométrica limpia para información.
+ * Tipografías del Brand Book (ver docs/MARCA.md).
  *
- * [PENDIENTE: familias tipográficas y licencias definitivas del Brand Book]
- * Si la identidad final usa una fuente con licencia propia, sustituir estos
- * `next/font/google` por `next/font/local` apuntando a los archivos .woff2;
- * las variables CSS (--font-cormorant / --font-jost) no cambian.
+ * PRINCIPAL — Cormorant Garamond. Es la del manual, es libre (SIL OFL) y se
+ * sirve desde aquí. Títulos y logotipo.
+ *
+ * SECUNDARIA — Avenir LT Std. De licencia comercial (Linotype): no puede
+ * distribuirse desde este repositorio y no está en Google Fonts. Mientras el
+ * cliente no entregue los archivos con licencia se usa Nunito Sans, que
+ * comparte el esqueleto geométrico de Avenir, la 'a' de doble piso, la 'g'
+ * de un piso y una altura de x similar.
+ *
+ * PARA ACTIVAR AVENIR REAL (3 pasos, sin tocar nada más):
+ *   1. Copiar los .woff2 con licencia a `src/fonts/`.
+ *   2. Sustituir el bloque `Nunito_Sans({…})` por:
+ *
+ *        import localFont from 'next/font/local';
+ *        const avenir = localFont({
+ *          src: [
+ *            { path: '../fonts/AvenirLTStd-Light.woff2',  weight: '300', style: 'normal' },
+ *            { path: '../fonts/AvenirLTStd-Book.woff2',   weight: '400', style: 'normal' },
+ *            { path: '../fonts/AvenirLTStd-Medium.woff2', weight: '500', style: 'normal' },
+ *          ],
+ *          variable: '--font-avenir-fallback',
+ *          display: 'swap',
+ *        });
+ *
+ *   3. Cambiar `nunito.variable` por `avenir.variable` en el <html>.
+ *
+ * La variable CSS no cambia de nombre, así que `--font-sans` y todo el resto
+ * del sitio siguen igual.
  */
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -28,10 +51,10 @@ const cormorant = Cormorant_Garamond({
   display: 'swap',
 });
 
-const jost = Jost({
+const nunito = Nunito_Sans({
   subsets: ['latin'],
   weight: ['300', '400', '500'],
-  variable: '--font-jost',
+  variable: '--font-avenir-fallback',
   display: 'swap',
 });
 
@@ -50,7 +73,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#2d3e45',
+  themeColor: '#33464e', // PANTONE 7545 C
   colorScheme: 'dark light',
 };
 
@@ -60,13 +83,13 @@ export default function RootLayout({
   return (
     <html
       lang={localeTags[defaultLocale]}
-      className={`${cormorant.variable} ${jost.variable}`}
+      className={`${cormorant.variable} ${nunito.variable}`}
       suppressHydrationWarning
     >
       <body className="min-h-dvh antialiased">
         <a
           href="#contenido"
-          className="bg-accent text-petrol-950 sr-only z-[60] px-6 py-3 text-sm focus:not-sr-only focus:fixed focus:top-4 focus:left-4"
+          className="bg-sand text-forest sr-only z-[60] px-6 py-3 text-sm focus:not-sr-only focus:fixed focus:top-4 focus:left-4"
         >
           Saltar al contenido
         </a>

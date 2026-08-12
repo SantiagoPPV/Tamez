@@ -43,7 +43,7 @@ export default async function ContactPage({ searchParams }: PageProps) {
         lead="Cuéntanos brevemente qué te interesa y el equipo te contactará para coordinar una cita con el Dr. Tamez."
       />
 
-      <Section tone="bone">
+      <Section tone="sand">
         <Container width="wide">
           <div className="grid gap-16 lg:grid-cols-[1.15fr_0.85fr] lg:gap-24">
             <div>
@@ -98,7 +98,7 @@ export default async function ContactPage({ searchParams }: PageProps) {
         </Container>
       </Section>
 
-      <Section tone="deep" size="compact" aria-labelledby="privacidad-title">
+      <Section tone="forest" size="compact" aria-labelledby="privacidad-title">
         <Container width="default">
           <h2
             id="privacidad-title"

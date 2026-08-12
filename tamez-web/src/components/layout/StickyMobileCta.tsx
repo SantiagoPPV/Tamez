@@ -20,8 +20,8 @@ export function StickyMobileCta() {
 
   return (
     <div
-      data-tone="deep"
-      className="bg-petrol-950/95 border-line fixed inset-x-0 bottom-0 z-40 border-t backdrop-blur-sm lg:hidden"
+      data-tone="forest"
+      className="bg-forest/95 border-line fixed inset-x-0 bottom-0 z-40 border-t backdrop-blur-sm lg:hidden"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
       <div className="flex items-stretch">
@@ -30,7 +30,7 @@ export function StickyMobileCta() {
           onClick={() =>
             track(ANALYTICS_EVENTS.ctaValoracion, { location: 'sticky_movil' })
           }
-          className="bg-accent text-petrol-950 flex-1 px-4 py-4 text-center text-[0.6875rem] tracking-eyebrow uppercase"
+          className="bg-accent text-surface flex-1 px-4 py-4 text-center text-[0.6875rem] tracking-eyebrow uppercase"
         >
           {PRIMARY_CTA.label}
         </Link>

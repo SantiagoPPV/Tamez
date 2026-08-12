@@ -24,7 +24,7 @@ export function Footer() {
   ).filter(([, value]) => !isPending(value));
 
   return (
-    <footer data-tone="deep" className="bg-surface text-fg">
+    <footer data-tone="forest" className="bg-surface text-fg">
       <Container width="wide" className="py-16 sm:py-20">
         <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
           <div>

@@ -69,7 +69,7 @@ export default function PendingPage() {
         lead={`${total} marcadores activos en el contenido. Esta página no está indexada y debe retirarse antes del lanzamiento definitivo.`}
       />
 
-      <Section tone="bone">
+      <Section tone="sand">
         <Container width="default">
           <div className="space-y-16">
             {groups.map((group) => (

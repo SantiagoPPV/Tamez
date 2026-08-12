@@ -66,7 +66,7 @@ export default function PrivacyPage() {
         lead="Cómo se tratan los datos personales recabados a través de este sitio."
       />
 
-      <Section tone="bone">
+      <Section tone="sand">
         <Container width="prose">
           <div className="border-line bg-surface-2 mb-14 border p-6">
             <p className="text-sm leading-relaxed">

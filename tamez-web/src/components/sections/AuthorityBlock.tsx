@@ -15,7 +15,7 @@ import { siteConfig } from '@/content/site';
  */
 export function AuthorityBlock() {
   return (
-    <Section tone="bone" aria-labelledby="autoridad-title">
+    <Section tone="sand" aria-labelledby="autoridad-title">
       <Container width="wide">
         <div className="grid gap-14 lg:grid-cols-2 lg:items-center lg:gap-20">
           <Reveal>
