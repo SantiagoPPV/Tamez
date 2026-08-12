@@ -1,0 +1,61 @@
+# =============================================================================
+# TAMEZ Plastic Surgery — configuración de despliegue en Netlify
+#
+# Este archivo vive en la RAÍZ del repositorio para que Netlify lo detecte al
+# vincular el repo. La aplicación está en la subcarpeta `tamez-web/`, por eso
+# se declara `base`.
+#
+# Al vincular el repositorio, Netlify debería leer estos valores solo. Si la
+# interfaz te pide confirmarlos:
+#   Base directory:      tamez-web
+#   Build command:       npm run build
+#   Publish directory:   tamez-web/.next
+#
+# Netlify detecta Next.js e instala su runtime automáticamente; el bloque
+# [[plugins]] lo deja explícito para que no dependa de la autodetección.
+# =============================================================================
+
+[build]
+  base = "tamez-web"
+  command = "npm run build"
+  publish = "tamez-web/.next"
+
+[build.environment]
+  NODE_VERSION = "22"
+  # El build no debe fallar por warnings de dependencias opcionales.
+  NPM_FLAGS = "--no-audit --no-fund"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# --- Contextos ---------------------------------------------------------------
+
+[context.production.environment]
+  NODE_ENV = "production"
+
+# Deploy previews y ramas: no deben indexarse nunca.
+[[context.deploy-preview.headers]]
+  for = "/*"
+  [context.deploy-preview.headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[context.branch-deploy.headers]]
+  for = "/*"
+  [context.branch-deploy.headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+# --- Cabeceras ---------------------------------------------------------------
+# Las cabeceras de seguridad principales se definen en `next.config.ts`.
+# Aquí sólo van las que dependen del CDN.
+
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
