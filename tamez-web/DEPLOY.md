@@ -17,12 +17,17 @@ No hace falta que escribas la configuración de build: el archivo
 [`netlify.toml`](../netlify.toml) está en la raíz del repositorio y Netlify lo
 lee al vincular. Si la interfaz te pide confirmar los valores, deben quedar así:
 
-| Campo             | Valor                            |
-| ----------------- | -------------------------------- |
-| Base directory    | `tamez-web`                      |
-| Build command     | `npm run build`                  |
-| Publish directory | *(vacío — lo detecta Netlify)*   |
-| Node version      | `22`                             |
+| Campo             | Valor             |
+| ----------------- | ----------------- |
+| Base directory    | `tamez-web`       |
+| Build command     | `npm run build`   |
+| Publish directory | `tamez-web/.next` |
+| Node version      | `22`              |
+
+> En el `netlify.toml` el publish está escrito como `.next` a secas, y es
+> correcto: ahí la ruta se resuelve **desde el directorio base**. En la
+> interfaz, en cambio, se escribe completa desde la raíz del repositorio
+> (`tamez-web/.next`). Las dos formas apuntan al mismo sitio.
 
 Netlify detecta Next.js e instala su runtime (`@netlify/plugin-nextjs`)
 automáticamente; el `netlify.toml` además lo declara de forma explícita.
@@ -158,13 +163,18 @@ Ya está prevenido con `NPM_FLAGS = "--include=dev …"` en el `netlify.toml`.
 Si reaparece, revisa que no haya una variable `NODE_ENV` con valor
 `production` en *Site configuration → Environment variables*, y bórrala.
 
-### `Your publish directory was not found at: …`
+### Errores con el publish directory
 
-El `netlify.toml` deja el publish sin declarar para que lo resuelva la
-detección de framework. Si Netlify lo reclama, el propio mensaje de error
-indica la ruta que buscó; añade en `[build]` el `publish` que corresponda
-—`tamez-web/.next` o `.next`, según lo que muestre el error— y vuelve a
-desplegar.
+Los dos síntomas tienen la misma raíz: dentro de `netlify.toml`, `publish` se
+resuelve **relativo al directorio base**, no a la raíz del repositorio.
+
+| Error                                                        | Causa                                            |
+| ------------------------------------------------------------ | ------------------------------------------------ |
+| `Your publish directory cannot be the same as the base directory` | `publish` sin declarar → Netlify lo iguala a `base` |
+| `Your publish directory was not found at: …/tamez-web/tamez-web/.next` | Se escribió `tamez-web/.next` en el toml         |
+
+El valor correcto en el archivo es `publish = ".next"`. En la interfaz de
+Netlify, en cambio, la ruta va completa: `tamez-web/.next`.
 
 ### 2.4 Consultar prospectos
 

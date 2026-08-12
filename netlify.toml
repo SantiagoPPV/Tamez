@@ -8,7 +8,7 @@
 # Si la interfaz de Netlify te pide confirmar valores:
 #   Base directory:      tamez-web
 #   Build command:       npm run build
-#   Publish directory:   (dejar vacío — lo detecta Netlify)
+#   Publish directory:   tamez-web/.next   ← en la interfaz sí lleva el prefijo
 #
 # Netlify detecta Next.js e instala su runtime automáticamente; el bloque
 # [[plugins]] lo deja explícito para que no dependa de la autodetección.
@@ -17,10 +17,21 @@
 [build]
   base = "tamez-web"
   command = "npm run build"
-  # `publish` se omite a propósito: con `base` declarado, la detección de
-  # framework de Netlify resuelve el directorio de salida de Next
-  # (tamez-web/.next) sin ambigüedad sobre si la ruta es relativa a la raíz
-  # del repositorio o a la base.
+
+  # `.next`, NO `tamez-web/.next`.
+  #
+  # Dentro de netlify.toml, `build.publish` se resuelve contra el directorio
+  # de build, que es precisamente `base` (ver packages/config/src/files.ts en
+  # netlify/build: `const baseRel = options.baseRelDir ? options.buildDir :
+  # options.repositoryRoot`). Poner "tamez-web/.next" aquí apuntaría a
+  # tamez-web/tamez-web/.next y fallaría con "publish directory was not found".
+  #
+  # Ojo: en la INTERFAZ de Netlify la ruta sí se escribe completa desde la
+  # raíz del repositorio. Es la fuente habitual de confusión.
+  #
+  # Sin declararlo, Netlify lo iguala a `base` y falla con "Your publish
+  # directory cannot be the same as the base directory of your site".
+  publish = ".next"
 
 [build.environment]
   NODE_VERSION = "22"
