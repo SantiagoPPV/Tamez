@@ -1,0 +1,222 @@
+@import 'tailwindcss';
+
+/* ==========================================================================
+   TAMEZ — Design tokens
+   Derivados del Brand Book. Paleta principal: la portada del brand book
+   (petróleo profundo + crema/hueso), con arena y gris cálido como apoyo.
+   [PENDIENTE: validar HEX finales contra el archivo vectorial del Brand Book]
+   ========================================================================== */
+
+@theme {
+  /* --- Petróleo / azul-verde profundo (color firma) --- */
+  --color-petrol-950: #101c21;
+  --color-petrol-900: #16242a;
+  --color-petrol-800: #1e2f35;
+  --color-petrol-700: #26363d;
+  --color-petrol-600: #2d3e45; /* base — fondo de portada */
+  --color-petrol-500: #3b4e56;
+  --color-petrol-400: #53676f;
+
+  /* --- Hueso / crema / arena --- */
+  --color-bone-50: #faf7f2;
+  --color-bone-100: #f3ede4;
+  --color-bone-200: #ede6da; /* crema del logotipo */
+  --color-bone-300: #e2d8c9;
+  --color-bone-400: #d9cec0; /* arena */
+  --color-bone-500: #c6b8a5;
+
+  /* --- Gris cálido y verde profundo (secundarios del brand book) --- */
+  --color-warmgray-300: #b6bdba;
+  --color-warmgray-400: #a3aba8;
+  --color-warmgray-500: #869089;
+  --color-forest-900: #14231f;
+
+  /* --- Tokens semánticos ---
+     Valores por defecto (tono petróleo). Cada bloque `[data-tone]` los
+     redefine para su subárbol.
+
+     IMPORTANTE: se declaran con su valor final y NO como `var(--otra-cosa)`
+     apuntando a una variable de `:root`. Una custom property se sustituye
+     allí donde se declara, así que esa indirección congelaría el valor de
+     `:root` y los hijos heredarían siempre el tono oscuro. */
+  --color-surface: #2d3e45;
+  --color-surface-2: #26363d;
+  --color-fg: #ede6da;
+  --color-fg-muted: color-mix(in oklab, #ede6da 74%, transparent);
+  --color-fg-subtle: color-mix(in oklab, #ede6da 52%, transparent);
+  --color-line: color-mix(in oklab, #ede6da 18%, transparent);
+  --color-accent: #d9cec0;
+
+  /* --- Tipografía --- */
+  --font-display: var(--font-cormorant), 'Cormorant Garamond', 'Didot',
+    'Times New Roman', serif;
+  --font-sans: var(--font-jost), 'Jost', ui-sans-serif, system-ui, -apple-system,
+    'Segoe UI', sans-serif;
+
+  /* --- Ritmo editorial --- */
+  --spacing-section: 6.5rem;
+  --spacing-section-lg: 9.5rem;
+
+  /* --- Curvas de movimiento discretas (brief §8) --- */
+  --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* --------------------------------------------------------------------------
+   Tonos de sección. Cada bloque declara su propio contexto de color, así los
+   componentes usan `bg-surface` / `text-fg` y funcionan en cualquier fondo.
+   -------------------------------------------------------------------------- */
+
+[data-tone='petrol'] {
+  --color-surface: #2d3e45;
+  --color-surface-2: #26363d;
+  --color-fg: #ede6da;
+  --color-fg-muted: color-mix(in oklab, #ede6da 74%, transparent);
+  --color-fg-subtle: color-mix(in oklab, #ede6da 52%, transparent);
+  --color-line: color-mix(in oklab, #ede6da 18%, transparent);
+  --color-accent: #d9cec0;
+  color-scheme: dark;
+}
+
+[data-tone='deep'] {
+  --color-surface: #101c21;
+  --color-surface-2: #16242a;
+  --color-fg: #ede6da;
+  --color-fg-muted: color-mix(in oklab, #ede6da 72%, transparent);
+  --color-fg-subtle: color-mix(in oklab, #ede6da 50%, transparent);
+  --color-line: color-mix(in oklab, #ede6da 16%, transparent);
+  --color-accent: #d9cec0;
+  color-scheme: dark;
+}
+
+[data-tone='bone'] {
+  --color-surface: #f3ede4;
+  --color-surface-2: #e7ded1;
+  --color-fg: #16242a;
+  --color-fg-muted: color-mix(in oklab, #16242a 76%, transparent);
+  --color-fg-subtle: color-mix(in oklab, #16242a 55%, transparent);
+  --color-line: color-mix(in oklab, #16242a 15%, transparent);
+  --color-accent: #2d3e45;
+  color-scheme: light;
+}
+
+[data-tone='sand'] {
+  --color-surface: #d9cec0;
+  --color-surface-2: #cdc0af;
+  --color-fg: #101c21;
+  --color-fg-muted: color-mix(in oklab, #101c21 78%, transparent);
+  --color-fg-subtle: color-mix(in oklab, #101c21 58%, transparent);
+  --color-line: color-mix(in oklab, #101c21 16%, transparent);
+  --color-accent: #26363d;
+  color-scheme: light;
+}
+
+/* --------------------------------------------------------------------------
+   Base
+   -------------------------------------------------------------------------- */
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-petrol-600);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    font-weight: 300;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 300;
+    line-height: 1.08;
+    letter-spacing: -0.005em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Accesibilidad: foco siempre visible y con contraste en ambos tonos. */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background-color: var(--color-bone-400);
+    color: var(--color-petrol-950);
+  }
+
+  /* Brief §8 — respetar preferencias de movimiento reducido. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Utilidades editoriales
+   -------------------------------------------------------------------------- */
+
+@utility tracking-wordmark {
+  letter-spacing: 0.28em;
+}
+
+@utility tracking-eyebrow {
+  letter-spacing: 0.22em;
+}
+
+/* Reveal suave al entrar en viewport (JS mínimo, ver <Reveal />). */
+@layer components {
+  .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity 900ms var(--ease-editorial),
+      transform 900ms var(--ease-editorial);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .reveal[data-visible='true'] {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* Regla fina editorial usada como separador entre bloques. */
+  .rule {
+    height: 1px;
+    width: 100%;
+    background-color: var(--color-line);
+  }
+}
