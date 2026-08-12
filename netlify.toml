@@ -5,11 +5,10 @@
 # vincular el repo. La aplicación está en la subcarpeta `tamez-web/`, por eso
 # se declara `base`.
 #
-# Al vincular el repositorio, Netlify debería leer estos valores solo. Si la
-# interfaz te pide confirmarlos:
+# Si la interfaz de Netlify te pide confirmar valores:
 #   Base directory:      tamez-web
 #   Build command:       npm run build
-#   Publish directory:   tamez-web/.next
+#   Publish directory:   (dejar vacío — lo detecta Netlify)
 #
 # Netlify detecta Next.js e instala su runtime automáticamente; el bloque
 # [[plugins]] lo deja explícito para que no dependa de la autodetección.
@@ -18,20 +17,29 @@
 [build]
   base = "tamez-web"
   command = "npm run build"
-  publish = "tamez-web/.next"
+  # `publish` se omite a propósito: con `base` declarado, la detección de
+  # framework de Netlify resuelve el directorio de salida de Next
+  # (tamez-web/.next) sin ambigüedad sobre si la ruta es relativa a la raíz
+  # del repositorio o a la base.
 
 [build.environment]
   NODE_VERSION = "22"
-  # El build no debe fallar por warnings de dependencias opcionales.
-  NPM_FLAGS = "--no-audit --no-fund"
 
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
+  # `--include=dev` es obligatorio, no una preferencia.
+  #
+  # Tailwind, TypeScript y los tipos viven en devDependencies porque sólo se
+  # usan al compilar. Si algo pone NODE_ENV=production durante la instalación,
+  # npm las omite y el build muere con "Cannot find module
+  # '@tailwindcss/postcss'" al procesar globals.css — un error que apunta a una
+  # dependencia que sí está declarada en package.json, así que despista.
+  # Esta bandera lo impide pase lo que pase.
+  NPM_FLAGS = "--include=dev --no-audit --no-fund"
+
+# NO declarar NODE_ENV=production aquí. Netlify ya construye en modo
+# producción (lo hace `next build`), y fijarlo como variable de entorno afecta
+# también al `npm install`, que entonces salta las devDependencies.
 
 # --- Contextos ---------------------------------------------------------------
-
-[context.production.environment]
-  NODE_ENV = "production"
 
 # Deploy previews y ramas: no deben indexarse nunca.
 [[context.deploy-preview.headers]]
@@ -43,6 +51,11 @@
   for = "/*"
   [context.branch-deploy.headers.values]
     X-Robots-Tag = "noindex, nofollow"
+
+# --- Plugins -----------------------------------------------------------------
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
 
 # --- Cabeceras ---------------------------------------------------------------
 # Las cabeceras de seguridad principales se definen en `next.config.ts`.

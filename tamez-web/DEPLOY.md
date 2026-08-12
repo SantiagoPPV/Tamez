@@ -17,12 +17,12 @@ No hace falta que escribas la configuración de build: el archivo
 [`netlify.toml`](../netlify.toml) está en la raíz del repositorio y Netlify lo
 lee al vincular. Si la interfaz te pide confirmar los valores, deben quedar así:
 
-| Campo             | Valor            |
-| ----------------- | ---------------- |
-| Base directory    | `tamez-web`      |
-| Build command     | `npm run build`  |
-| Publish directory | `tamez-web/.next`|
-| Node version      | `22`             |
+| Campo             | Valor                            |
+| ----------------- | -------------------------------- |
+| Base directory    | `tamez-web`                      |
+| Build command     | `npm run build`                  |
+| Publish directory | *(vacío — lo detecta Netlify)*   |
+| Node version      | `22`                             |
 
 Netlify detecta Next.js e instala su runtime (`@netlify/plugin-nextjs`)
 automáticamente; el `netlify.toml` además lo declara de forma explícita.
@@ -142,6 +142,29 @@ Si algo falla, la respuesta de `/api/leads` trae un código:
 | `storage_error`  | Supabase rechazó el insert (revisa Logs)            |
 | `rate_limited`   | Más de 5 envíos desde la misma IP en 10 minutos     |
 | `validation`     | Datos inválidos; el detalle va por campo            |
+
+---
+
+## Si el build falla
+
+### `Cannot find module '@tailwindcss/postcss'`
+
+El paquete **sí** está en `package.json`; el problema es que no se instaló.
+Pasa cuando algo fija `NODE_ENV=production` durante la instalación: npm
+entonces omite las `devDependencies` —donde viven Tailwind, TypeScript y los
+tipos— e instala 37 paquetes en lugar de ~380.
+
+Ya está prevenido con `NPM_FLAGS = "--include=dev …"` en el `netlify.toml`.
+Si reaparece, revisa que no haya una variable `NODE_ENV` con valor
+`production` en *Site configuration → Environment variables*, y bórrala.
+
+### `Your publish directory was not found at: …`
+
+El `netlify.toml` deja el publish sin declarar para que lo resuelva la
+detección de framework. Si Netlify lo reclama, el propio mensaje de error
+indica la ruta que buscó; añade en `[build]` el `publish` que corresponda
+—`tamez-web/.next` o `.next`, según lo que muestre el error— y vuelve a
+desplegar.
 
 ### 2.4 Consultar prospectos
 
