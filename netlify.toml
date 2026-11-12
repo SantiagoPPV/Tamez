@@ -1,85 +1,63 @@
 # =============================================================================
-# TAMEZ Plastic Surgery — configuración de despliegue en Netlify
+# Sistemas a la medida · software interno — despliegue en Netlify
 #
-# Este archivo vive en la RAÍZ del repositorio para que Netlify lo detecte al
-# vincular el repo. La aplicación está en la subcarpeta `tamez-web/`, por eso
-# se declara `base`.
+# La aplicación vive en la RAÍZ del repositorio (Vite + React). En la interfaz
+# de Netlify (Site configuration → Build & deploy) los valores deben quedar así:
+#   Base directory:     (vacío)
+#   Build command:      npm run ci
+#   Publish directory:  dist
+# Si quedó «tamez-web» como Base directory o el plugin de Next.js instalado
+# desde la interfaz (del sitio anterior), hay que quitarlos: ver docs/DEPLOY.md.
 #
-# Si la interfaz de Netlify te pide confirmar valores:
-#   Base directory:      tamez-web
-#   Build command:       npm run build
-#   Publish directory:   tamez-web/.next   ← en la interfaz sí lleva el prefijo
-#
-# Netlify detecta Next.js e instala su runtime automáticamente; el bloque
-# [[plugins]] lo deja explícito para que no dependa de la autodetección.
+# `npm run ci` corre lint, las pruebas automáticas (incluida la prueba de
+# aceptación CE-INV) y el build. Si una prueba falla, no se publica nada.
 # =============================================================================
 
 [build]
-  base = "tamez-web"
-  command = "npm run build"
-
-  # `.next`, NO `tamez-web/.next`.
-  #
-  # Dentro de netlify.toml, `build.publish` se resuelve contra el directorio
-  # de build, que es precisamente `base` (ver packages/config/src/files.ts en
-  # netlify/build: `const baseRel = options.baseRelDir ? options.buildDir :
-  # options.repositoryRoot`). Poner "tamez-web/.next" aquí apuntaría a
-  # tamez-web/tamez-web/.next y fallaría con "publish directory was not found".
-  #
-  # Ojo: en la INTERFAZ de Netlify la ruta sí se escribe completa desde la
-  # raíz del repositorio. Es la fuente habitual de confusión.
-  #
-  # Sin declararlo, Netlify lo iguala a `base` y falla con "Your publish
-  # directory cannot be the same as the base directory of your site".
-  publish = ".next"
+  command = "npm run ci"
+  publish = "dist"
 
 [build.environment]
   NODE_VERSION = "22"
-
-  # `--include=dev` es obligatorio, no una preferencia.
-  #
-  # Tailwind, TypeScript y los tipos viven en devDependencies porque sólo se
-  # usan al compilar. Si algo pone NODE_ENV=production durante la instalación,
-  # npm las omite y el build muere con "Cannot find module
-  # '@tailwindcss/postcss'" al procesar globals.css — un error que apunta a una
-  # dependencia que sí está declarada en package.json, así que despista.
-  # Esta bandera lo impide pase lo que pase.
+  # Vite, TypeScript, Tailwind y Vitest están en devDependencies: sin esto, un
+  # NODE_ENV=production durante la instalación las omite y el build falla.
   NPM_FLAGS = "--include=dev --no-audit --no-fund"
 
-# NO declarar NODE_ENV=production aquí. Netlify ya construye en modo
-# producción (lo hace `next build`), y fijarlo como variable de entorno afecta
-# también al `npm install`, que entonces salta las devDependencies.
+# --- Ambientes ---------------------------------------------------------------
+# Producción: la rama de producción del sitio (main), con las variables de
+#   Supabase del sitio.
+# Pruebas: deploy previews y branch deploys. Arrancan en MODO DEMOSTRACIÓN
+#   (datos de CE-INV en el navegador) para que una rama en revisión nunca
+#   escriba en la base de producción. Para probar contra una base de pruebas,
+#   define en Netlify las variables de ese contexto y quita VITE_DEMO_ONLY.
+# Desarrollo: local, con `npm run dev` (ver README.md).
+[context.deploy-preview.environment]
+  VITE_DEMO_ONLY = "1"
 
-# --- Contextos ---------------------------------------------------------------
+[context.branch-deploy.environment]
+  VITE_DEMO_ONLY = "1"
 
-# Deploy previews y ramas: no deben indexarse nunca.
-[[context.deploy-preview.headers]]
+# --- Rutas ---------------------------------------------------------------------
+# Aplicación de una sola página: toda ruta la resuelve index.html.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# --- Cabeceras -----------------------------------------------------------------
+[[headers]]
   for = "/*"
-  [context.deploy-preview.headers.values]
+  [headers.values]
+    # Software interno: nunca se indexa.
     X-Robots-Tag = "noindex, nofollow"
-
-[[context.branch-deploy.headers]]
-  for = "/*"
-  [context.branch-deploy.headers.values]
-    X-Robots-Tag = "noindex, nofollow"
-
-# --- Plugins -----------------------------------------------------------------
-
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
-
-# --- Cabeceras ---------------------------------------------------------------
-# Las cabeceras de seguridad principales se definen en `next.config.ts`.
-# Aquí sólo van las que dependen del CDN.
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://*.supabase.co wss://*.supabase.co; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
 
 [[headers]]
-  for = "/_next/static/*"
+  for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "/*"
-  [headers.values]
-    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
-    X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "strict-origin-when-cross-origin"

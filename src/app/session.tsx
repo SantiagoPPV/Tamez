@@ -1,0 +1,129 @@
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
+import { DemoRepository } from '../data/demoRepo'
+import { DataError, type Repository } from '../data/repository'
+import { getSupabase, supabaseConfigured } from '../data/supabase'
+import { SupabaseRepository } from '../data/supabaseRepo'
+
+export type Session =
+  | { status: 'loading' }
+  | { status: 'signedOut'; error?: string }
+  | { status: 'notStaff'; userId: string; email: string }
+  | { status: 'noSchema'; message: string }
+  | { status: 'ready'; repo: Repository; userId: string | null; email: string | null }
+
+interface SessionApi {
+  session: Session
+  isDemo: boolean
+  signIn: (email: string, password: string) => Promise<void>
+  signOut: () => Promise<void>
+  enterDemo: () => void
+  leaveDemo: () => void
+}
+
+const Ctx = createContext<SessionApi | null>(null)
+const MODE_KEY = 'sam-mode'
+
+function storedDemo(): boolean {
+  try {
+    return sessionStorage.getItem(MODE_KEY) === 'demo'
+  } catch {
+    return false
+  }
+}
+
+export function SessionProvider({ children }: { children: ReactNode }) {
+  const [demo, setDemo] = useState(() => !supabaseConfigured || storedDemo())
+  const [session, setSession] = useState<Session>({ status: 'loading' })
+
+  const resolveUser = useCallback(async (user: { id: string; email?: string } | null) => {
+    const db = getSupabase()
+    if (!db || !user) {
+      setSession({ status: 'signedOut' })
+      return
+    }
+    const repo = new SupabaseRepository(db)
+    try {
+      const ok = await repo.isStaff()
+      if (!ok) setSession({ status: 'notStaff', userId: user.id, email: user.email ?? '' })
+      else setSession({ status: 'ready', repo, userId: user.id, email: user.email ?? null })
+    } catch (e) {
+      if (e instanceof DataError && e.code === 'missing_schema') setSession({ status: 'noSchema', message: e.message })
+      else setSession({ status: 'signedOut', error: e instanceof Error ? e.message : String(e) })
+    }
+  }, [])
+
+  useEffect(() => {
+    if (demo) {
+      setSession({ status: 'ready', repo: new DemoRepository(), userId: null, email: null })
+      return
+    }
+    const db = getSupabase()!
+    let alive = true
+    void db.auth.getSession().then(({ data }) => {
+      if (alive) void resolveUser(data.session?.user ?? null)
+    })
+    const { data: sub } = db.auth.onAuthStateChange((event, s) => {
+      if (event === 'SIGNED_IN' || event === 'SIGNED_OUT') void resolveUser(s?.user ?? null)
+    })
+    return () => {
+      alive = false
+      sub.subscription.unsubscribe()
+    }
+  }, [demo, resolveUser])
+
+  const api = useMemo<SessionApi>(
+    () => ({
+      session,
+      isDemo: demo,
+      async signIn(email, password) {
+        const db = getSupabase()
+        if (!db) return
+        const { error } = await db.auth.signInWithPassword({ email, password })
+        if (error)
+          setSession({
+            status: 'signedOut',
+            error: error.message === 'Invalid login credentials' ? 'Correo o contraseña incorrectos.' : error.message,
+          })
+      },
+      async signOut() {
+        await getSupabase()?.auth.signOut()
+        setSession({ status: 'signedOut' })
+      },
+      enterDemo() {
+        try {
+          sessionStorage.setItem(MODE_KEY, 'demo')
+        } catch {
+          /* sin almacenamiento */
+        }
+        setDemo(true)
+      },
+      leaveDemo() {
+        try {
+          sessionStorage.removeItem(MODE_KEY)
+        } catch {
+          /* sin almacenamiento */
+        }
+        if (supabaseConfigured) {
+          setSession({ status: 'loading' })
+          setDemo(false)
+        }
+      },
+    }),
+    [session, demo],
+  )
+
+  return <Ctx.Provider value={api}>{children}</Ctx.Provider>
+}
+
+export function useSession(): SessionApi {
+  const v = useContext(Ctx)
+  if (!v) throw new Error('useSession fuera de SessionProvider')
+  return v
+}
+
+/** El repositorio de la sesión lista (las pantallas internas solo existen con sesión lista). */
+export function useRepo(): Repository {
+  const { session } = useSession()
+  if (session.status !== 'ready') throw new Error('Sin sesión')
+  return session.repo
+}

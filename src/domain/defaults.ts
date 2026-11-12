@@ -1,0 +1,98 @@
+import type { Params } from './types'
+
+/**
+ * Valores iniciales de los parámetros (columna «Plantilla» de la hoja de control).
+ * Los que la plantilla deja vacíos (precio, costo por hora, crédito…) van en null y
+ * se capturan por proyecto. La minuta de decisiones de los socios puede cambiarlos.
+ */
+export const DEFAULT_PARAMS: Params = {
+  price: null,
+  initialPayment: null,
+  estHourlyCost: null,
+  reservePct: 0.15,
+  poolPct: 0.08,
+  directCostsBudget: null,
+  minMargin: null,
+  clientReviewDays: 7,
+  fixVerifyDays: 3,
+  creditDays: null,
+  invoiceReception: '',
+  paymentDocuments: '',
+  warrantyDays: 60,
+  maxActivityHours: 16,
+  scopeChangeFromHours: 2,
+  usageWarningPct: 0.75,
+  trainingCapPct: 0.1,
+  indexDecimals: 2,
+  progressYellow: 0.9,
+  progressRed: 0.8,
+  efficiencyYellow: 0.9,
+  efficiencyRed: 0.8,
+  marginDropYellow: 0.05,
+  marginDropRedNoMin: 0.1,
+  overdueYellowCount: 1,
+  overdueRedDays: 3,
+  deviationYellowDays: 1,
+  deviationRedDays: 5,
+  reworkYellow: 0.15,
+  reworkRed: 0.25,
+  clientDefectsYellow: 0.2,
+  clientDefectsRed: 0.35,
+  acceptYellowDays: 5,
+  satisfactionYellow: 9,
+  satisfactionRed: 7,
+  collectRedDays: 5,
+  weeklyHoursCap: 30,
+  daysPerWeek: 7,
+  efficiencyUpper: 1.1,
+  pauseAfterOverdueDays: 10,
+}
+
+/** Etiquetas y unidades de cada parámetro, para la pantalla de parámetros. */
+export const PARAM_FIELDS: {
+  key: keyof Params
+  label: string
+  unit: 'pesos' | 'pct' | 'days' | 'hours' | 'index' | 'int' | 'text'
+  group: 'Proyecto' | 'Plazos y topes' | 'Umbrales del semáforo'
+}[] = [
+  { key: 'price', label: 'Precio sin IVA', unit: 'pesos', group: 'Proyecto' },
+  { key: 'initialPayment', label: 'Pago inicial sin IVA', unit: 'pesos', group: 'Proyecto' },
+  { key: 'estHourlyCost', label: 'Costo por hora para estimar lo que falta', unit: 'pesos', group: 'Proyecto' },
+  { key: 'reservePct', label: 'Reserva para imprevistos', unit: 'pct', group: 'Proyecto' },
+  { key: 'poolPct', label: 'Bolsa de ajustes', unit: 'pct', group: 'Proyecto' },
+  { key: 'directCostsBudget', label: 'Gastos directos presupuestados', unit: 'pesos', group: 'Proyecto' },
+  { key: 'minMargin', label: 'Margen mínimo (vacío = por definir)', unit: 'pct', group: 'Proyecto' },
+  { key: 'creditDays', label: 'Días de crédito (naturales)', unit: 'days', group: 'Proyecto' },
+  { key: 'invoiceReception', label: 'Días en que recibe facturas', unit: 'text', group: 'Proyecto' },
+  { key: 'paymentDocuments', label: 'Documentos que pide para pagar', unit: 'text', group: 'Proyecto' },
+  { key: 'clientReviewDays', label: 'Plazo de revisión del cliente (días hábiles)', unit: 'days', group: 'Plazos y topes' },
+  { key: 'fixVerifyDays', label: 'Plazo para verificar correcciones (días hábiles)', unit: 'days', group: 'Plazos y topes' },
+  { key: 'warrantyDays', label: 'Garantía (días naturales tras la aceptación)', unit: 'days', group: 'Plazos y topes' },
+  { key: 'maxActivityHours', label: 'Tope de horas por actividad', unit: 'hours', group: 'Plazos y topes' },
+  { key: 'scopeChangeFromHours', label: 'Horas desde las que un ajuste es cambio de alcance', unit: 'hours', group: 'Plazos y topes' },
+  { key: 'usageWarningPct', label: 'Aviso de uso de bolsa y reserva', unit: 'pct', group: 'Plazos y topes' },
+  { key: 'trainingCapPct', label: 'Tope de horas de formación (% de horas planeadas)', unit: 'pct', group: 'Plazos y topes' },
+  { key: 'indexDecimals', label: 'Decimales de los índices', unit: 'int', group: 'Plazos y topes' },
+  { key: 'weeklyHoursCap', label: 'Tope de horas por persona por semana', unit: 'hours', group: 'Plazos y topes' },
+  { key: 'daysPerWeek', label: 'Días naturales de una semana', unit: 'int', group: 'Plazos y topes' },
+  { key: 'efficiencyUpper', label: 'Eficiencia por tipo: fuera de rango arriba de', unit: 'index', group: 'Plazos y topes' },
+  { key: 'pauseAfterOverdueDays', label: 'Pausa del siguiente hito por factura vencida (días hábiles)', unit: 'days', group: 'Plazos y topes' },
+  { key: 'progressYellow', label: '1. Avance contra plan: amarillo debajo de', unit: 'index', group: 'Umbrales del semáforo' },
+  { key: 'progressRed', label: '1. Avance contra plan: rojo debajo de', unit: 'index', group: 'Umbrales del semáforo' },
+  { key: 'efficiencyYellow', label: '2. Eficiencia de horas: amarillo debajo de', unit: 'index', group: 'Umbrales del semáforo' },
+  { key: 'efficiencyRed', label: '2. Eficiencia de horas: rojo debajo de', unit: 'index', group: 'Umbrales del semáforo' },
+  { key: 'marginDropYellow', label: '3. Margen: caída para amarillo (puntos)', unit: 'pct', group: 'Umbrales del semáforo' },
+  { key: 'marginDropRedNoMin', label: '3. Margen: caída para rojo si no hay margen mínimo (puntos)', unit: 'pct', group: 'Umbrales del semáforo' },
+  { key: 'overdueYellowCount', label: '4. Pendientes vencidos: amarillo desde', unit: 'int', group: 'Umbrales del semáforo' },
+  { key: 'overdueRedDays', label: '4. Pendientes vencidos: rojo con días hábiles vencidos desde', unit: 'days', group: 'Umbrales del semáforo' },
+  { key: 'deviationYellowDays', label: '5. Desviación de hito: amarillo desde (días hábiles)', unit: 'days', group: 'Umbrales del semáforo' },
+  { key: 'deviationRedDays', label: '5. Desviación de hito: rojo desde (días hábiles)', unit: 'days', group: 'Umbrales del semáforo' },
+  { key: 'reworkYellow', label: '6. Retrabajo: amarillo desde', unit: 'pct', group: 'Umbrales del semáforo' },
+  { key: 'reworkRed', label: '6. Retrabajo: rojo desde', unit: 'pct', group: 'Umbrales del semáforo' },
+  { key: 'clientDefectsYellow', label: '7. Defectos del cliente: amarillo desde', unit: 'pct', group: 'Umbrales del semáforo' },
+  { key: 'clientDefectsRed', label: '7. Defectos del cliente: rojo desde', unit: 'pct', group: 'Umbrales del semáforo' },
+  { key: 'acceptYellowDays', label: '8. Días para aceptar: amarillo desde', unit: 'days', group: 'Umbrales del semáforo' },
+  { key: 'satisfactionYellow', label: '9. Satisfacción: amarillo debajo de', unit: 'int', group: 'Umbrales del semáforo' },
+  { key: 'satisfactionRed', label: '9. Satisfacción: rojo debajo de', unit: 'int', group: 'Umbrales del semáforo' },
+  { key: 'collectRedDays', label: '10. Días para cobrar: rojo con días hábiles de atraso desde', unit: 'days', group: 'Umbrales del semáforo' },
+]
