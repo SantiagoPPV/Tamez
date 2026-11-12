@@ -13,6 +13,9 @@ const TABS = [
   { to: 'decisiones', label: 'Decisiones' },
   { to: 'cobranza', label: 'Cobranza' },
   { to: 'semanas', label: 'Semanas' },
+  { to: 'puertas', label: 'Puertas' },
+  { to: 'documentos', label: 'Documentos' },
+  { to: 'servicio', label: 'Servicio' },
   { to: 'proyecto', label: 'Proyecto' },
 ]
 
@@ -40,7 +43,7 @@ export function ProjectLayout() {
 
   return (
     <div>
-      <div className="border-b border-rule bg-white">
+      <div className="no-print border-b border-rule bg-white">
         <div className="mx-auto max-w-7xl px-4 pt-4">
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div className="min-w-0">

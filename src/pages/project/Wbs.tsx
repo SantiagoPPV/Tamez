@@ -13,8 +13,9 @@ import {
 import { folio as folioOf, fmtDate, fmtHours } from '../../domain/format'
 import { localId, newWbsItem } from '../../domain/factory'
 import type { Milestone, WbsItem } from '../../domain/types'
-import { Check, DateField, FormGrid, FormSection, NumberField, SelectField, TextField } from '../../ui/fields'
+import { Check, DateField, FormGrid, FormSection, NumberField, SelectField, TextArea, TextField } from '../../ui/fields'
 import { Alert, Button, cx, DataTable, Drawer, Notice } from '../../ui/kit'
+import { CriteriaSection } from './Criteria'
 import { names, useDraft, useP, useSaver } from './ctx'
 
 const STATUS_STYLE: Record<string, string> = {
@@ -465,6 +466,8 @@ export function MilestoneForm({ draft, set, close }: { draft: Milestone; set: <K
           <TextField label="Clave" value={draft.key} onChange={(v) => set('key', v)} help="H1, H2…" />
           <SelectField label="Tramo" value={draft.segmentId} onChange={(v) => v && set('segmentId', v)} options={n.segmentOptions} allowEmpty={false} />
           <TextField className="sm:col-span-2" label="Nombre del hito" value={draft.title} onChange={(v) => set('title', v)} />
+          <TextArea className="sm:col-span-2" label="Resultado, en palabras del cliente" help="Va a la propuesta y al acta de inicio." value={draft.result ?? ''} onChange={(v) => set('result', v)} rows={2} />
+          <TextArea className="sm:col-span-2" label="Cómo se comprueba" value={draft.criterion ?? ''} onChange={(v) => set('criterion', v)} rows={2} />
           <NumberField label="Monto del pago (sin IVA)" value={draft.paymentAmount} onChange={(v) => set('paymentAmount', v)} />
         </FormGrid>
       </FormSection>
@@ -492,6 +495,11 @@ export function MilestoneForm({ draft, set, close }: { draft: Milestone; set: <K
           </p>
         )}
       </FormSection>
+      {!isNew && (
+        <FormSection title="Criterios de aceptación">
+          <CriteriaSection milestone={draft} />
+        </FormSection>
+      )}
       <p className="text-xs text-muted">
         El cliente tiene {data.project.params.clientReviewDays} días hábiles para revisar y {data.project.params.fixVerifyDays} para verificar correcciones; si
         vence el plazo sin observaciones, el hito queda aceptado. Garantía: {data.project.params.warrantyDays} días naturales.

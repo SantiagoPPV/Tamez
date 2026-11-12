@@ -1,4 +1,4 @@
-import { DEFAULT_SEGMENTS } from './catalogs'
+import { DEFAULT_SEGMENTS, STANDARD_ROUTINES } from './catalogs'
 import { DEFAULT_PARAMS } from './defaults'
 import type { HatName, ProjectData, WbsItem, WorkLog } from './types'
 
@@ -51,6 +51,12 @@ export function emptyProject(init: { id?: string; key?: string; name?: string; c
     invoices: [],
     hats: HATS.map((hat) => ({ id: localId('hat'), hat, holderId: null, level: 'na', backupId: null })),
     snapshots: [],
+    gates: [],
+    criteria: [],
+    documents: [],
+    routines: STANDARD_ROUTINES.map((r) => ({ id: localId('rut'), ...r, ownerId: null, active: true })),
+    routineRuns: [],
+    portalAccess: [],
   }
 }
 

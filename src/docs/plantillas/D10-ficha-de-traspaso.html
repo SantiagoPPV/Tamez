@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>D10 · Ficha de traspaso · Ejemplo</title>
+<link rel="stylesheet" href="base.css">
+</head>
+<body>
+<!-- Extensión: 3 hojas (decisión de armado). Con el caso de ejemplo completo y la letra de la guía (nunca menos de 8 pt), las diez secciones piden más de 2 hojas aun compactando todo; no se baja a 2 para no recortar lo que pide la especificación. Queda por corregir la línea «Extensión: 1 página» de la especificación del D10 a «2 a 3 páginas». -->
+
+<section class="page">
+  <div class="hdr"><span>D10 · Ficha de traspaso</span><span>Uso interno · Ejemplo</span></div>
+
+  <div class="doc-head">
+    <div class="eyebrow">D10 · Ficha de traspaso</div>
+    <h1><span data-campo="proyecto.nombre">Control de inventario en almacenes</span></h1>
+    <p class="sub">Lo que venta entrega a operación el día en que el cliente acepta la propuesta: lo prometido, los contactos, las condiciones y los riesgos. No se envía al cliente.</p>
+    <div class="meta" style="grid-template-columns:1.6fr .8fr 1.5fr .6fr;">
+      <div><div class="k">Cliente</div><div class="v"><span data-campo="cliente.nombre">Cliente Ejemplo, S.A. de C.V.</span></div></div>
+      <div><div class="k">Clave</div><div class="v"><span data-campo="proyecto.clave">CE-INV</span></div></div>
+      <div><div class="k">Fecha</div><div class="v"><span data-campo="documento.fecha">Lunes 4 de enero de 2027</span></div></div>
+      <div><div class="k">Versión</div><div class="v"><span data-campo="documento.version">v1</span></div></div>
+    </div>
+  </div>
+
+  <h2 class="s"><span class="n" style="min-width:16pt">1</span>Encabezado</h2>
+  <div class="grid3" style="gap:14pt;">
+    <div><div class="k">Vendió</div><div><b><span data-campo="traspaso.vendio">Santiago</span></b><br><span class="muted"><span data-campo="traspaso.vendio_sombrero">Venta y cuenta</span></span></div></div>
+    <div><div class="k">Recibe</div><div><b><span data-campo="traspaso.recibe">Socio operativo</span></b><br><span class="muted"><span data-campo="traspaso.recibe_escalon">Como observador (escalón 1)</span></span></div></div>
+    <div><div class="k">Junta de traspaso</div><div><b><span data-campo="traspaso.junta_fecha">Martes 5 de enero de 2027</span></b></div></div>
+  </div>
+
+  <h2 class="s"><span class="n" style="min-width:16pt">2</span>Contactos y su papel</h2>
+  <table class="compacta">
+    <thead><tr><th style="width:23.5%">Papel</th><th style="width:13.5%">Nombre</th><th style="width:21.5%">Puesto</th><th style="width:28%">Correo</th><th style="width:13.5%">Teléfono</th></tr></thead>
+    <tbody data-lista="contactos">
+      <tr><td class="fuerte"><span data-campo="contacto.papel">Decide y paga</span></td><td><span data-campo="contacto.nombre">Ricardo Solís</span></td><td><span data-campo="contacto.puesto">Director general</span></td><td><span data-campo="contacto.correo">rsolis@clienteejemplo.mx</span></td><td><span data-campo="contacto.telefono">55 5550 0101</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="contacto.papel">Responsable del proyecto</span></td><td><span data-campo="contacto.nombre">Laura Méndez</span></td><td><span data-campo="contacto.puesto">Gerente de operaciones</span></td><td><span data-campo="contacto.correo">lmendez@clienteejemplo.mx</span></td><td><span data-campo="contacto.telefono">55 5550 0102</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="contacto.papel">Usuarios que prueban</span></td><td colspan="2"><span data-campo="contacto.nombre">Tres almacenistas, uno por almacén</span></td><td colspan="2"><span data-campo="contacto.pendiente">Nombres por confirmar con Laura Méndez el miércoles 20 de enero de 2027</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="contacto.papel">Contacto de sistemas; suple a la responsable</span></td><td><span data-campo="contacto.nombre">Iván Torres</span></td><td><span data-campo="contacto.puesto">Sistemas</span></td><td><span data-campo="contacto.correo">itorres@clienteejemplo.mx</span></td><td><span data-campo="contacto.telefono">55 5550 0103</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="contacto.papel">Tramita órdenes y pagos</span></td><td><span data-campo="contacto.nombre">Patricia Luna</span></td><td><span data-campo="contacto.puesto">Cuentas por pagar</span></td><td><span data-campo="contacto.correo">pluna@clienteejemplo.mx</span></td><td><span data-campo="contacto.telefono">55 5550 0104</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="s"><span class="n" style="min-width:16pt">3</span>Problema en palabras del cliente</h2>
+  <div class="callout">
+    <div class="k"><span data-campo="problema.principal_quien">Ricardo Solís, director general</span></div>
+    <div class="v"><span data-campo="problema.principal_frase">«Contamos a mano cada semana y aun así no sabemos cuánto hay en cada almacén.»</span></div>
+  </div>
+  <ul class="clean neutral" style="margin-top:9pt;" data-lista="problema_frases">
+    <li><span data-campo="problema.frase">«Cuando el conteo no cuadra con el sistema contable, nadie sabe cuál de los dos números es el bueno.»</span> <span class="muted">(<span data-campo="problema.quien">Laura Méndez, gerente de operaciones</span>)</span></li>
+    <li><span data-campo="problema.frase">«Nos enteramos de que falta producto cuando el cliente ya lo pidió.»</span> <span class="muted">(<span data-campo="problema.quien">Ricardo Solís, director general</span>)</span></li>
+  </ul>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D10-ficha-de-traspaso-v1</span></span><span>1 / 3</span></div>
+</section>
+
+<section class="page">
+  <div class="hdr"><span>D10 · Ficha de traspaso</span><span>Uso interno · Ejemplo</span></div>
+
+  <h2 class="s"><span class="n" style="min-width:16pt">4</span>Lo que se vendió</h2>
+  <div class="garantia"><b>Resultado.</b> <span data-campo="vendido.resultado">Saber en tiempo real cuánto inventario hay en cada uno de sus tres almacenes y eliminar el conteo manual de cada semana.</span></div>
+  <div class="grid3" style="margin-top:10pt;" data-lista="hitos">
+    <div class="hito">
+      <div class="h"><span data-campo="hito.numero">Hito 1</span> · <span data-campo="hito.semana">Semana 5</span></div>
+      <div class="t"><span data-campo="hito.nombre">Prueba piloto en un almacén</span></div>
+      <ul><li>Entrega: <span data-campo="hito.fecha">vie 12 feb 2027</span>.</li><li><span data-campo="hito.alcance">Existencias en tiempo real en el almacén piloto.</span></li></ul>
+    </div>
+    <div class="hito">
+      <div class="h"><span data-campo="hito.numero">Hito 2</span> · <span data-campo="hito.semana">Semana 8</span></div>
+      <div class="t"><span data-campo="hito.nombre">Entradas, salidas y conexión con su sistema contable</span></div>
+      <ul><li>Entrega: <span data-campo="hito.fecha">vie 5 mar 2027</span>.</li><li><span data-campo="hito.alcance">Cada entrada y salida, con responsable.</span></li></ul>
+    </div>
+    <div class="hito">
+      <div class="h"><span data-campo="hito.numero">Hito 3</span> · <span data-campo="hito.semana">Semana 11</span></div>
+      <div class="t"><span data-campo="hito.nombre">Uso completo en los tres almacenes</span></div>
+      <ul><li>Entrega: <span data-campo="hito.fecha">mié 24 mar 2027</span>.</li><li><span data-campo="hito.alcance">Sin conteo manual de cada semana.</span></li></ul>
+    </div>
+  </div>
+  <p class="small muted" style="margin:7pt 0 0;">Propuesta preliminar <span data-campo="vendido.propuesta">CE-INV-D01, versión v1</span>: <span data-campo="vendido.plazo">13 semanas</span> a partir del <span data-campo="proyecto.arranque">lunes 11 de enero de 2027</span>; <span data-campo="vendido.diagnostico">diagnóstico en las semanas 1 y 2</span> y <span data-campo="vendido.acompanamiento">acompañamiento en las semanas 12 y 13 (29 de marzo al 9 de abril)</span>.</p>
+
+  <h2 class="s"><span class="n" style="min-width:16pt">5</span>Lo que se prometió de palabra</h2>
+  <table class="compacta">
+    <thead><tr><th style="width:15%">Fecha</th><th style="width:14%">A quién</th><th style="width:32%">Promesa, como se dijo</th><th>Destino</th></tr></thead>
+    <tbody data-lista="promesas">
+      <tr><td><span data-campo="promesa.fecha">Jue 10 dic 2026</span></td><td class="fuerte"><span data-campo="promesa.a_quien">Ricardo Solís</span></td><td><span data-campo="promesa.texto">«Verá las existencias en su celular desde el Hito 1.»</span></td><td><div style="margin-bottom:2pt"><span class="chip ok" data-campo="promesa.destino_tipo">Entra al acta</span></div><span data-campo="promesa.destino_detalle">Criterio de aceptación del Hito 1 (D02).</span></td></tr>
+      <tr><td><span data-campo="promesa.fecha">Jue 10 dic 2026</span></td><td class="fuerte"><span data-campo="promesa.a_quien">Laura Méndez</span></td><td><span data-campo="promesa.texto">«A los almacenistas los capacitamos en su almacén y en su turno.»</span></td><td><div style="margin-bottom:2pt"><span class="chip ok" data-campo="promesa.destino_tipo">Entra al acta</span></div><span data-campo="promesa.destino_detalle">En el alcance (D02): capacitación en cada almacén y en el turno de cada almacenista.</span></td></tr>
+      <tr><td><span data-campo="promesa.fecha">Jue 17 dic 2026</span></td><td class="fuerte"><span data-campo="promesa.a_quien">Ricardo Solís</span></td><td><span data-campo="promesa.texto">«Si abren un cuarto almacén el año que entra, lo vemos y les damos precio.»</span></td><td><div style="margin-bottom:2pt"><span class="chip alerta" data-campo="promesa.destino_tipo">Se aclara por escrito</span></div><span data-campo="promesa.destino_detalle">Antes de firmar el acta: un almacén adicional se cotiza como cambio de alcance. Aclara Santiago el 6 de enero de 2027.</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="s"><span class="n" style="min-width:16pt">6</span>Lo que NO se prometió</h2>
+  <p class="muted" style="margin-bottom:4pt;">Lo mencionó el cliente y quedó fuera de lo vendido:</p>
+  <ul class="clean neutral" style="display:grid; grid-template-columns:1fr 1fr; column-gap:16pt;" data-lista="no_prometido">
+    <li><span data-campo="no_prometido.texto">Módulo de compras.</span></li>
+    <li><span data-campo="no_prometido.texto">Cambios dentro de su sistema contable.</span></li>
+  </ul>
+
+  <h2 class="s"><span class="n" style="min-width:16pt">7</span>Supuestos y riesgos</h2>
+  <div class="grid2">
+    <div>
+      <h3 style="margin-top:2pt;">Supuestos <span class="chip">Al acta de inicio (D02)</span></h3>
+      <ul class="clean" data-lista="supuestos">
+        <li><span data-campo="supuesto.texto">Su sistema contable permite conexión.</span></li>
+        <li><span data-campo="supuesto.texto">Son tres almacenes; si son más, cambian el precio y la fecha del Hito 3.</span></li>
+        <li><span data-campo="supuesto.texto">Iván Torres da acceso al sistema contable en la semana 1.</span></li>
+        <li><span data-campo="supuesto.texto">Cada almacén tiene internet y equipo propio.</span></li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="margin-top:2pt;">Riesgos <span class="chip">A la bitácora de riesgos e incidentes</span></h3>
+      <ul class="clean neutral" data-lista="riesgos">
+        <li><span data-campo="riesgo.texto">Iván Torres tiene poco tiempo para el proyecto.</span></li>
+        <li><span data-campo="riesgo.texto">Sin alta de proveedor ni orden de compra, el pago inicial se atrasa.</span></li>
+        <li><span data-campo="riesgo.texto">El Hito 3 cae pegado a Semana Santa.</span></li>
+        <li><span data-campo="riesgo.texto">Los almacenistas llevan años contando a mano y pueden resistir el cambio.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D10-ficha-de-traspaso-v1</span></span><span>2 / 3</span></div>
+</section>
+
+<section class="page">
+  <div class="hdr"><span>D10 · Ficha de traspaso</span><span>Uso interno · Ejemplo</span></div>
+
+  <h2 class="s"><span class="n" style="min-width:16pt">8</span>Condiciones comerciales y de pago</h2>
+  <div class="pagos" data-lista="pagos">
+    <div class="pago"><div class="cuando"><span data-campo="pago.disparador">Al firmar el acta</span></div><div class="monto"><span data-campo="pago.monto">$40,000</span></div><div class="que"><span data-campo="pago.concepto">Pago inicial. Cubre el diagnóstico.</span></div></div>
+    <div class="pago"><div class="cuando"><span data-campo="pago.disparador">Hito 1 aceptado</span></div><div class="monto"><span data-campo="pago.monto">$90,000</span></div><div class="que"><span data-campo="pago.concepto">Prueba piloto en un almacén.</span></div></div>
+    <div class="pago"><div class="cuando"><span data-campo="pago.disparador">Hito 2 aceptado</span></div><div class="monto"><span data-campo="pago.monto">$90,000</span></div><div class="que"><span data-campo="pago.concepto">Entradas, salidas y conexión con su sistema contable.</span></div></div>
+    <div class="pago"><div class="cuando"><span data-campo="pago.disparador">Hito 3 aceptado</span></div><div class="monto"><span data-campo="pago.monto">$110,000</span></div><div class="que"><span data-campo="pago.concepto">Uso completo en los tres almacenes.</span></div></div>
+  </div>
+  <div class="grid2" style="margin-top:8pt;">
+    <div class="tile"><div class="big"><span data-campo="proyecto.precio_total">$330,000</span> <small>más IVA</small></div><div class="lbl">Precio fijo total, en <span data-campo="proyecto.numero_pagos">cuatro</span> pagos.</div></div>
+    <div class="tile"><div class="big"><span data-campo="mensualidad.monto">$12,000</span> <small>más IVA al mes</small></div><div class="lbl">Mensualidad; arranca al terminar la capacitación final, prevista para el <span data-campo="mensualidad.arranque">jueves 8 de abril de 2027</span>.</div></div>
+  </div>
+  <div class="kv" style="margin-top:10pt; grid-template-columns:1.35in 1fr;">
+    <div class="k">Plazo de pago</div><div><span data-campo="cobro.plazo">Por confirmar con Patricia Luna el lunes 4 de enero de 2027.</span></div>
+    <div class="k">Orden de compra</div><div><span data-campo="cobro.orden_compra">Sí la exigen antes de facturar; una por el total, con sus cuatro pagos.</span></div>
+    <div class="k">Alta de proveedor</div><div><span data-campo="cobro.alta_proveedor">Constancia de situación fiscal, opinión de cumplimiento, carátula bancaria y su formato firmado; tarda 3 días hábiles.</span></div>
+    <div class="k">Día de corte</div><div><span data-campo="cobro.dia_corte">Por confirmar con Patricia Luna el lunes 4 de enero de 2027.</span></div>
+    <div class="k">Envío de factura</div><div><span data-campo="cobro.envio_factura">Por correo a facturas@clienteejemplo.mx, con copia a Patricia Luna.</span></div>
+    <div class="k">Dueño del código</div><div><span data-campo="cobro.dueno_codigo">Se ofreció la opción A: el sistema es del cliente al pagarse cada hito.</span></div>
+  </div>
+
+  <h2 class="s"><span class="n" style="min-width:16pt">9</span>Siguientes pasos</h2>
+  <table class="compacta">
+    <thead><tr><th>Acción</th><th style="width:17%">Responsable</th><th style="width:16%">Fecha</th></tr></thead>
+    <tbody data-lista="pasos">
+      <tr><td><span data-campo="paso.accion">Pedir alta de proveedor y orden de compra a Patricia Luna; confirmar plazo de pago y día de corte.</span></td><td class="fuerte"><span data-campo="paso.responsable">Santiago</span></td><td><span data-campo="paso.fecha">Lun 4 ene 2027</span></td></tr>
+      <tr><td><span data-campo="paso.accion">Pasar los supuestos al borrador del acta de inicio (D02) y los riesgos a la bitácora de riesgos e incidentes.</span></td><td class="fuerte"><span data-campo="paso.responsable">Socio operativo</span></td><td><span data-campo="paso.fecha">Mar 5 ene 2027</span></td></tr>
+      <tr><td><span data-campo="paso.accion">Aclarar por escrito con Ricardo Solís que un cuarto almacén no está incluido.</span></td><td class="fuerte"><span data-campo="paso.responsable">Santiago</span></td><td><span data-campo="paso.fecha">Mié 6 ene 2027</span></td></tr>
+      <tr><td><span data-campo="paso.accion">Enviar el acta de inicio (D02) a firma de Ricardo Solís.</span></td><td class="fuerte"><span data-campo="paso.responsable">Santiago</span></td><td><span data-campo="paso.fecha">Jue 7 ene 2027</span></td></tr>
+      <tr><td><span data-campo="paso.accion">Junta de arranque con el cliente.</span></td><td class="fuerte"><span data-campo="paso.responsable">Santiago</span></td><td><span data-campo="paso.fecha">Lun 11 ene 2027</span></td></tr>
+      <tr><td><span data-campo="paso.accion">Pedir a Laura Méndez los nombres de los tres almacenistas.</span></td><td class="fuerte"><span data-campo="paso.responsable">Santiago</span></td><td><span data-campo="paso.fecha">Lun 11 ene 2027</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="s"><span class="n" style="min-width:16pt">10</span>Recibido</h2>
+  <div class="grid2" style="grid-template-columns:1.25fr 1fr; gap:26pt; align-items:start;">
+    <div class="garantia">«Recibí esta ficha y la revisé con quien vendió. Lo que no está escrito aquí no se prometió al cliente.»</div>
+    <div class="firma">
+      <div class="linea" style="height:30pt;"></div>
+      <div class="n"><span data-campo="recibido.nombre">Socio operativo</span></div>
+      <div class="r">Recibe · Sistemas a la medida<br>Fecha: <span class="campo-mano"></span></div>
+    </div>
+  </div>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D10-ficha-de-traspaso-v1</span></span><span>3 / 3</span></div>
+</section>
+
+</body>
+</html>

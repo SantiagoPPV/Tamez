@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>D06 · Reporte semanal de avance · Ejemplo</title>
+<link rel="stylesheet" href="base.css">
+</head>
+<body>
+
+<section class="page">
+  <div class="hdr"><span>D06 · Reporte semanal de avance</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <!-- Encabezado (sección 1 de la especificación; no lleva número visible) -->
+  <div class="doc-head" style="margin-bottom:0;">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;">
+      <div class="eyebrow" style="margin-bottom:4pt;">D06 · Reporte semanal de avance</div>
+      <div class="small muted">Archivo: <span data-campo="documento.archivo_pdf">CE-INV-D06-reporte-semanal-06-v1.pdf</span></div>
+    </div>
+    <h1><span data-campo="proyecto.nombre">Control de inventario en almacenes</span></h1>
+    <p class="sub" style="margin-bottom:5pt;">Cómo va el proyecto al cierre de la semana y qué necesitamos de ustedes.</p>
+    <div class="meta" style="grid-template-columns:1.8fr 0.6fr 0.6fr 0.75fr 1.95fr;gap:9pt 12pt;padding:4pt 0;">
+      <div><div class="k">Cliente</div><div class="v"><span data-campo="cliente.nombre">Cliente Ejemplo, S.A. de C.V.</span></div></div>
+      <div><div class="k">Clave</div><div class="v"><span data-campo="proyecto.clave">CE-INV</span></div></div>
+      <div><div class="k">Reporte</div><div class="v"><span data-campo="reporte.numero">6</span></div></div>
+      <div><div class="k">Semana</div><div class="v"><span data-campo="reporte.semana">6</span> de <span data-campo="proyecto.semanas">13</span></div></div>
+      <div><div class="k">Fecha de corte</div><div class="v"><span data-campo="reporte.fecha_corte">Viernes 19 de febrero de 2027</span></div></div>
+    </div>
+  </div>
+
+  <!-- Semáforo general (sección 2 de la especificación) -->
+  <div style="display:flex;justify-content:space-between;align-items:center;margin:8pt 0 3pt;">
+    <h2 class="s" style="margin:0;"><span class="n">1</span>Semáforo general</h2>
+    <div style="display:flex;align-items:center;gap:10pt;">
+      <span class="small muted"><span data-campo="semaforo.hito">Hito 2</span>: avance contra plan de <span data-campo="semaforo.avance_contra_plan">0.83</span></span>
+      <span class="tile" style="border:0;padding:0;"><span class="sem amarillo"><span class="big" data-campo="semaforo.color">Amarillo</span></span></span>
+    </div>
+  </div>
+  <div class="caja suave" style="padding:5pt 10pt;">
+    <div class="kv" style="grid-template-columns:0.85in 1fr auto auto;gap:3pt 10pt;">
+      <div class="k">Causa</div><div style="grid-column:2 / -1;"><span data-campo="semaforo.causa">El Hito 2 va en 0.83 contra plan y falta la cuenta de acceso a su sistema contable.</span></div>
+      <div class="k">Acción</div><div style="grid-column:2 / -1;"><span data-campo="semaforo.accion">Entregar la cuenta de acceso a su sistema contable.</span></div>
+      <div class="k">Responsable</div><div><b><span data-campo="semaforo.responsable">Iván Torres</span></b>, <span data-campo="semaforo.responsable_puesto">Sistemas</span></div>
+      <div class="k">Fecha</div><div><b><span data-campo="semaforo.fecha">Martes 23 de febrero de 2027</span></b></div>
+    </div>
+  </div>
+
+  <!-- Avance por hito contra plan (sección 3 de la especificación) -->
+  <h2 class="s" style="margin:7pt 0 3pt;"><span class="n">2</span>Avance por hito contra plan</h2>
+  <table class="compacta" style="table-layout:fixed;">
+    <thead><tr>
+      <th style="width:29%">Hito</th>
+      <th style="width:12%">Línea base</th>
+      <th style="width:11%">Fecha prevista</th>
+      <th class="num" style="width:6.5%">Plan</th>
+      <th class="num" style="width:7%">Real</th>
+      <th class="num" style="width:7.5%">Contra<br>plan</th>
+      <th style="width:13%;padding-left:9pt;">Avance<br>línea&nbsp;=&nbsp;plan</th>
+      <th style="width:14%;padding-left:10pt;padding-right:0;">Estado</th>
+    </tr></thead>
+    <tbody data-lista="hitos">
+      <tr>
+        <td><b><span data-campo="hito.numero">Hito 1</span></b> · <span data-campo="hito.nombre">Prueba piloto en un almacén</span></td>
+        <td><span data-campo="hito.fecha_linea_base">12&nbsp;feb&nbsp;2027</span></td>
+        <td><span data-campo="hito.fecha_prevista">12&nbsp;feb&nbsp;2027</span><br><span class="small muted"><span data-campo="hito.nota_fecha">Entregado</span></span></td>
+        <td class="num" style="padding-right:0;"><span data-campo="hito.avance_planeado">100 %</span></td>
+        <td class="num" style="padding-right:0;"><span data-campo="hito.avance_real">100 %</span></td>
+        <td class="num fuerte" style="padding-right:0;"><span data-campo="hito.avance_contra_plan">1.00</span></td>
+        <td style="padding-left:9pt;"><div class="barra" style="margin-top:3pt"><i style="width:100%"></i><b style="left:100%"></b></div></td>
+        <td style="padding-left:10pt;padding-right:0;"><span class="sem"><span data-campo="hito.estado">Aceptado</span></span><br><span class="small muted"><span data-campo="hito.nota_estado">18 feb 2027</span></span></td>
+      </tr>
+      <tr>
+        <td><b><span data-campo="hito.numero">Hito 2</span></b> · <span data-campo="hito.nombre">Entradas, salidas y conexión con su sistema contable</span></td>
+        <td><span data-campo="hito.fecha_linea_base">5&nbsp;mar&nbsp;2027</span></td>
+        <td><span data-campo="hito.fecha_prevista">5&nbsp;mar&nbsp;2027</span></td>
+        <td class="num" style="padding-right:0;"><span data-campo="hito.avance_planeado">30 %</span></td>
+        <td class="num" style="padding-right:0;"><span data-campo="hito.avance_real">25 %</span></td>
+        <td class="num fuerte" style="padding-right:0;"><span data-campo="hito.avance_contra_plan">0.83</span></td>
+        <td style="padding-left:9pt;"><div class="barra" style="margin-top:3pt"><i style="width:25%"></i><b style="left:30%"></b></div></td>
+        <td style="padding-left:10pt;padding-right:0;"><span class="sem amarillo"><span data-campo="hito.estado">En curso</span></span><br><span class="small muted"><span data-campo="hito.nota_estado">Amarillo</span></span></td>
+      </tr>
+      <tr>
+        <td><b><span data-campo="hito.numero">Hito 3</span></b> · <span data-campo="hito.nombre">Uso completo en los tres almacenes</span></td>
+        <td><span data-campo="hito.fecha_linea_base">24&nbsp;mar&nbsp;2027</span></td>
+        <td><span data-campo="hito.fecha_prevista">24&nbsp;mar&nbsp;2027</span></td>
+        <td class="num" style="padding-right:0;"><span data-campo="hito.avance_planeado">0 %</span></td>
+        <td class="num" style="padding-right:0;"><span data-campo="hito.avance_real">0 %</span></td>
+        <td class="num fuerte" style="padding-right:0;"><span data-campo="hito.avance_contra_plan">—</span></td>
+        <td style="padding-left:9pt;"><div class="barra" style="margin-top:3pt"><i style="width:0%"></i></div></td>
+        <td style="padding-left:10pt;padding-right:0;"><span class="sem gris"><span data-campo="hito.estado">Sin iniciar</span></span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Lo hecho en la semana y Lo que sigue (secciones 4 y 5 de la especificación) -->
+  <div class="grid2" style="margin-top:7pt;">
+    <div>
+      <h2 class="s" style="margin-bottom:3pt;"><span class="n">3</span>Lo hecho en la semana</h2>
+      <ul class="check" data-lista="hechos">
+        <li class="ok"><span data-campo="hecho.resultado">Registro de entradas terminado.</span></li>
+        <li class="ok"><span data-campo="hecho.resultado">Almacén 1 operando en piloto.</span></li>
+        <li class="ok" style="margin-bottom:0;"><span data-campo="hecho.resultado">Hito 1 aceptado el jueves 18 de febrero.</span></li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="s" style="margin-bottom:3pt;"><span class="n">4</span>Lo que sigue</h2>
+      <ul class="clean" data-lista="siguientes">
+        <li><span data-campo="siguiente.resultado">Registro de salidas.</span></li>
+        <li><span data-campo="siguiente.resultado">Primera prueba de envío al sistema contable.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Pendientes del cliente (sección 6 de la especificación) -->
+  <h2 class="s" style="margin:7pt 0 3pt;"><span class="n">5</span>Pendientes del cliente<span class="chip ok" style="margin-left:auto;">Facturas vencidas: <span data-campo="pendiente.facturas_vencidas">ninguna</span></span></h2>
+  <table class="compacta" style="table-layout:fixed;">
+    <thead><tr>
+      <th style="width:30%">Qué necesitamos</th>
+      <th style="width:13.5%">Responsable</th>
+      <th style="width:12.5%">Fecha<br>compromiso</th>
+      <th style="width:12%">Atraso</th>
+      <th style="padding-right:0;">Efecto en la fecha</th>
+    </tr></thead>
+    <tbody data-lista="pendientes">
+      <tr>
+        <td class="fuerte"><span data-campo="pendiente.que">Cuenta de acceso para conectar con su sistema contable</span></td>
+        <td><span data-campo="pendiente.responsable">Iván Torres</span><br><span class="small muted"><span data-campo="pendiente.responsable_puesto">Sistemas</span></span></td>
+        <td><span data-campo="pendiente.fecha_compromiso">Martes 23 feb&nbsp;2027</span></td>
+        <td><span class="chip ok"><span data-campo="pendiente.atraso">Sin atraso</span></span></td>
+        <td style="padding-right:0;"><span data-campo="pendiente.efecto">Desde el miércoles 24, cada día hábil de espera recorre un día hábil el Hito 2.</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Riesgos y Cambios (secciones 7 y 8 de la especificación) -->
+  <div class="grid2" style="margin-top:7pt;">
+    <div>
+      <h2 class="s" style="margin-bottom:3pt;"><span class="n">6</span>Riesgos</h2>
+      <div data-lista="riesgos">
+        <div class="kv" style="grid-template-columns:0.9in 1fr;gap:3pt 10pt;">
+          <div class="k">Puede pasar</div><div><b><span data-campo="riesgo.que_puede_pasar">Claves duplicadas en el catálogo del almacén 2</span></b></div>
+          <div class="k">Qué se hace</div><div><span data-campo="riesgo.que_se_hace">Se limpian con Laura Méndez antes de la carga.</span></div>
+          <div class="k">Lo atiende</div><div><span data-campo="riesgo.quien_atiende">Líder de proyecto, con Laura Méndez</span></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h2 class="s" style="margin-bottom:3pt;"><span class="n">7</span>Cambios</h2>
+      <div data-lista="cambios">
+        <div class="kv" style="grid-template-columns:0.6in 1fr;gap:3pt 10pt;">
+          <div class="k">Folio</div><div><b><span data-campo="cambio.folio">CE-INV-D05-01</span></b> <span class="chip alerta" style="margin-left:4pt;"><span data-campo="cambio.tipo">Cambio de alcance</span></span></div>
+          <div class="k">Petición</div><div><span data-campo="cambio.peticion">Avisos de mínimo</span></div>
+          <div class="k">Estado</div><div><span data-campo="cambio.estado">En espera de su decisión, antes del viernes 26 de febrero de 2027</span></div>
+        </div>
+      </div>
+      <div class="kv" style="grid-template-columns:0.6in 1fr;gap:3pt 10pt;margin-top:3pt;">
+        <div class="k">Bolsa de ajustes</div><div><b><span data-campo="bolsa.horas_usadas">6</span> de <span data-campo="bolsa.horas_totales">34</span> horas usadas</b>; saldo de <b><span data-campo="bolsa.saldo_horas">28</span> horas</b></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Próxima demostración (sección 9 de la especificación) -->
+  <div class="grid2" style="grid-template-columns:auto 1fr;gap:14pt;margin-top:7pt;align-items:baseline;">
+    <h2 class="s" style="margin:0;"><span class="n">8</span>Próxima demostración</h2>
+    <div><b><span data-campo="demostracion.fecha">Jueves 25 de febrero de 2027</span>, <span data-campo="demostracion.hora">10:00</span></b> · <span data-campo="demostracion.que_se_muestra">Entradas y salidas desde celular</span><br>Asisten: <span data-campo="demostracion.asistentes">Laura Méndez y un almacenista</span></div>
+  </div>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D06-reporte-semanal-06-v1</span></span><span>1 / 1</span></div>
+</section>
+
+<!-- Anexo: texto del correo con el que se envía el reporte. No forma parte del PDF adjunto. -->
+<section class="page">
+  <div class="hdr"><span>D06 · Reporte semanal de avance</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <div class="eyebrow">Texto del correo · no forma parte del PDF</div>
+  <h2 class="s" style="margin-top:0;">Correo de envío</h2>
+  <p class="muted">Correo con el que se envía este reporte. El PDF adjunto es solo la hoja anterior.</p>
+  <div class="caja" style="margin-top:10pt;">
+    <div class="kv" style="grid-template-columns:0.8in 1fr;">
+      <div class="k">Para</div><div><span data-campo="correo.para">Laura Méndez</span>, con copia a <span data-campo="correo.copia">Ricardo Solís</span></div>
+      <div class="k">Asunto</div><div><b><span data-campo="proyecto.clave">CE-INV</span> - Reporte semanal <span data-campo="reporte.numero">6</span> - <span data-campo="semaforo.color">Amarillo</span> - <span data-campo="correo.causa_asunto">Pendiente de ustedes: cuenta de acceso</span></b></div>
+      <div class="k">Adjunto</div><div><span data-campo="documento.archivo_pdf">CE-INV-D06-reporte-semanal-06-v1.pdf</span></div>
+    </div>
+    <div class="rule" style="margin:9pt 0;"></div>
+    <p><span data-campo="correo.destinatario">Laura</span>: les enviamos el reporte de la semana <span data-campo="reporte.semana">6</span>. Estado: <span data-campo="correo.estado">amarillo</span>. <span data-campo="correo.resumen">El Hito 1 quedó aceptado y el Hito 2 avanza, pero falta la cuenta de acceso para conectar con su sistema contable.</span></p>
+    <p>Necesitamos que <span data-campo="pendiente.responsable">Iván Torres</span> la entregue a más tardar el <span data-campo="correo.fecha_compromiso">martes 23 de febrero</span>. A partir del <span data-campo="correo.fecha_efecto">miércoles 24</span>, cada día hábil de espera recorre un día hábil la fecha prevista del <span data-campo="correo.hito_afectado">Hito 2</span>.</p>
+    <p style="margin-bottom:0;">Próxima demostración: <span data-campo="correo.demostracion_fecha">jueves 25 de febrero</span> a las <span data-campo="demostracion.hora">10:00</span>.</p>
+  </div>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · Correo de envío de <span data-campo="documento.archivo">CE-INV-D06-reporte-semanal-06-v1</span></span><span>Anexo · 1 / 1</span></div>
+</section>
+
+</body>
+</html>

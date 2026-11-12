@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>D14 · Lecciones aprendidas · Ejemplo</title>
+<link rel="stylesheet" href="base.css">
+</head>
+<body>
+<!-- Versión del cierre del Hito 1. Extensión: 2 hojas (decisión de armado). La especificación pide 1 página por hito; con las ocho secciones completas (la tabla de horas sola lleva 13 renglones) y la letra de la guía (nunca menos de 8 pt), el contenido mide cerca de hoja y media aun quitando la sección 1, el detalle de los indicadores y la columna de notas. -->
+
+<section class="page">
+  <div class="hdr"><span>D14 · Lecciones aprendidas</span><span>Uso interno · Ejemplo</span></div>
+
+  <div class="doc-head">
+    <div class="eyebrow">D14 · Lecciones aprendidas</div>
+    <h1><span data-campo="proyecto.nombre">Control de inventario en almacenes</span></h1>
+    <p class="sub">Lo que aprendimos en el hito y lo que cambia en plantillas, listas y horas de referencia.</p>
+    <div class="meta" style="grid-template-columns:1.6fr .7fr 1.5fr .6fr;">
+      <div><div class="k">Cliente</div><div class="v"><span data-campo="cliente.nombre">Cliente Ejemplo, S.A. de C.V.</span></div></div>
+      <div><div class="k">Clave</div><div class="v"><span data-campo="proyecto.clave">CE-INV</span></div></div>
+      <div><div class="k">Fecha</div><div class="v"><span data-campo="documento.fecha">Viernes 19 de febrero de 2027</span></div></div>
+      <div><div class="k">Versión</div><div class="v"><span data-campo="documento.version">v1</span></div></div>
+    </div>
+  </div>
+
+  <h2 class="s"><span class="n" style="min-width:16pt">1</span>Encabezado</h2>
+  <div class="grid3" style="grid-template-columns:1.3fr 1.35fr .75fr;gap:14pt;">
+    <div><div class="k">Hito o cierre</div><div><b><span data-campo="hito.numero">Hito 1</span> · <span data-campo="hito.nombre">Prueba piloto en un almacén</span></b><br><span class="muted">Aceptado el <span data-campo="leccion.fecha_aceptacion">jue 18 feb 2027</span></span></div></div>
+    <div><div class="k">Asistentes</div><div><b><span data-campo="leccion.asistente_1">Santiago</span></b>, <span data-campo="leccion.asistente_1_papel">líder de proyecto</span><br><b><span data-campo="leccion.asistente_2">Socio operativo</span></b>, <span data-campo="leccion.asistente_2_papel">suplente del líder</span></div></div>
+    <div><div class="k">Sesión</div><div><b><span data-campo="leccion.sesion">Revisión entre socios</span></b><br><span class="muted"><span data-campo="leccion.duracion">20 minutos</span></span></div></div>
+  </div>
+  <div class="garantia" style="margin-top:8pt;"><b>Frase de apertura.</b> «Revisamos el proceso, no a las personas. Cada problema termina en un cambio a una plantilla, a una lista o a una estimación.»</div>
+
+  <h2 class="s" style="margin-top:12pt;"><span class="n" style="min-width:16pt">2</span>Indicadores del hito</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1.3fr 1fr 1fr;gap:7pt;" data-lista="indicadores">
+    <div class="tile" style="padding:7pt 9pt;display:flex;flex-direction:column;">
+      <div class="big"><span data-campo="indicador.valor">0</span> <small><span data-campo="indicador.unidad">días hábiles</span></small></div>
+      <div class="lbl" style="color:var(--ink);font-weight:700;"><span data-campo="indicador.nombre">Desviación de hito</span></div>
+      <div class="lbl" style="margin-top:1pt;">Meta: <span data-campo="indicador.meta">0</span>.</div>
+      <div style="margin-top:auto;padding-top:4pt;"><span class="sem"><span data-campo="indicador.estado">En meta</span></span></div>
+    </div>
+    <div class="tile" style="padding:7pt 9pt;display:flex;flex-direction:column;">
+      <div class="big"><span data-campo="indicador.valor">9 %</span></div>
+      <div class="lbl" style="color:var(--ink);font-weight:700;"><span data-campo="indicador.nombre">Retrabajo</span></div>
+      <div class="lbl" style="margin-top:1pt;">Meta: <span data-campo="indicador.meta">menos de 15 %</span>.</div>
+      <div style="margin-top:auto;padding-top:4pt;"><span class="sem"><span data-campo="indicador.estado">En meta</span></span></div>
+    </div>
+    <div class="tile" style="padding:7pt 9pt;display:flex;flex-direction:column;">
+      <div class="big"><span data-campo="indicador.valor">19 %</span></div>
+      <div class="lbl" style="color:var(--ink);font-weight:700;"><span data-campo="indicador.nombre">Defectos que encontró el cliente</span></div>
+      <div class="lbl" style="margin-top:1pt;">Meta: <span data-campo="indicador.meta">menos de 20 %</span>.</div>
+      <div style="margin-top:auto;padding-top:4pt;"><span class="sem"><span data-campo="indicador.estado">En meta</span></span></div>
+    </div>
+    <div class="tile" style="padding:7pt 9pt;display:flex;flex-direction:column;">
+      <div class="big"><span data-campo="indicador.valor">4</span> <small><span data-campo="indicador.unidad">días hábiles</span></small></div>
+      <div class="lbl" style="color:var(--ink);font-weight:700;"><span data-campo="indicador.nombre">Días para aceptar</span></div>
+      <div class="lbl" style="margin-top:1pt;">Meta: <span data-campo="indicador.meta">menos de 5</span>.</div>
+      <div style="margin-top:auto;padding-top:4pt;"><span class="sem"><span data-campo="indicador.estado">En meta</span></span></div>
+    </div>
+    <div class="tile" style="padding:7pt 9pt;display:flex;flex-direction:column;">
+      <div class="big"><span data-campo="indicador.valor">9</span> <small>de 10</small></div>
+      <div class="lbl" style="color:var(--ink);font-weight:700;"><span data-campo="indicador.nombre">Satisfacción</span></div>
+      <div class="lbl" style="margin-top:1pt;">Meta: <span data-campo="indicador.meta">9 o más</span>.</div>
+      <div style="margin-top:auto;padding-top:4pt;"><span class="sem"><span data-campo="indicador.estado">En meta</span></span></div>
+    </div>
+  </div>
+  <p class="small muted" style="margin:5pt 0 0;"><span data-campo="indicadores.detalle">Retrabajo: 14 de 150 horas reales. Defectos: 3 del cliente de 16 en total (13 de revisión interna).</span> Metas: valores iniciales.</p>
+
+  <div class="grid2" style="gap:18pt;">
+    <div>
+      <h2 class="s" style="margin-top:11pt;"><span class="n" style="min-width:16pt">3</span>Qué salió bien</h2>
+      <ul class="clean" data-lista="bien">
+        <li><b><span data-campo="bien.que">Fechas con certeza.</span></b> <span data-campo="bien.detalle">La prueba técnica de la conexión en el diagnóstico dio certeza a las fechas.</span> <span class="muted">Causa: <span data-campo="bien.causa">se probó lo más riesgoso antes de firmar el plan.</span></span></li>
+        <li><b><span data-campo="bien.que">Entrega el día del plan.</span></b> <span data-campo="bien.detalle">Pasó a pruebas el 12 de febrero pese a dos imprevistos.</span> <span class="muted">Causa: <span data-campo="bien.causa">el 5 de febrero se tomaron 9 h de la reserva en vez de mover la entrega.</span></span></li>
+        <li><b><span data-campo="bien.que">Ajustes de las demostraciones.</span></b> <span data-campo="bien.detalle">Lo pedido en la construcción se resolvió antes de las pruebas, con la bolsa.</span> <span class="muted">Causa: <span data-campo="bien.causa">la demostración de cada jueves.</span></span></li>
+        <li><b><span data-campo="bien.que">Aceptación en 4 días hábiles.</span></b> <span data-campo="bien.detalle">16 de 16 criterios cumplieron.</span> <span class="muted">Causa: <span data-campo="bien.causa">el guion de casos usó las mismas claves CA que la especificación.</span></span></li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="s" style="margin-top:11pt;"><span class="n" style="min-width:16pt">4</span>Qué salió mal</h2>
+      <ul class="clean neutral" data-lista="mal">
+        <li><b><span data-campo="mal.problema">Plantilla de carga tarde.</span></b> <span data-campo="mal.detalle">La plantilla de carga llena llegó el 2 de febrero, 1 día hábil tarde, con otras unidades y otro formato de clave.</span> <span class="muted">Causa: <span data-campo="mal.causa">no tenía fecha compromiso; se acordó hasta el 26 de enero.</span> Costo: <b><span data-campo="mal.costo">4&nbsp;h de la reserva</span></b>.</span></li>
+        <li><b><span data-campo="mal.problema">Celulares del almacén 1.</span></b> <span data-campo="mal.detalle">La pantalla «Inventario inicial» no abría en su navegador antiguo.</span> <span class="muted">Causa: <span data-campo="mal.causa">no probamos en sus equipos antes de construir.</span> Costo: <b><span data-campo="mal.costo">5&nbsp;h de la reserva</span></b>.</span></li>
+        <li><b><span data-campo="mal.problema">Pantallas.</span></b> <span data-campo="mal.detalle">Las siete tomaron 41 horas contra 33 estimadas.</span> <span class="muted">Causa: <span data-campo="mal.causa">tiempo real y trabajo sin conexión pasaron su hora base.</span> Costo: <b><span data-campo="mal.costo">8&nbsp;h más; eficiencia 0.80</span></b>.</span></li>
+        <li><b><span data-campo="mal.problema">Correcciones.</span></b> <span data-campo="mal.detalle">14 horas contra 3 planeadas.</span> <span class="muted">Causa: <span data-campo="mal.causa">vacíos y sin conexión se probaron hasta la revisión.</span> Costo: <b><span data-campo="mal.costo">11&nbsp;h de la reserva</span></b>.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D14-lecciones-aprendidas-hito-1-v1</span></span><span>1 / 2</span></div>
+</section>
+
+<section class="page">
+  <div class="hdr"><span>D14 · Lecciones aprendidas</span><span>Uso interno · Ejemplo</span></div>
+
+  <h2 class="s" style="margin-top:0;"><span class="n" style="min-width:16pt">5</span>Qué cambiamos en plantillas o listas</h2>
+  <table class="compacta" style="table-layout:fixed;">
+    <thead><tr><th style="width:24%">Documento o lista</th><th>Cambio concreto</th><th style="width:11%;white-space:nowrap;">Versión nueva</th></tr></thead>
+    <tbody data-lista="cambios_plantillas">
+      <tr><td class="fuerte"><span data-campo="cambio.documento">Lista L5, carga de datos</span></td><td><span data-campo="cambio.texto">Se agrega revisar unidades, formato de clave y duplicados antes de cargar.</span></td><td><span data-campo="cambio.version">v1 → v2</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="cambio.documento">Lista L1, pantalla o módulo</span></td><td><span data-campo="cambio.texto">Se agrega probar en sus celulares, sin conexión y con campos vacíos.</span></td><td><span data-campo="cambio.version">v1 → v2</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="cambio.documento">Especificación del hito (D04)</span></td><td><span data-campo="cambio.texto">En «Accesos necesarios» se pide con fecha la plantilla de carga llena y el modelo y navegador de los celulares que se usarán.</span></td><td><span data-campo="cambio.version">v1 → v2</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="s" style="margin-top:10pt;"><span class="n" style="min-width:16pt">6</span>Horas estimadas contra reales</h2>
+  <table class="compacta" style="table-layout:fixed;">
+    <thead><tr><th style="width:42%">Bloque del desglose · tipo de actividad</th><th class="num" style="width:10.5%">Estimadas</th><th class="num" style="width:8%">Reales</th><th class="num" style="width:10.5%">Eficiencia</th><th style="padding-left:14pt;">Nota</th></tr></thead>
+    <tbody data-lista="horas">
+      <tr><td><span data-campo="horas.bloque">1 · Gestión del proyecto</span></td><td class="num"><span data-campo="horas.estimadas">16</span></td><td class="num"><span data-campo="horas.reales">17</span></td><td class="num"><span data-campo="horas.eficiencia">0.94</span></td><td style="padding-left:14pt;"></td></tr>
+      <tr><td><span data-campo="horas.bloque">2 · Diagnóstico y diseño de la solución</span></td><td class="num"><span data-campo="horas.estimadas">4</span></td><td class="num"><span data-campo="horas.reales">4</span></td><td class="num"><span data-campo="horas.eficiencia">1.00</span></td><td style="padding-left:14pt;"></td></tr>
+      <tr><td><span data-campo="horas.bloque">3 · Base técnica</span></td><td class="num"><span data-campo="horas.estimadas">24</span></td><td class="num"><span data-campo="horas.reales">22</span></td><td class="num"><span data-campo="horas.eficiencia">1.09</span></td><td style="padding-left:14pt;"></td></tr>
+      <tr><td class="fuerte"><span data-campo="horas.bloque">4 · Módulos propios del proyecto</span></td><td class="num fuerte"><span data-campo="horas.estimadas">39</span></td><td class="num fuerte"><span data-campo="horas.reales">47</span></td><td class="num fuerte"><span data-campo="horas.eficiencia">0.83</span></td><td style="padding-left:14pt;"></td></tr>
+      <tr><td style="padding-left:11pt;"><span data-campo="horas.tipo">Pantalla o módulo: 7 pantallas</span></td><td class="num"><span data-campo="horas.estimadas">33</span></td><td class="num"><span data-campo="horas.reales">41</span></td><td class="num"><span class="chip alerta" data-campo="horas.eficiencia">0.80</span></td><td style="padding-left:14pt;"><span data-campo="horas.nota">Fuera de rango; se reestimó</span></td></tr>
+      <tr><td style="padding-left:11pt;"><span data-campo="horas.tipo">Pantalla o módulo, propia: regla de negocio</span></td><td class="num"><span data-campo="horas.estimadas">2</span></td><td class="num"><span data-campo="horas.reales">2</span></td><td class="num"><span data-campo="horas.eficiencia">1.00</span></td><td style="padding-left:14pt;"></td></tr>
+      <tr><td style="padding-left:11pt;"><span data-campo="horas.tipo">Base de datos</span></td><td class="num"><span data-campo="horas.estimadas">4</span></td><td class="num"><span data-campo="horas.reales">4</span></td><td class="num"><span data-campo="horas.eficiencia">1.00</span></td><td style="padding-left:14pt;"></td></tr>
+      <tr><td class="fuerte"><span data-campo="horas.bloque">6 · Datos: limpieza y carga inicial</span></td><td class="num fuerte"><span data-campo="horas.estimadas">11</span></td><td class="num fuerte"><span data-campo="horas.reales">12</span></td><td class="num fuerte"><span data-campo="horas.eficiencia">0.92</span></td><td style="padding-left:14pt;"></td></tr>
+      <tr><td style="padding-left:11pt;"><span data-campo="horas.tipo">Documento o capacitación</span></td><td class="num"><span data-campo="horas.estimadas">2</span></td><td class="num"><span data-campo="horas.reales">2</span></td><td class="num"><span data-campo="horas.eficiencia">1.00</span></td><td style="padding-left:14pt;"></td></tr>
+      <tr><td style="padding-left:11pt;"><span data-campo="horas.tipo">Carga de datos</span></td><td class="num"><span data-campo="horas.estimadas">9</span></td><td class="num"><span data-campo="horas.reales">10</span></td><td class="num"><span data-campo="horas.eficiencia">0.90</span></td><td style="padding-left:14pt;"><span data-campo="horas.nota">En el límite del rango</span></td></tr>
+      <tr><td><span data-campo="horas.bloque">7 · Pruebas internas y pruebas del cliente</span></td><td class="num"><span data-campo="horas.estimadas">10</span></td><td class="num"><span data-campo="horas.reales">11</span></td><td class="num"><span data-campo="horas.eficiencia">0.91</span></td><td style="padding-left:14pt;"><span data-campo="horas.nota">Sin las 3 h para corregir</span></td></tr>
+      <tr><td><span data-campo="horas.bloque">8 · Capacitación, manuales y salida a producción</span></td><td class="num"><span data-campo="horas.estimadas">8</span></td><td class="num"><span data-campo="horas.reales">8</span></td><td class="num"><span data-campo="horas.eficiencia">1.00</span></td><td style="padding-left:14pt;"></td></tr>
+      <tr class="total"><td>Total del hito, clase planeada</td><td class="num"><span data-campo="horas.total_estimadas">112</span></td><td class="num"><span data-campo="horas.total_reales">121</span></td><td class="num"><span data-campo="horas.total_eficiencia">0.93</span></td><td style="padding-left:14pt;"></td></tr>
+    </tbody>
+  </table>
+  <p class="small muted" style="margin:6pt 0 0;"><span data-campo="horas.total_nota">Plan del hito: 112 + 3 h para corregir = 115 h.</span> <span data-campo="horas.aparte">Bloque 5 sin actividades en este hito. Aparte de la calibración: 14 h de corrección, 9 de imprevistos y 6 de ajustes menores (bolsa); 150 h reales en total.</span></p>
+
+  <h2 class="s" style="margin-top:10pt;"><span class="n" style="min-width:16pt">7</span>Acciones</h2>
+  <table class="compacta" style="table-layout:fixed;">
+    <thead><tr><th>Qué se hará</th><th style="width:20%">Responsable</th><th style="width:17%">Fecha</th></tr></thead>
+    <tbody data-lista="acciones">
+      <tr><td><span data-campo="accion.texto">Actualizar la lista L5 en «Listas de calidad»</span></td><td class="fuerte"><span data-campo="accion.responsable">Socio operativo</span></td><td><span data-campo="accion.fecha">Vie 26 feb 2027</span></td></tr>
+      <tr><td><span data-campo="accion.texto">Actualizar la lista L1 y probar el Hito 2 en los celulares del almacén 1</span></td><td class="fuerte"><span data-campo="accion.responsable">Socio operativo</span></td><td><span data-campo="accion.fecha">Vie 26 feb 2027</span></td></tr>
+      <tr><td><span data-campo="accion.texto">Pasar la D04 a v2 y usarla en la especificación del Hito 3</span></td><td class="fuerte"><span data-campo="accion.responsable">Santiago</span></td><td><span data-campo="accion.fecha">Lun 1 mar 2027</span></td></tr>
+      <tr><td><span data-campo="accion.texto">Medir las pantallas del Hito 2 contra su reestimación</span></td><td class="fuerte"><span data-campo="accion.responsable">Santiago</span></td><td><span data-campo="accion.fecha">Vie 5 mar 2027</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="s" style="margin-top:10pt;"><span class="n" style="min-width:16pt">8</span>Solo al cierre del proyecto <span class="muted" style="font-size:9.6pt;font-weight:400;letter-spacing:0;margin-left:6pt;"><span data-campo="cierre.nota">No aplica en un cierre de hito.</span></span></h2>
+
+  <div class="firmas" style="margin-top:4pt;">
+    <div></div>
+    <div class="firma">
+      <div class="linea" style="height:22pt;"></div>
+      <div class="n"><span data-campo="aprobo.nombre">Santiago</span></div>
+      <div class="r">Aprueba · Sistemas a la medida · Fecha: <span class="campo-mano" style="min-width:.9in;"></span></div>
+    </div>
+  </div>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D14-lecciones-aprendidas-hito-1-v1</span></span><span>2 / 2</span></div>
+</section>
+
+</body>
+</html>

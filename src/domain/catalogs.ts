@@ -1,4 +1,13 @@
 import type {
+  ClientRole,
+  CriterionClass,
+  CriterionResult,
+  DocumentCode,
+  GateNumber,
+  ProjectSize,
+  ProspectStage,
+  RoutineFrequency,
+  Urgency,
   ActivityStatus,
   ActivityType,
   Billing,
@@ -79,6 +88,8 @@ export const CHANNEL: Record<Channel, string> = {
   meeting: 'Junta',
   email: 'Correo',
   whatsapp: 'WhatsApp',
+  portal: 'Portal',
+  phone: 'Teléfono de guardia',
 }
 
 export const REQUEST_KIND: Record<RequestKind, string> = {
@@ -275,4 +286,157 @@ export const INTERNAL_REVIEW = [
 
 export function options<T extends string>(map: Record<T, string>): { value: T; label: string }[] {
   return (Object.keys(map) as T[]).map((value) => ({ value, label: map[value] }))
+}
+
+/* ---------------------------------------------------------------------------
+ * Puertas (Procedimientos y puertas). Las cinco las aprueba Santiago.
+ * ------------------------------------------------------------------------- */
+export const GATE_DEFS: Record<GateNumber, { name: string; stage: string; items: string[]; ifMissing: string }> = {
+  1: {
+    name: 'Propuesta aceptada',
+    stage: 'Preventa',
+    items: [
+      'El cliente aceptó la D01 por escrito y la aceptación está guardada.',
+      'El cliente nombró por escrito a su responsable del proyecto.',
+    ],
+    ifMissing:
+      'No se pasa a Inicio. Venta y cuenta pide lo faltante al cliente y lo anota en la hoja de control, con fecha compromiso.',
+  },
+  2: {
+    name: 'Arranque autorizado',
+    stage: 'Inicio',
+    items: [
+      'La D02 está firmada por las dos partes y guardada.',
+      'El pago inicial se recibió, o el cliente emitió la orden de compra.',
+      'El responsable del cliente está nombrado en el acta.',
+      'Los accesos y la información se solicitaron por escrito, con fecha compromiso.',
+    ],
+    ifMissing:
+      'No empieza el diagnóstico. El Líder de proyecto avisa por escrito al responsable del cliente qué falta y que el arranque se recorre.',
+  },
+  3: {
+    name: 'Línea base firmada',
+    stage: 'Planeación',
+    items: [
+      'El cliente firmó alcance y fechas definitivos (D03) y aceptó por escrito los montos definitivos (D01).',
+      'La versión firmada está guardada como línea base.',
+    ],
+    ifMissing: 'No se construye nada. El Líder de proyecto avisa al responsable del cliente qué falta y qué fecha se recorre.',
+  },
+  4: {
+    name: 'Hito aceptado',
+    stage: 'Ejecución',
+    items: ['La D07 está firmada, o el plazo de revisión venció sin observaciones por escrito.'],
+    ifMissing:
+      'El hito no se factura; el siguiente avanza mientras el cliente revisa. Se pausa si las observaciones siguen abiertas, o una factura sigue vencida, 10 días hábiles después de su plazo.',
+  },
+  5: {
+    name: 'Proyecto cerrado',
+    stage: 'Cierre',
+    items: [
+      'La D08 está firmada por las dos partes.',
+      'Todos los pagos están facturados: inicial, hitos y cambios de alcance aprobados.',
+      'La D14 del proyecto está registrada, con horas reales por actividad.',
+    ],
+    ifMissing:
+      'El proyecto no se da por cerrado y sigue en el control semanal. El Líder de proyecto anota qué falta y quién lo resuelve, y avisa a Santiago.',
+  },
+}
+
+export const CRITERION_RESULT: Record<CriterionResult, string> = { pass: 'Cumple', fail: 'No cumple' }
+export const CRITERION_CLASS: Record<CriterionClass, string> = {
+  none: 'Sin observación',
+  defect: 'Defecto',
+  minor_adjustment: 'Ajuste menor',
+  scope_change: 'Cambio de alcance',
+}
+
+export const CLIENT_ROLE: Record<ClientRole, string> = {
+  decides: 'Decide y paga',
+  responsible: 'Responsable del proyecto',
+  systems: 'Contacto de sistemas',
+  billing: 'Tramita órdenes y pagos',
+  tester: 'Usuario que prueba',
+  other: 'Otro',
+}
+
+/* ---------------------------------------------------------------------------
+ * Documentos estándar (Plantillas con el cliente e internas; carpeta modelo)
+ * ------------------------------------------------------------------------- */
+export type DocContextKind = 'none' | 'milestone' | 'change' | 'week' | 'month' | 'proposal'
+
+export const DOCUMENTS: Record<
+  DocumentCode,
+  { title: string; folder: string; slug: string; client: boolean; context: DocContextKind; template: string | null; prepares: string }
+> = {
+  D01: { title: 'Propuesta preliminar y definitiva', folder: '01-preventa', slug: 'propuesta', client: true, context: 'proposal', template: 'D01-propuesta', prepares: 'Venta y cuenta' },
+  D02: { title: 'Acta de inicio', folder: '02-inicio', slug: 'acta-de-inicio', client: true, context: 'none', template: 'D02-acta-de-inicio', prepares: 'Líder de proyecto' },
+  D03: { title: 'Plan del proyecto (línea base)', folder: '03-planeacion', slug: 'plan-del-proyecto', client: true, context: 'none', template: 'D03-plan-del-proyecto', prepares: 'Líder de proyecto' },
+  D04: { title: 'Especificación del hito', folder: '04-hitos', slug: 'especificacion', client: true, context: 'milestone', template: 'D04-especificacion-del-hito', prepares: 'Análisis' },
+  D05: { title: 'Solicitud de cambio', folder: '05-control', slug: 'solicitud-de-cambio', client: true, context: 'change', template: 'D05-solicitud-de-cambio', prepares: 'Líder de proyecto' },
+  D06: { title: 'Reporte semanal de avance', folder: '05-control', slug: 'reporte-semanal', client: true, context: 'week', template: 'D06-reporte-semanal', prepares: 'Líder de proyecto' },
+  D07: { title: 'Acta de aceptación del hito', folder: '04-hitos', slug: 'acta-de-aceptacion', client: true, context: 'milestone', template: 'D07-acta-de-aceptacion', prepares: 'Líder de proyecto' },
+  D08: { title: 'Acta de cierre', folder: '06-cierre', slug: 'acta-de-cierre', client: true, context: 'none', template: 'D08-acta-de-cierre', prepares: 'Líder de proyecto' },
+  D09: { title: 'Reporte mensual de servicio', folder: '07-servicio', slug: 'reporte-mensual', client: true, context: 'month', template: 'D09-reporte-mensual', prepares: 'Soporte' },
+  D10: { title: 'Ficha de traspaso', folder: '01-preventa', slug: 'ficha-de-traspaso', client: false, context: 'none', template: 'D10-ficha-de-traspaso', prepares: 'Venta y cuenta' },
+  D11: { title: 'Presupuesto interno', folder: '05-control', slug: 'presupuesto-interno', client: false, context: 'none', template: null, prepares: 'Líder de proyecto' },
+  D12: { title: 'Plan de calidad', folder: '03-planeacion', slug: 'plan-de-calidad', client: false, context: 'none', template: 'D12-plan-de-calidad', prepares: 'Líder de proyecto' },
+  D13: { title: 'Bitácora del proyecto', folder: '05-control', slug: 'bitacora-del-proyecto', client: false, context: 'none', template: null, prepares: 'Líder de proyecto' },
+  D14: { title: 'Lecciones aprendidas', folder: '06-cierre', slug: 'lecciones-aprendidas', client: false, context: 'milestone', template: 'D14-lecciones-aprendidas', prepares: 'Líder de proyecto' },
+}
+
+export const DOCUMENT_STATUS = { draft: 'Borrador', sent: 'Enviado', signed: 'Firmado' } as const
+
+/** Carpeta del proyecto estándar (06-carpeta-modelo). */
+export const PROJECT_FOLDERS = [
+  '01-preventa',
+  '02-inicio',
+  '03-planeacion',
+  '04-hitos',
+  '05-control',
+  '06-cierre',
+  '07-servicio',
+  '08-administracion',
+]
+
+/* ---------------------------------------------------------------------------
+ * Servicio mensual
+ * ------------------------------------------------------------------------- */
+export const URGENCY: Record<Urgency, string> = { urgent: 'Urgente', normal: 'Normal' }
+
+export const ROUTINE_FREQUENCY: Record<RoutineFrequency, string> = {
+  continuous: 'Continuo',
+  daily: 'Diario',
+  weekly: 'Cada semana',
+  monthly: 'Cada mes',
+  bimonthly: 'Cada bimestre',
+  quarterly: 'Cada trimestre',
+}
+
+/** Rutinas de la mensualidad tipo (valores iniciales). */
+export const STANDARD_ROUTINES: { name: string; frequency: RoutineFrequency; reviewer: string; evidenceHint: string }[] = [
+  { name: 'Monitoreo con aviso si el sistema se detiene', frequency: 'continuous', reviewer: '', evidenceHint: 'Registro de avisos y de tiempo fuera de servicio' },
+  { name: 'Respaldos', frequency: 'daily', reviewer: '', evidenceHint: 'Registro del respaldo de cada día' },
+  { name: 'Prueba de recuperación', frequency: 'bimonthly', reviewer: 'Arquitectura', evidenceHint: 'Constancia con fecha, respaldo usado y resultado' },
+  { name: 'Actualizaciones de seguridad', frequency: 'monthly', reviewer: 'Revisión de calidad', evidenceHint: 'Nota de versión en la D13' },
+  { name: 'Revisión de accesos', frequency: 'monthly', reviewer: 'Responsable del cliente', evidenceHint: 'Lista de usuarios activos confirmada por el cliente' },
+  { name: 'Guardia para fallas urgentes', frequency: 'weekly', reviewer: '', evidenceHint: 'Calendario compartido de guardias' },
+]
+
+/* ---------------------------------------------------------------------------
+ * Preventa y estimación
+ * ------------------------------------------------------------------------- */
+export const PROSPECT_STAGE: Record<ProspectStage, string> = {
+  qualify: '1. Calificar',
+  discovery: '2. Junta de descubrimiento',
+  feasibility: '3. Factibilidad (D11 v0)',
+  proposal: '4. Propuesta (D01)',
+  won: 'Ganado',
+  lost: 'Perdido',
+}
+
+export const PROJECT_SIZE: Record<ProjectSize, { label: string; factor: number; weeks: string; hint: string }> = {
+  small: { label: 'Chico', factor: 0.6, weeks: '4 a 8', hint: 'Un sitio o área; 1 o 2 hitos; hasta 8 pantallas; sin conexiones; menos de 200 horas' },
+  medium: { label: 'Mediano', factor: 1.0, weeks: '9 a 16', hint: 'Hasta tres sitios; 3 hitos; de 9 a 20 pantallas; una o dos conexiones; de 200 a 500 horas' },
+  large: { label: 'Grande', factor: 1.5, weeks: '17 a 26', hint: 'Más de tres sitios; 4 hitos o más; más de 20 pantallas; tres conexiones o más; más de 500 horas' },
 }

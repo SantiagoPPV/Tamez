@@ -1,0 +1,144 @@
+/* Sistema de diseño común de las plantillas D01–D14. Hoja carta, páginas fijas. */
+:root {
+  --ink: #0F172A; --ink2: #334155; --muted: #64748B; --rule: #E2E8F0; --soft: #F1F5F9; --surface: #F8FAFC;
+  --accent: #0E7C66; --accent-2: #0B5E4E; --accent-soft: #E8F4F0; --accent-mid: #9ACFC1;
+  --ambar: #B45309; --ambar-soft: #FEF3C7; --rojo: #B91C1C; --rojo-soft: #FEE2E2;
+}
+@page { size: Letter; margin: 0; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', sans-serif; color: var(--ink); font-size: 9.6pt; line-height: 1.5;
+  -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  font-feature-settings: "tnum" 1, "cv11" 1, "ss01" 1;
+}
+
+/* Página */
+.page { width: 8.5in; height: 11in; padding: 0.78in 0.8in 0.8in; position: relative; page-break-after: always; overflow: hidden; }
+.page:last-child { page-break-after: auto; }
+.hdr, .ftr { position: absolute; left: 0.8in; right: 0.8in; display: flex; justify-content: space-between; font-size: 7.2pt; color: var(--muted); }
+.hdr { top: 0.38in; letter-spacing: .08em; text-transform: uppercase; }
+.ftr { bottom: 0.38in; }
+.ftr b { color: var(--ink2); font-weight: 600; }
+
+/* Texto */
+h1, h2, h3 { font-family: 'Inter Display', 'Inter', sans-serif; margin: 0; letter-spacing: -0.012em; }
+p { margin: 0 0 7pt; text-wrap: pretty; }
+.lead { font-size: 11pt; color: var(--ink2); line-height: 1.5; text-wrap: pretty; }
+.muted { color: var(--muted); }
+.small { font-size: 8.4pt; }
+.eyebrow { font-size: 7.8pt; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 6pt; }
+.rule { height: 1px; background: var(--rule); margin: 12pt 0; }
+
+/* Encabezado del documento (primera página) */
+.doc-head { margin-bottom: 12pt; }
+.doc-head h1 { font-size: 24pt; font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 4pt; text-wrap: balance; }
+.doc-head .sub { font-size: 11pt; color: var(--ink2); margin: 0 0 12pt; text-wrap: pretty; }
+.meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9pt 14pt; border-top: 1.5px solid var(--ink); border-bottom: 1px solid var(--rule); padding: 9pt 0; }
+.meta.tres { grid-template-columns: repeat(3, 1fr); }
+.meta .k, .kv .k, .k { font-size: 7.2pt; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 2pt; }
+.meta .v { font-size: 9.6pt; font-weight: 600; line-height: 1.35; }
+
+/* Secciones numeradas */
+h2.s { font-size: 12.5pt; font-weight: 700; margin: 14pt 0 5pt; display: flex; gap: 8pt; align-items: baseline; }
+h2.s .n { color: var(--accent); font-weight: 800; min-width: 14pt; }
+h2.s:first-child { margin-top: 0; }
+h3 { font-size: 10.4pt; font-weight: 700; margin: 9pt 0 3pt; }
+
+/* Listas */
+ul.clean { list-style: none; padding: 0; margin: 0; }
+ul.clean li { position: relative; padding-left: 13pt; margin-bottom: 4pt; }
+ul.clean li::before { content: ""; position: absolute; left: 2pt; top: 5.6pt; width: 4.6pt; height: 4.6pt; border-radius: 2px; background: var(--accent); }
+ul.clean.neutral li::before { background: var(--muted); }
+ol.pasos { margin: 0; padding-left: 15pt; }
+ol.pasos li { margin-bottom: 4pt; padding-left: 2pt; }
+ol.pasos li::marker { font-weight: 700; color: var(--accent-2); }
+ul.check { list-style: none; margin: 0; padding: 0; }
+ul.check li { position: relative; padding-left: 16pt; margin-bottom: 4pt; }
+ul.check li::before { content: ""; position: absolute; left: 0; top: 2.6pt; width: 8pt; height: 8pt; border: 1.2px solid var(--ink2); border-radius: 2px; background: #fff; }
+ul.check li.ok::before { background: var(--accent); border-color: var(--accent); }
+ul.check li.ok::after { content: "✓"; position: absolute; left: 1.5pt; top: -0.4pt; font-size: 7.4pt; font-weight: 800; color: #fff; }
+
+/* Rejillas */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16pt; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12pt; }
+.grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8pt; }
+.kv { display: grid; grid-template-columns: 1.25in 1fr; gap: 5pt 10pt; }
+.kv .k { margin: 0; padding-top: 1.6pt; }
+
+/* Cajas */
+.caja { border: 1px solid var(--rule); border-radius: 10px; padding: 10pt 12pt; background: #fff; }
+.caja.suave { background: var(--surface); }
+.callout { background: var(--accent-soft); border-radius: 10px; padding: 12pt 14pt; }
+.callout .k { color: var(--accent-2); margin-bottom: 4pt; }
+.callout .v { font-size: 12pt; line-height: 1.42; font-weight: 600; color: var(--ink); text-wrap: pretty; }
+.garantia { background: var(--accent-soft); border-left: 3px solid var(--accent); border-radius: 6px; padding: 8pt 11pt; font-size: 9.2pt; line-height: 1.45; }
+.nota { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 9pt 12pt; font-size: 8.8pt; color: var(--ink2); }
+.tile { border: 1px solid var(--rule); border-radius: 10px; padding: 9pt 11pt; }
+.tile .big { font-family: 'Inter Display', 'Inter'; font-size: 16pt; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+.tile .big small { font-size: 8.6pt; font-weight: 600; color: var(--muted); letter-spacing: 0; }
+.tile .lbl { font-size: 8.2pt; color: var(--muted); margin-top: 3pt; line-height: 1.35; }
+
+/* Pagos por hito */
+.pagos { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; }
+.pago { padding: 9pt 10pt; border-right: 1px solid var(--rule); }
+.pago:last-child { border-right: none; }
+.pago .cuando { font-size: 7.2pt; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.pago .monto { font-family: 'Inter Display', 'Inter'; font-size: 14pt; font-weight: 800; letter-spacing: -0.01em; margin: 2pt 0 1pt; }
+.pago .que { font-size: 8.2pt; color: var(--ink2); line-height: 1.3; }
+
+/* Tablas */
+table { width: 100%; border-collapse: collapse; }
+th { text-align: left; font-size: 7.4pt; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 0 8pt 5pt 0; border-bottom: 1.5px solid var(--ink); vertical-align: bottom; }
+td { padding: 5pt 8pt 5pt 0; border-bottom: 1px solid var(--rule); vertical-align: top; font-size: 9.2pt; }
+td.num, th.num { text-align: right; padding-right: 0; white-space: nowrap; }
+td.fuerte { font-weight: 700; }
+tr.total td { border-bottom: none; border-top: 1.5px solid var(--ink); font-weight: 800; font-size: 10.4pt; padding-top: 7pt; }
+table.compacta td { font-size: 8.5pt; padding: 3.6pt 6pt 3.6pt 0; }
+table.compacta th { font-size: 7pt; }
+
+/* Estados: siempre con texto, nunca solo color */
+.sem { display: inline-flex; align-items: center; gap: 5pt; font-weight: 700; font-size: 9pt; white-space: nowrap; }
+.sem::before { content: ""; width: 8pt; height: 8pt; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+.sem.amarillo::before { background: #D97706; }
+.sem.rojo::before { background: #DC2626; }
+.sem.gris::before { background: #94A3B8; }
+.chip { display: inline-block; font-size: 7.2pt; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; border-radius: 4px; padding: 1.5pt 5pt; background: var(--soft); color: var(--ink2); white-space: nowrap; }
+.chip.ok { background: var(--accent-soft); color: var(--accent-2); }
+.chip.alerta { background: var(--ambar-soft); color: var(--ambar); }
+.chip.mal { background: var(--rojo-soft); color: var(--rojo); }
+
+/* Barra de avance: <div class="barra"><i style="width:62%"></i><b style="left:70%"></b></div>  (i = real, b = plan) */
+.barra { position: relative; height: 8pt; background: var(--soft); border-radius: 4pt; }
+.barra i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--accent); border-radius: 4pt; }
+.barra b { position: absolute; top: -2.5pt; bottom: -2.5pt; width: 1.6pt; background: var(--ink); border-radius: 1pt; }
+
+/* Firmas y campos a mano */
+.firmas { display: grid; grid-template-columns: 1fr 1fr; gap: 30pt; margin-top: 18pt; }
+.firma .linea { border-bottom: 1px solid var(--ink); height: 36pt; }
+.firma .n { font-weight: 700; font-size: 9.6pt; margin-top: 4pt; }
+.firma .r { font-size: 8.4pt; color: var(--muted); line-height: 1.35; }
+.campo-mano { display: inline-block; border-bottom: 1px solid var(--muted); min-width: 1.1in; height: 11pt; vertical-align: baseline; }
+
+/* Cláusulas y texto de reglas */
+.clausulas { counter-reset: cl; }
+.clausula { position: relative; padding-left: 18pt; margin-bottom: 6pt; font-size: 9pt; color: var(--ink2); text-wrap: pretty; }
+.clausula::before { counter-increment: cl; content: counter(cl) "."; position: absolute; left: 0; font-weight: 700; color: var(--accent-2); }
+.clausula b { color: var(--ink); }
+
+/* Portada (solo D01) */
+.cover { padding: 0.75in 0.8in; display: flex; flex-direction: column; }
+.brand { font-size: 8pt; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--ink2); }
+.brand span { color: var(--accent); }
+.cover h1 { font-size: 36pt; font-weight: 800; line-height: 1.05; letter-spacing: -0.025em; margin: 14pt 0 18pt; text-wrap: balance; }
+.cover .conf { font-size: 7.8pt; color: var(--muted); margin-top: 12pt; }
+
+/* Hitos en columnas */
+.hito { border-top: 2px solid var(--accent); padding-top: 7pt; }
+.hito .h { font-size: 7.4pt; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-2); }
+.hito .t { font-weight: 700; font-size: 10pt; margin: 2pt 0 4pt; }
+.hito ul { margin: 0; padding-left: 12pt; font-size: 8.6pt; color: var(--ink2); }
+.hito li { margin-bottom: 3pt; }
+
+/* Dato variable: no cambia el aspecto; solo marca qué llenará el software */
+[data-campo] { }

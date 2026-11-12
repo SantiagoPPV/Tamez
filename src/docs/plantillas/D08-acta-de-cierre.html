@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>D08 · Acta de cierre · Ejemplo</title>
+<link rel="stylesheet" href="base.css">
+</head>
+<body>
+
+<!-- ============================== HOJA 1 ============================== -->
+<section class="page">
+  <div class="hdr"><span>D08 · Acta de cierre</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <div class="doc-head">
+    <div class="eyebrow">D08 · Acta de cierre</div>
+    <h1><span data-campo="proyecto.nombre">Control de inventario en almacenes</span></h1>
+    <p class="sub">Da por terminado el proyecto. La firman <span data-campo="cliente.responsable.nombre">Laura Méndez</span> y <span data-campo="despacho.lider.nombre">Santiago</span> en la hoja <span data-campo="documento.hoja_firmas">3</span>.</p>
+    <div class="meta" style="grid-template-columns:2fr 0.9fr 1.9fr 0.8fr;">
+      <div><div class="k">Cliente</div><div class="v"><span data-campo="cliente.nombre">Cliente Ejemplo, S.A. de C.V.</span></div></div>
+      <div><div class="k">Clave</div><div class="v"><span data-campo="proyecto.clave">CE-INV</span></div></div>
+      <div><div class="k">Fecha del acta</div><div class="v"><span data-campo="documento.fecha">Viernes 9 de abril de 2027</span></div></div>
+      <div><div class="k">Versión</div><div class="v"><span data-campo="documento.version">v1</span></div></div>
+    </div>
+  </div>
+
+  <h2 class="s"><span class="n">1</span>Datos del proyecto</h2>
+  <div class="kv" style="grid-template-columns:1.2in 1fr;gap:3pt 10pt;">
+    <div class="k">Proyecto</div><div><b><span data-campo="proyecto.clave">CE-INV</span> · <span data-campo="proyecto.nombre">Control de inventario en almacenes</span></b></div>
+    <div class="k">Fechas</div><div>Del <span data-campo="proyecto.fecha_inicio">lunes 11 de enero de 2027</span> al <span data-campo="proyecto.fecha_cierre">viernes 9 de abril de 2027</span> (<span data-campo="proyecto.duracion">13 semanas</span>)</div>
+    <div class="k">Línea base final</div><div>Plan del proyecto (D03) <span data-campo="proyecto.linea_base_version">v2</span>, del <span data-campo="proyecto.linea_base_fecha">lunes 22 de febrero de 2027</span>; anexo: <span data-campo="proyecto.linea_base_cambios" style="white-space:nowrap;">CE-INV-D05-01</span></div>
+    <div class="k">Archivo</div><div><span data-campo="documento.archivo_pdf">CE-INV-D08-acta-de-cierre-v1.pdf</span></div>
+  </div>
+
+  <h2 class="s"><span class="n">2</span>Lo entregado frente a la línea base</h2>
+  <p><span data-campo="proyecto.numero_hitos_texto">Tres</span> hitos entregados conforme al D03 <span data-campo="proyecto.linea_base_version">v2</span>, <span data-campo="proyecto.desviacion">sin desviación</span>; acompañamiento concluido el <span data-campo="proyecto.fin_acompanamiento">9 de abril</span>.</p>
+  <table class="compacta">
+    <thead><tr><th style="width:33.5%">Hito</th><th style="width:10%">Planeado</th><th style="width:10%">Entregado</th><th style="width:10%">Aceptado</th><th>Qué se entregó</th></tr></thead>
+    <tbody data-lista="hitos">
+      <tr><td class="fuerte"><span data-campo="hito.numero">Hito 1</span> · <span data-campo="hito.nombre">Prueba piloto en un almacén</span></td><td style="white-space:nowrap;"><span data-campo="hito.fecha_plan">Vie 12 feb</span></td><td style="white-space:nowrap;"><span data-campo="hito.fecha_entrega">Vie 12 feb</span></td><td style="white-space:nowrap;"><span data-campo="hito.fecha_aceptacion">Jue 18 feb</span></td><td><span data-campo="hito.entregado">Inventario en tiempo real, Almacén 1.</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="hito.numero">Hito 2</span> · <span data-campo="hito.nombre">Entradas, salidas y conexión con su sistema contable</span></td><td style="white-space:nowrap;"><span data-campo="hito.fecha_plan">Vie 5 mar</span></td><td style="white-space:nowrap;"><span data-campo="hito.fecha_entrega">Vie 5 mar</span></td><td style="white-space:nowrap;"><span data-campo="hito.fecha_aceptacion">Jue 11 mar</span></td><td><span data-campo="hito.entregado">Entradas y salidas con responsable, sin recaptura en su sistema contable.</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="hito.numero">Hito 3</span> · <span data-campo="hito.nombre">Uso completo en los tres almacenes</span></td><td style="white-space:nowrap;"><span data-campo="hito.fecha_plan">Mié 31 mar</span></td><td style="white-space:nowrap;"><span data-campo="hito.fecha_entrega">Mié 31 mar</span></td><td style="white-space:nowrap;"><span data-campo="hito.fecha_aceptacion">Mié 7 abr</span></td><td><span data-campo="hito.entregado">Los tres almacenes en operación, con los avisos de mínimo del cambio.</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top:9pt;">Cambios de alcance aprobados y monto final</h3>
+  <table class="compacta" style="margin-top:3pt;">
+    <thead><tr><th style="width:17%">Folio</th><th style="width:47%">Cambio</th><th style="width:26%">Aprobación</th><th class="num">Monto</th></tr></thead>
+    <tbody data-lista="cambios">
+      <tr><td class="fuerte" style="white-space:nowrap;"><span data-campo="cambio.folio">CE-INV-D05-01</span></td><td><span data-campo="cambio.descripcion">«Avisos de mínimo»: 24 horas a $786; Hito 3 al 31 mar</span></td><td><span data-campo="cambio.aprobacion">Ricardo Solís, lun 22 feb</span></td><td class="num"><span data-campo="cambio.monto">$18,864</span></td></tr>
+    </tbody>
+    <tbody>
+      <tr class="total"><td colspan="3">Monto final, más IVA: <span data-campo="proyecto.precio_original">$330,000</span> del acta de inicio + <span data-campo="proyecto.monto_cambios">$18,864</span> de cambios</td><td class="num"><span data-campo="proyecto.precio_final">$348,864</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="s"><span class="n">3</span>Actas de aceptación y pagos</h2>
+  <table class="compacta" style="table-layout:fixed;">
+    <thead><tr><th style="width:24%">Concepto</th><th style="width:10.5%">Acta del</th><th style="width:17.5%">Cómo se aceptó</th><th style="width:9.5%" class="num">Monto</th><th style="width:11.5%;padding-left:10pt;">Factura</th><th>Pago</th></tr></thead>
+    <tbody data-lista="pagos">
+      <tr><td class="fuerte"><span data-campo="pago.concepto">Pago inicial</span></td><td style="white-space:nowrap;"><span data-campo="pago.fecha_acta">Jue 7 ene</span></td><td style="white-space:nowrap;"><span data-campo="pago.forma">Acta de inicio firmada</span></td><td class="num"><span data-campo="pago.monto">$40,000</span></td><td style="padding-left:10pt;white-space:nowrap;"><span data-campo="pago.fecha_factura">Jue 7 ene</span></td><td style="white-space:nowrap;"><span class="sem"><span data-campo="pago.estado">Pagado</span></span> <span class="muted"><span data-campo="pago.fecha_pago">jue 21 ene</span></span></td></tr>
+      <tr><td class="fuerte"><span data-campo="pago.concepto">Hito 1</span></td><td style="white-space:nowrap;"><span data-campo="pago.fecha_acta">Jue 18 feb</span></td><td style="white-space:nowrap;"><span data-campo="pago.forma">Acta firmada</span></td><td class="num"><span data-campo="pago.monto">$90,000</span></td><td style="padding-left:10pt;white-space:nowrap;"><span data-campo="pago.fecha_factura">Vie 19 feb</span></td><td style="white-space:nowrap;"><span class="sem"><span data-campo="pago.estado">Pagado</span></span> <span class="muted"><span data-campo="pago.fecha_pago">jue 4 mar</span></span></td></tr>
+      <tr><td class="fuerte"><span data-campo="pago.concepto">Hito 2</span></td><td style="white-space:nowrap;"><span data-campo="pago.fecha_acta">Jue 11 mar</span></td><td style="white-space:nowrap;"><span data-campo="pago.forma">Acta firmada</span></td><td class="num"><span data-campo="pago.monto">$90,000</span></td><td style="padding-left:10pt;white-space:nowrap;"><span data-campo="pago.fecha_factura">Vie 12 mar</span></td><td style="white-space:nowrap;"><span class="sem"><span data-campo="pago.estado">Pagado</span></span> <span class="muted"><span data-campo="pago.fecha_pago">mié 24 mar</span></span></td></tr>
+      <tr><td class="fuerte"><span data-campo="pago.concepto">Hito 3</span></td><td style="white-space:nowrap;"><span data-campo="pago.fecha_acta">Mié 7 abr</span></td><td style="white-space:nowrap;"><span data-campo="pago.forma">Acta firmada</span></td><td class="num"><span data-campo="pago.monto">$110,000</span></td><td style="padding-left:10pt;white-space:nowrap;"><span data-campo="pago.fecha_factura">Jue 8 abr</span></td><td style="white-space:nowrap;"><span class="sem amarillo"><span data-campo="pago.estado">Por pagar</span></span> <span class="muted">vence <span data-campo="pago.fecha_vence">vie 23 abr</span></span></td></tr>
+      <tr><td class="fuerte"><span data-campo="pago.concepto">Cambio <span style="white-space:nowrap;">CE-INV-D05-01</span></span></td><td style="white-space:nowrap;"><span data-campo="pago.fecha_acta">Mié 7 abr</span></td><td style="white-space:nowrap;"><span data-campo="pago.forma">En el acta del Hito 3</span></td><td class="num"><span data-campo="pago.monto">$18,864</span></td><td style="padding-left:10pt;white-space:nowrap;"><span data-campo="pago.fecha_factura">Jue 8 abr</span></td><td style="white-space:nowrap;"><span class="sem amarillo"><span data-campo="pago.estado">Por pagar</span></span> <span class="muted">vence <span data-campo="pago.fecha_vence">vie 23 abr</span></span></td></tr>
+    </tbody>
+    <tbody>
+      <tr class="total"><td colspan="3">Total, <span data-campo="facturacion.orden_compra">OC-2027-0018</span> ampliada, más IVA</td><td class="num"><span data-campo="pagos.total">$348,864</span></td><td colspan="2" style="padding-left:10pt;font-size:9pt;">Por cobrar <span data-campo="pagos.por_cobrar">$128,864</span></td></tr>
+    </tbody>
+  </table>
+  <p class="small muted" style="margin-top:6pt;margin-bottom:0;">Pagados: <span data-campo="pagos.pagado">$220,000</span> (<span data-campo="pagos.conceptos_pagados">pago inicial e hitos 1 y 2</span>). Las facturas del Hito 3 y del cambio vencen el <span data-campo="pagos.vence_final">viernes 23 de abril de 2027</span>.</p>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D08-acta-de-cierre-v1</span></span><span>1 / 3</span></div>
+</section>
+
+<!-- ============================== HOJA 2 ============================== -->
+<section class="page">
+  <div class="hdr"><span>D08 · Acta de cierre</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <h2 class="s"><span class="n">4</span>Paquete de entrega</h2>
+  <table class="compacta">
+    <thead><tr><th style="width:22%">Elemento</th><th style="width:53%">Dónde queda</th><th>Quién lo recibió</th></tr></thead>
+    <tbody data-lista="entrega">
+      <tr><td class="fuerte"><span data-campo="entrega.elemento">Accesos</span></td><td><span data-campo="entrega.donde">De administrador: sistema, nube, dominio y repositorio. Contraseñas en la bóveda de contraseñas, no en esta acta.</span></td><td><span data-campo="entrega.recibe">Iván Torres, jue 8 abr; las cambió al recibirlas</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="entrega.elemento">Código fuente</span></td><td><span data-campo="entrega.donde">Repositorio a su nombre; versión final del 7 de abril.</span></td><td><span data-campo="entrega.recibe">Iván Torres</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="entrega.elemento">Documentación técnica</span></td><td><span data-campo="entrega.donde">Manual técnico y de conexión contable; carpeta 06-cierre.</span></td><td><span data-campo="entrega.recibe">Iván Torres</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="entrega.elemento">Manuales de operación</span></td><td><span data-campo="entrega.donde">Del usuario y guía rápida por perfil; carpeta 06-cierre.</span></td><td><span data-campo="entrega.recibe">Laura Méndez</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="entrega.elemento">Último respaldo</span></td><td><span data-campo="entrega.donde">Del 7 de abril, 23:00, en la nube; recuperado completo el 8 de abril en el ambiente de pruebas.</span></td><td><span data-campo="entrega.recibe">Iván Torres; presenció la prueba</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="entrega.elemento">Evidencias</span></td><td><span data-campo="entrega.donde">Actas de aceptación, guiones y evidencias de pruebas, en 04-hitos; solicitud de cambio CE-INV-D05-01, en 05-control; listas de asistencia, en 06-cierre.</span></td><td><span data-campo="entrega.recibe">Laura Méndez</span></td></tr>
+    </tbody>
+  </table>
+  <div class="grid2" style="margin-top:3pt;gap:12pt;">
+    <div class="caja suave" style="padding:5pt 11pt;">
+      <div class="k">Titularidad y nube</div>
+      <p class="small" style="margin:0;"><span data-campo="entrega.titularidad">Según el acta de inicio, el sistema es de ustedes: el código y la documentación de cada hito son suyos al pagarse ese hito; los del Hito 3, al pagarse su factura.</span> <span data-campo="entrega.titular_nube">La nube y el dominio están contratados a su nombre</span>; la nube la paga <span data-campo="entrega.paga_nube">Cliente Ejemplo al proveedor</span>.</p>
+    </div>
+    <div class="caja suave" style="padding:5pt 11pt;">
+      <div class="k">Bajas de accesos del despacho</div>
+      <p class="small" style="margin:0;"><span data-campo="entrega.bajas">El viernes 9 de abril, Soporte dio de baja la cuenta de pruebas en su sistema contable y los accesos de desarrollo a producción. Quedan solo las cuentas del servicio mensual.</span></p>
+    </div>
+  </div>
+
+  <h2 class="s" style="margin-top:8pt;"><span class="n">5</span>Capacitación impartida</h2>
+  <table class="compacta">
+    <thead><tr><th style="width:15%">Fecha</th><th style="width:42%">Sesión y tema</th><th style="width:27%">Asistentes</th><th>Constancia</th></tr></thead>
+    <tbody data-lista="capacitaciones">
+      <tr><td><span data-campo="capacitacion.fecha">Jue 11 feb</span></td><td><span data-campo="capacitacion.tema">Arranque del almacén 1, con el Hito 1: existencias e inventario inicial</span></td><td><span data-campo="capacitacion.asistentes">El almacenista del almacén 1, en su turno</span></td><td><span data-campo="capacitacion.constancia">Lista firmada</span></td></tr>
+      <tr><td><span data-campo="capacitacion.fecha">Lun 22 y mar 23 mar</span></td><td><span data-campo="capacitacion.tema">Arranque, una sesión por almacén: existencias, entradas, salidas y traspasos</span></td><td><span data-campo="capacitacion.asistentes">Los almacenistas de los almacenes 2 y 3, cada uno en su almacén y en su turno</span></td><td><span data-campo="capacitacion.constancia">2 listas firmadas</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="capacitacion.fecha">Jue 8 abr</span></td><td class="fuerte"><span data-campo="capacitacion.tema">Capacitación final y de supervisión: operación diaria, reportes, usuarios y permisos, avisos de mínimo y cómo pedir soporte</span></td><td><span data-campo="capacitacion.asistentes">Los 3 almacenistas y Laura Méndez</span></td><td><span data-campo="capacitacion.constancia">Lista de asistencia firmada</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="s" style="margin-top:8pt;"><span class="n">6</span>Pendientes y garantía</h2>
+  <table class="compacta" style="table-layout:fixed;">
+    <thead><tr><th style="width:11%">Tipo</th><th style="width:56%">Pendiente</th><th style="width:19%">Responsable</th><th>Fecha</th></tr></thead>
+    <tbody data-lista="pendientes">
+      <tr><td><span class="chip ok"><span data-campo="pendiente.tipo">Ninguno</span></span></td><td><span data-campo="pendiente.texto">El defecto del Hito 1 (lista de ubicaciones ordenada por pasillo) quedó corregido.</span></td><td><span data-campo="pendiente.responsable">Sistemas a la medida</span></td><td><span data-campo="pendiente.fecha">Vie 26 feb</span></td></tr>
+    </tbody>
+  </table>
+  <table class="compacta" style="margin-top:3pt;">
+    <thead><tr><th style="width:58%">Hito</th><th style="width:15%">Aceptado</th><th>Garantía hasta</th></tr></thead>
+    <tbody data-lista="garantias">
+      <tr><td class="fuerte"><span data-campo="hito.numero">Hito 1</span> · <span data-campo="hito.nombre">Prueba piloto en un almacén</span></td><td><span data-campo="garantia.aceptado">Jue 18 feb</span></td><td class="fuerte"><span data-campo="garantia.fin">Lunes 19 de abril de 2027</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="hito.numero">Hito 2</span> · <span data-campo="hito.nombre">Entradas, salidas y conexión con su sistema contable</span></td><td><span data-campo="garantia.aceptado">Jue 11 mar</span></td><td class="fuerte"><span data-campo="garantia.fin">Lunes 10 de mayo de 2027</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="hito.numero">Hito 3</span> · <span data-campo="hito.nombre">Uso completo en los tres almacenes</span></td><td><span data-campo="garantia.aceptado">Mié 7 abr</span></td><td class="fuerte"><span data-campo="garantia.fin">Domingo 6 de junio de 2027</span></td></tr>
+    </tbody>
+  </table>
+  <p class="small muted" style="margin-top:4pt;margin-bottom:0;">Garantía de <span data-campo="regla.dias_garantia">60</span> días naturales desde la aceptación de cada hito, según el acta de inicio. Los defectos en garantía se corrigen sin costo, se reportan por el canal de soporte de la sección 7 y no consumen la bolsa de horas del mes.</p>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D08-acta-de-cierre-v1</span></span><span>2 / 3</span></div>
+</section>
+
+<!-- ============================== HOJA 3 ============================== -->
+<section class="page">
+  <div class="hdr"><span>D08 · Acta de cierre</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <h2 class="s"><span class="n">7</span>Arranque de la mensualidad</h2>
+  <div class="kv" style="grid-template-columns:1.2in 1fr;gap:3pt 10pt;margin-bottom:6pt;">
+    <div class="k">Arranca</div><div><b>El <span data-campo="mensualidad.fecha_arranque">jueves 8 de abril de 2027</span>, al terminar la capacitación final</b></div>
+    <div class="k">Monto</div><div><b><span data-campo="mensualidad.monto">$12,000</span> más IVA al mes</b>; se actualiza cada año con el INPC</div>
+    <div class="k">Primera factura</div><div>Del <span data-campo="mensualidad.primer_periodo">8 de abril al 7 de mayo de 2027</span>; se emite el <span data-campo="mensualidad.fecha_primera_factura">jueves 8 de abril</span></div>
+    <div class="k">Orden de compra</div><div><span data-campo="mensualidad.orden_compra">OC-2027-0061, por 12 mensualidades; recibida el martes 6 de abril</span></div>
+    <div class="k">Vigencia</div><div><span data-campo="mensualidad.vigencia">12 meses, del 8 de abril de 2027 al 7 de abril de 2028</span></div>
+    <div class="k">Primera revisión</div><div><span data-campo="mensualidad.primera_revision">Jueves 6 de mayo de 2027, 10:00, con Laura Méndez</span></div>
+  </div>
+  <div class="caja" style="padding:7pt 12pt;">
+    <p style="margin-bottom:5pt;">El servicio mensual corre desde el <span data-campo="mensualidad.fecha_arranque">jueves 8 de abril de 2027</span>, día de la capacitación final, por <span data-campo="mensualidad.monto_texto">12,000</span> pesos más IVA al mes. Incluye monitoreo con aviso si el sistema se detiene, respaldos diarios con prueba de recuperación <span data-campo="mensualidad.frecuencia_prueba_respaldo">cada bimestre</span>, actualizaciones de seguridad y revisión mensual de accesos.</p>
+    <p style="margin-bottom:5pt;">Las fallas urgentes se atienden las 24 horas, con respuesta en <span data-campo="mensualidad.respuesta_urgente_habil">1 hora</span> en horario hábil y en <span data-campo="mensualidad.respuesta_urgente_inhabil">2</span> fuera de él; lo demás, en días hábiles, con respuesta en <span data-campo="mensualidad.respuesta_normal">1 día hábil</span>. Todo se pide por <span data-campo="mensualidad.canal">el correo soporte@sistemasalamedida.mx; las fallas urgentes, además, por el teléfono de guardia 55&nbsp;5550&nbsp;0112</span>. Incluye una bolsa de <span data-campo="mensualidad.bolsa_horas">8</span> horas al mes para ajustes y mejoras, y una revisión mensual de <span data-campo="mensualidad.duracion_revision">1 hora</span> con su responsable del proyecto.</p>
+    <p style="margin:0;">Las horas no usadas <span data-campo="mensualidad.horas_no_usadas">no se acumulan al mes siguiente</span>. El monto se actualiza cada año con la inflación (INPC). Hasta el <span data-campo="proyecto.fin_acompanamiento_texto">9 de abril</span>, las dudas y los defectos del proyecto se atienden en el acompañamiento.</p>
+  </div>
+  <h3 style="margin-top:7pt;">Qué cubre cada uno mientras coinciden, del <span data-campo="mensualidad.fecha_arranque_corta">jueves 8</span> al <span data-campo="proyecto.fin_acompanamiento_corta">viernes 9 de abril</span></h3>
+  <table class="compacta" style="margin-top:3pt;">
+    <thead><tr><th style="width:22%">Asunto</th><th style="width:27%">Acompañamiento</th><th>Mensualidad</th></tr></thead>
+    <tbody data-lista="cobertura">
+      <tr><td class="fuerte"><span data-campo="cobertura.asunto">Dudas de uso</span></td><td><span data-campo="cobertura.acompanamiento">Sí, en cada almacén</span></td><td><span data-campo="cobertura.mensualidad">Al terminar el acompañamiento, por el canal único</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="cobertura.asunto">Defectos del proyecto</span></td><td><span data-campo="cobertura.acompanamiento">Sí, sin costo</span></td><td><span data-campo="cobertura.mensualidad">No: después van en la garantía de la sección 6</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="cobertura.asunto">Fallas urgentes</span></td><td><span data-campo="cobertura.acompanamiento">No</span></td><td><span data-campo="cobertura.mensualidad">Sí, las 24 horas, por el teléfono de guardia</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="cobertura.asunto">Ajustes y mejoras</span></td><td><span data-campo="cobertura.acompanamiento">No</span></td><td><span data-campo="cobertura.mensualidad">Sí, con la bolsa de <span data-campo="mensualidad.bolsa_horas">8</span> horas del mes</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="s" style="margin-top:12pt;"><span class="n">8</span>Declaración de cierre y firmas</h2>
+  <div class="garantia" style="padding:6pt 11pt;">
+    <p style="margin-bottom:5pt;">Las dos partes declaran terminado el proyecto <span data-campo="proyecto.clave">CE-INV</span>. <span data-campo="cliente.nombre">Cliente Ejemplo, S.A. de C.V.</span> recibió los entregables, los accesos y la documentación que lista esta acta. Los defectos en garantía se corrigen sin costo hasta las fechas de la sección 6 y no consumen la bolsa de horas del mes.</p>
+    <p style="margin:0;">Los pendientes de esa sección se atienden en sus fechas. Cualquier otra petición posterior a esta fecha se atiende en el servicio mensual o se cotiza como proyecto nuevo.</p>
+  </div>
+  <p class="small muted" style="margin-top:5pt;margin-bottom:0;">Se firma de forma autógrafa, electrónica o por correo corporativo con esta acta en PDF. Copia a <span data-campo="cliente.decide.nombre">Ricardo Solís</span>, <span data-campo="cliente.decide.puesto_minusculas">director general</span>, quien decide y paga.</p>
+  <div class="firmas" style="margin-top:6pt;">
+    <div class="firma">
+      <div class="linea"></div>
+      <div class="n"><span data-campo="cliente.responsable.nombre">Laura Méndez</span></div>
+      <div class="r"><span data-campo="cliente.responsable.puesto">Gerente de operaciones</span> · <span data-campo="cliente.nombre">Cliente Ejemplo, S.A. de C.V.</span><br>Responsable del proyecto · Recibe<br>Fecha: <span class="campo-mano"></span></div>
+    </div>
+    <div class="firma">
+      <div class="linea"></div>
+      <div class="n"><span data-campo="despacho.lider.nombre">Santiago</span></div>
+      <div class="r"><span data-campo="despacho.lider.puesto">Socio</span> · <span data-campo="despacho.nombre">Sistemas a la medida</span><br>Líder de proyecto · Entrega<br>Fecha: <span class="campo-mano"></span></div>
+    </div>
+  </div>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D08-acta-de-cierre-v1</span></span><span>3 / 3</span></div>
+</section>
+
+</body>
+</html>

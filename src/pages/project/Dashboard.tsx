@@ -74,11 +74,11 @@ export function Dashboard() {
         </div>
       </section>
 
-      <section className="grid gap-6 lg:grid-cols-2">
+      <section className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <div>
           <SectionTitle>Presupuesto interno (D11)</SectionTitle>
           <p className="mb-3 text-xs italic text-muted">Documento interno. No se envía al cliente.</p>
-          <Card className="overflow-hidden">
+          <Card className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead className="bg-surface text-left text-[11px] font-bold uppercase tracking-wider text-muted">
                 <tr>

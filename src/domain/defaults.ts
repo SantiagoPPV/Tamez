@@ -46,14 +46,24 @@ export const DEFAULT_PARAMS: Params = {
   daysPerWeek: 7,
   efficiencyUpper: 1.1,
   pauseAfterOverdueDays: 10,
+  monthlyFee: null,
+  serviceStart: null,
+  monthlyPoolHours: 8,
+  unusedHoursRule: 'no se acumulan al mes siguiente',
+  urgentResponseHours: 1,
+  urgentResponseOffHours: 2,
+  urgentSolutionHours: 8,
+  normalResponseDays: 1,
+  normalSolutionDays: 5,
+  expectedMargin: null,
 }
 
 /** Etiquetas y unidades de cada parámetro, para la pantalla de parámetros. */
 export const PARAM_FIELDS: {
   key: keyof Params
   label: string
-  unit: 'pesos' | 'pct' | 'days' | 'hours' | 'index' | 'int' | 'text'
-  group: 'Proyecto' | 'Plazos y topes' | 'Umbrales del semáforo'
+  unit: 'pesos' | 'pct' | 'days' | 'hours' | 'index' | 'int' | 'text' | 'date'
+  group: 'Proyecto' | 'Plazos y topes' | 'Umbrales del semáforo' | 'Servicio mensual'
 }[] = [
   { key: 'price', label: 'Precio sin IVA', unit: 'pesos', group: 'Proyecto' },
   { key: 'initialPayment', label: 'Pago inicial sin IVA', unit: 'pesos', group: 'Proyecto' },
@@ -95,4 +105,14 @@ export const PARAM_FIELDS: {
   { key: 'satisfactionYellow', label: '9. Satisfacción: amarillo debajo de', unit: 'int', group: 'Umbrales del semáforo' },
   { key: 'satisfactionRed', label: '9. Satisfacción: rojo debajo de', unit: 'int', group: 'Umbrales del semáforo' },
   { key: 'collectRedDays', label: '10. Días para cobrar: rojo con días hábiles de atraso desde', unit: 'days', group: 'Umbrales del semáforo' },
+  { key: 'expectedMargin', label: 'Margen esperado con que se cotizó', unit: 'pct', group: 'Proyecto' },
+  { key: 'monthlyFee', label: 'Mensualidad sin IVA', unit: 'pesos', group: 'Servicio mensual' },
+  { key: 'serviceStart', label: 'Arranque de la mensualidad', unit: 'date', group: 'Servicio mensual' },
+  { key: 'monthlyPoolHours', label: 'Bolsa de horas del mes', unit: 'hours', group: 'Servicio mensual' },
+  { key: 'unusedHoursRule', label: 'Horas no usadas', unit: 'text', group: 'Servicio mensual' },
+  { key: 'urgentResponseHours', label: 'Urgente: primera respuesta en horario hábil (horas)', unit: 'hours', group: 'Servicio mensual' },
+  { key: 'urgentResponseOffHours', label: 'Urgente: primera respuesta fuera de horario (horas)', unit: 'hours', group: 'Servicio mensual' },
+  { key: 'urgentSolutionHours', label: 'Urgente: solución o forma temporal de operar (horas)', unit: 'hours', group: 'Servicio mensual' },
+  { key: 'normalResponseDays', label: 'Normal: primera respuesta (días hábiles)', unit: 'days', group: 'Servicio mensual' },
+  { key: 'normalSolutionDays', label: 'Normal: solución (días hábiles)', unit: 'days', group: 'Servicio mensual' },
 ]

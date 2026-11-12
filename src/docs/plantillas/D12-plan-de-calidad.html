@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>D12 · Plan de calidad · Ejemplo</title>
+<link rel="stylesheet" href="base.css">
+</head>
+<body>
+<!-- Extensión: el plan en 2 hojas, más el anexo de listas L1 a L7 como documento aparte (2 hojas) al final del archivo. La sección 1 «Encabezado» es el .doc-head y no lleva número visible, como en D06. -->
+
+<section class="page">
+  <div class="hdr"><span>D12 · Plan de calidad</span><span>Uso interno · Ejemplo</span></div>
+
+  <!-- Encabezado (sección 1 de la especificación; no lleva número visible) -->
+  <div class="doc-head" style="margin-bottom:4pt;">
+    <div class="eyebrow">D12 · Plan de calidad</div>
+    <h1><span data-campo="proyecto.nombre">Control de inventario en almacenes</span></h1>
+    <p class="sub" style="margin-bottom:4pt;">Qué se revisa en cada entregable, quién revisa, con qué lista y cuándo prueba el cliente.</p>
+    <div class="meta" style="grid-template-columns:auto auto auto auto;justify-content:space-between;gap:9pt 6pt;padding:7pt 0;">
+      <div><div class="k">Cliente</div><div class="v"><span data-campo="cliente.nombre">Cliente Ejemplo, S.A. de C.V.</span></div></div>
+      <div><div class="k">Clave y versión</div><div class="v"><span data-campo="proyecto.clave">CE-INV</span> · <span data-campo="documento.version">v1</span></div></div>
+      <div><div class="k">Fecha</div><div class="v"><span data-campo="documento.fecha">Viernes 22 de enero de 2027</span></div></div>
+      <div><div class="k">Construye / revisa</div><div class="v"><span data-campo="calidad.construye">Santiago</span> / <span data-campo="calidad.revisa">Socio operativo</span></div></div>
+    </div>
+  </div>
+
+  <h2 class="s" style="margin-top:5pt;"><span class="n">1</span>Listo para construir</h2>
+  <div class="grid3" style="grid-template-columns:repeat(3,minmax(0,1fr));gap:9pt;" data-lista="listo">
+    <div class="hito">
+      <div class="h"><span data-campo="hito.numero">Hito 1</span> · <span data-campo="hito.nombre">Prueba piloto en un almacén</span></div>
+      <div class="t" style="white-space:nowrap;margin:2pt 0 3pt;">A más tardar el <span data-campo="listo.fecha">lun 25 ene 2027</span></div>
+      <ul class="check" style="padding-left:0;margin-bottom:0;"><li style="margin-bottom:2.5pt;">Especificación confirmada</li><li style="margin-bottom:2.5pt;"><span data-campo="listo.criterios">16</span> criterios escritos</li><li style="margin-bottom:2.5pt;">Datos: <span data-campo="listo.datos">catálogo ficticio</span></li><li style="margin-bottom:2.5pt;">Accesos: <span data-campo="listo.accesos">ambiente de pruebas</span></li></ul>
+    </div>
+    <div class="hito">
+      <div class="h"><span data-campo="hito.numero">Hito 2</span> · <span data-campo="hito.nombre">Entradas, salidas y conexión con su sistema contable</span></div>
+      <div class="t" style="white-space:nowrap;margin:2pt 0 3pt;">A más tardar el <span data-campo="listo.fecha">jue 11 feb 2027</span></div>
+      <ul class="check" style="padding-left:0;margin-bottom:0;"><li style="margin-bottom:2.5pt;">Especificación confirmada</li><li style="margin-bottom:2.5pt;">Criterios escritos</li><li style="margin-bottom:2.5pt;">Datos: <span data-campo="listo.datos">movimientos ficticios</span></li><li style="margin-bottom:2.5pt;">Accesos: <span data-campo="listo.accesos">pruebas del sistema contable</span></li></ul>
+    </div>
+    <div class="hito">
+      <div class="h"><span data-campo="hito.numero">Hito 3</span> · <span data-campo="hito.nombre">Uso completo en los tres almacenes</span></div>
+      <div class="t" style="white-space:nowrap;margin:2pt 0 3pt;">A más tardar el <span data-campo="listo.fecha">jue 4 mar 2027</span></div>
+      <ul class="check" style="padding-left:0;margin-bottom:0;"><li style="margin-bottom:2.5pt;">Especificación confirmada</li><li style="margin-bottom:2.5pt;">Criterios escritos</li><li style="margin-bottom:2.5pt;">Datos: <span data-campo="listo.datos">catálogos ficticios</span></li><li style="margin-bottom:2.5pt;">Accesos: <span data-campo="listo.accesos">usuarios de prueba</span></li></ul>
+    </div>
+  </div>
+
+  <h2 class="s" style="margin-top:5pt;"><span class="n">2</span>Matriz por entregable</h2>
+  <table class="compacta" style="table-layout:fixed;">
+    <thead><tr><th style="width:18.6%">Entregable</th><th style="width:9.1%">Listas</th><th style="width:10.9%">Construye</th><th style="width:8.8%">Revisa</th><th style="width:29.3%">Cómo prueba el cliente</th><th style="width:23.3%">Evidencia</th></tr></thead>
+    <tbody data-lista="matriz">
+      <tr><td class="fuerte"><span data-campo="entregable.nombre">Hito 1: existencias del almacén piloto</span></td><td style="white-space:nowrap;"><span data-campo="entregable.listas">L1; L3; L6</span></td><td><span data-campo="entregable.construye">Santiago</span></td><td><span data-campo="entregable.revisa">Socio operativo</span></td><td><span data-campo="entregable.prueba_cliente">Los tres almacenistas siguen el guion en el ambiente de pruebas, en celular y computadora.</span></td><td><span data-campo="entregable.evidencia">Listas cumplidas; guion con resultados; nota de versión.</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="entregable.nombre">Hito 1: carga inicial del inventario</span></td><td style="white-space:nowrap;"><span data-campo="entregable.listas">L5</span></td><td><span data-campo="entregable.construye">Santiago</span></td><td><span data-campo="entregable.revisa">Socio operativo</span></td><td><span data-campo="entregable.prueba_cliente">Laura Méndez valida una muestra contra el conteo físico, en el ambiente de pruebas.</span></td><td><span data-campo="entregable.evidencia">Conteos de antes y después; lista de errores.</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="entregable.nombre">Hito 2: conexión con el sistema contable</span></td><td style="white-space:nowrap;"><span data-campo="entregable.listas">L2; L6</span></td><td><span data-campo="entregable.construye">Santiago</span></td><td><span data-campo="entregable.revisa">Socio operativo</span></td><td><span data-campo="entregable.prueba_cliente">Iván Torres confirma en su sistema los movimientos enviados desde el ambiente de pruebas.</span></td><td><span data-campo="entregable.evidencia">Registro de intercambios; prueba con el otro sistema detenido.</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="entregable.nombre">Hito 3: reporte de existencias de los tres almacenes</span></td><td style="white-space:nowrap;"><span data-campo="entregable.listas">L4; L6</span></td><td><span data-campo="entregable.construye">Santiago</span></td><td><span data-campo="entregable.revisa">Socio operativo</span></td><td><span data-campo="entregable.prueba_cliente">Laura Méndez coteja las cifras contra un conteo, en el ambiente de pruebas.</span></td><td><span data-campo="entregable.evidencia">Fórmula documentada; cotejo contra la fuente.</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="entregable.nombre">Hito 3: capacitación y manual</span></td><td style="white-space:nowrap;"><span data-campo="entregable.listas">L7</span></td><td><span data-campo="entregable.construye">Socio operativo</span></td><td><span data-campo="entregable.revisa">Santiago</span></td><td><span data-campo="entregable.prueba_cliente">Los almacenistas resuelven un caso durante la sesión.</span></td><td><span data-campo="entregable.evidencia">Lista de asistencia; manual entregado.</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="s" style="margin-top:5pt;"><span class="n">3</span>Guiones de pruebas del cliente y aviso de entrega</h2>
+  <table class="compacta" style="table-layout:fixed;">
+    <thead><tr><th style="width:5.8%">Hito</th><th style="width:14%">Escribe</th><th style="width:30.8%">Quién prueba</th><th style="width:15.2%">Entrega</th><th style="width:10.3%">Pruebas</th><th style="width:12.9%">Aviso a</th><th style="width:11%">Copia a</th></tr></thead>
+    <tbody data-lista="guiones">
+      <tr><td class="fuerte" style="white-space:nowrap;"><span data-campo="hito.numero">Hito 1</span></td><td style="white-space:nowrap;"><span data-campo="guion.escribe">Socio operativo</span></td><td><span data-campo="guion.prueban">Los tres almacenistas</span></td><td style="white-space:nowrap;"><span data-campo="guion.entrega">vie 12 feb 2027</span></td><td style="white-space:nowrap;"><span data-campo="guion.semana">Semana 6</span></td><td style="white-space:nowrap;"><span data-campo="guion.aviso_para">Laura Méndez</span></td><td style="white-space:nowrap;"><span data-campo="guion.aviso_copia">Ricardo Solís</span></td></tr>
+      <tr><td class="fuerte" style="white-space:nowrap;"><span data-campo="hito.numero">Hito 2</span></td><td style="white-space:nowrap;"><span data-campo="guion.escribe">Socio operativo</span></td><td><span data-campo="guion.prueban">Laura Méndez, con los tres almacenistas</span></td><td style="white-space:nowrap;"><span data-campo="guion.entrega">vie 5 mar 2027</span></td><td style="white-space:nowrap;"><span data-campo="guion.semana">Semana 9</span></td><td style="white-space:nowrap;"><span data-campo="guion.aviso_para">Laura Méndez</span></td><td style="white-space:nowrap;"><span data-campo="guion.aviso_copia">Ricardo Solís</span></td></tr>
+      <tr><td class="fuerte" style="white-space:nowrap;"><span data-campo="hito.numero">Hito 3</span></td><td style="white-space:nowrap;"><span data-campo="guion.escribe">Socio operativo</span></td><td><span data-campo="guion.prueban">Laura Méndez, con los tres almacenistas</span></td><td style="white-space:nowrap;"><span data-campo="guion.entrega">mié 24 mar 2027</span></td><td style="white-space:nowrap;"><span data-campo="guion.semana">Semana 12</span></td><td style="white-space:nowrap;"><span data-campo="guion.aviso_para">Laura Méndez</span></td><td style="white-space:nowrap;"><span data-campo="guion.aviso_copia">Ricardo Solís</span></td></tr>
+    </tbody>
+  </table>
+  <p class="small" style="margin:3pt 0 0;">El aviso de entrega usa el texto modelo de D07. Va por correo al responsable del cliente, con copia a quien decide y paga.</p>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D12-plan-de-calidad-v1</span></span><span>1 / 2</span></div>
+</section>
+
+<section class="page">
+  <div class="hdr"><span>D12 · Plan de calidad</span><span>Uso interno · Ejemplo</span></div>
+
+  <h2 class="s"><span class="n">4</span>Reglas fijas<span class="small muted" style="font-weight:400;margin-left:8pt;">Son las mismas en todos los proyectos del despacho.</span></h2>
+  <div class="clausulas">
+    <div class="k" style="margin:0 0 3pt;">Por construir con inteligencia artificial</div>
+    <div class="clausula">Una persona revisa cada cambio, lo haya escrito alguien del equipo o una herramienta de inteligencia artificial.</div>
+    <div class="clausula">Nadie aprueba su propio trabajo, tampoco en urgencias: otra persona revisa antes de liberar, aunque sea por llamada.</div>
+    <div class="clausula">Las pruebas automáticas corren antes de cada liberación; si una falla, no se libera.</div>
+    <div class="clausula">En cada hito se revisan permisos y accesos.</div>
+    <div class="k" style="margin:6pt 0 3pt;">De datos</div>
+    <div class="clausula">Se desarrolla con datos ficticios. Los datos reales del cliente solo viven en los ambientes acordados.</div>
+    <div class="clausula">Los datos reales no se procesan con herramientas de inteligencia artificial sin autorización escrita del cliente.</div>
+  </div>
+
+  <div class="grid2" style="grid-template-columns:1fr 1fr;gap:18pt;margin-top:2pt;">
+    <div>
+      <h3 style="margin-top:0;">Herramientas de inteligencia artificial autorizadas</h3>
+      <p class="small muted" style="margin-bottom:3pt;">Con la cuenta de empresa del despacho.</p>
+      <ul class="clean" data-lista="herramientas_ia">
+        <li><b><span data-campo="herramienta.nombre">Asistente de programación</span>:</b> <span data-campo="herramienta.uso">código y pruebas automáticas, solo con datos ficticios.</span></li>
+        <li><b><span data-campo="herramienta.nombre">Asistente de redacción</span>:</b> <span data-campo="herramienta.uso">documentos, guiones y manuales, sin datos reales, contraseñas ni llaves.</span></li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="margin-top:0;">Reglas firmadas por cada integrante</h3>
+      <p class="small muted" style="margin-bottom:0;">Cada integrante firma que leyó y acepta las 6 reglas.</p>
+      <div class="grid2" style="gap:14pt;" data-lista="firmas_reglas">
+        <div class="firma"><div class="linea" style="height:24pt;"></div><div class="n"><span data-campo="integrante.nombre">Santiago</span></div><div class="r"><span data-campo="integrante.papel">Líder de proyecto</span><br>Fecha: <span class="campo-mano" style="min-width:0.75in;"></span></div></div>
+        <div class="firma"><div class="linea" style="height:24pt;"></div><div class="n"><span data-campo="integrante.nombre">Socio operativo</span></div><div class="r"><span data-campo="integrante.papel">Revisión de calidad</span><br>Fecha: <span class="campo-mano" style="min-width:0.75in;"></span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="s"><span class="n">5</span>Revisiones de permisos y accesos</h2>
+  <table class="compacta">
+    <thead><tr><th style="width:23%">Momento</th><th style="width:44%">Qué se revisa</th><th>Evidencia</th></tr></thead>
+    <tbody data-lista="revisiones">
+      <tr><td class="fuerte"><span data-campo="revision.momento">Antes de liberar el Hito 1</span> <span class="muted" style="font-weight:400;">(<span data-campo="revision.semana">semana 5</span>)</span></td><td><span data-campo="revision.que">Usuarios y permisos del piloto; cuentas de prueba eliminadas.</span></td><td><span data-campo="revision.evidencia">Lista de usuarios con fecha y nombre de quien revisó.</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="revision.momento">Antes de liberar el Hito 2</span> <span class="muted" style="font-weight:400;">(<span data-campo="revision.semana">semana 8</span>)</span></td><td><span data-campo="revision.que">Usuarios y permisos del piloto, de nuevo; las contraseñas y llaves de la conexión contable no están escritas en el código ni en documentos.</span></td><td><span data-campo="revision.evidencia">Lista de usuarios y de llaves, con fecha y nombre de quien revisó.</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="revision.momento">Antes de liberar el Hito 3</span> <span class="muted" style="font-weight:400;">(<span data-campo="revision.semana">semana 11</span>)</span></td><td><span data-campo="revision.que">Usuarios de los tres almacenes; cada usuario ve solo lo que su perfil permite.</span></td><td><span data-campo="revision.evidencia">Una prueba por cada perfil de usuario, con captura.</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="revision.momento">Cierre</span> <span class="muted" style="font-weight:400;">(<span data-campo="revision.semana">semana 13</span>)</span></td><td><span data-campo="revision.que">Baja de nuestros accesos que ya no hacen falta; entrega de accesos al cliente.</span></td><td><span data-campo="revision.evidencia">Relación de accesos en el paquete de entrega.</span></td></tr>
+    </tbody>
+  </table>
+  <p class="small" style="margin:6pt 0 0;">Las hace <span data-campo="revision.responsable">el socio operativo</span>, que lleva el sombrero de revisión de calidad, con los criterios de arquitectura. El resultado y la evidencia se anotan en la bitácora de trabajo; un hallazgo, además, en la de riesgos e incidentes.</p>
+
+  <h2 class="s"><span class="n">6</span>Anexo: listas por tipo de actividad</h2>
+  <p class="small" style="margin:0;line-height:1.45;" data-lista="listas"><span style="white-space:nowrap;"><b><span data-campo="lista.clave">L1</span></b> <span data-campo="lista.nombre">Pantalla o módulo</span> · <span data-campo="lista.version">v1</span></span>;
+    <span style="white-space:nowrap;"><b><span data-campo="lista.clave">L2</span></b> <span data-campo="lista.nombre">Conexión con otro sistema</span> · <span data-campo="lista.version">v1</span></span>;
+    <span style="white-space:nowrap;"><b><span data-campo="lista.clave">L3</span></b> <span data-campo="lista.nombre">Base de datos</span> · <span data-campo="lista.version">v1</span></span>;
+    <span style="white-space:nowrap;"><b><span data-campo="lista.clave">L4</span></b> <span data-campo="lista.nombre">Reporte o indicador</span> · <span data-campo="lista.version">v1</span></span>;
+    <span style="white-space:nowrap;"><b><span data-campo="lista.clave">L5</span></b> <span data-campo="lista.nombre">Carga de datos</span> · <span data-campo="lista.version">v1</span></span>;
+    <span style="white-space:nowrap;"><b><span data-campo="lista.clave">L6</span></b> <span data-campo="lista.nombre">Liberación a producción</span> · <span data-campo="lista.version">v1</span></span>;
+    <span style="white-space:nowrap;"><b><span data-campo="lista.clave">L7</span></b> <span data-campo="lista.nombre">Documento o capacitación</span> · <span data-campo="lista.version">v1</span></span>. <span class="muted">Clave y versión vigente; las listas viven en la pestaña «Listas de calidad» y se reproducen en el anexo.</span></p>
+
+  <div class="k" style="margin:9pt 0 0;">Aprobación del plan</div>
+  <div class="firmas" style="margin-top:0;" data-lista="aprobacion">
+    <div class="firma"><div class="linea" style="height:22pt;"></div><div class="n"><span data-campo="aprobacion.nombre">Santiago</span></div><div class="r"><span data-campo="aprobacion.papel">Aprueba en la puerta 3 · viernes 22 de enero de 2027</span><br>Fecha: <span class="campo-mano"></span></div></div>
+    <div class="firma"><div class="linea" style="height:22pt;"></div><div class="n"><span data-campo="aprobacion.nombre">Socio operativo</span></div><div class="r"><span data-campo="aprobacion.papel">Verificó que nadie revise lo suyo</span><br>Fecha: <span class="campo-mano"></span></div></div>
+  </div>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D12-plan-de-calidad-v1</span></span><span>2 / 2</span></div>
+</section>
+
+<!-- Documento aparte: listas por tipo de actividad (L1 a L7), tal como están en «Listas de calidad». Lleva su propio pie y su propia cuenta de hojas. -->
+<section class="page">
+  <div class="hdr"><span>D12 · Plan de calidad</span><span>Uso interno · Ejemplo</span></div>
+
+  <div class="eyebrow">Anexo del plan de calidad · documento aparte</div>
+  <h2 class="s" style="margin-top:0;font-size:15pt;"><span>Listas por tipo de actividad</span></h2>
+  <p class="sub" style="margin:2pt 0 0;"><span data-campo="proyecto.nombre">Control de inventario en almacenes</span> (<span data-campo="proyecto.clave">CE-INV</span>) · anexo de <span data-campo="documento.archivo">CE-INV-D12-plan-de-calidad-v1</span></p>
+  <div class="nota" style="margin:8pt 0 4pt;">Quien construyó palomea su lista al terminar la actividad. Los usuarios de prueba se usan fuera de producción. Las casillas con <b>(E)</b> exigen evidencia propia.</div>
+
+  <div class="grid2" style="gap:20pt;">
+    <div data-lista="listas_detalle">
+      <h3><span data-campo="lista.clave">L1</span> · <span data-campo="lista.nombre">Pantalla o módulo</span> <span class="small muted" style="margin-left:4pt;font-weight:600;"><span data-campo="lista.version">v1</span></span></h3>
+      <ul class="check">
+        <li>Cada criterio de aceptación de D04 que toca la pantalla se probó y pasó.</li>
+        <li>Se recorrió en celular, a 375 píxeles de ancho <span class="muted">(valor inicial)</span>, y en computadora, sin cortes ni desplazamiento lateral.</li>
+        <li>Con un usuario de prueba de cada rol, cada uno ve y hace solo lo que D04 permite. <b>(E)</b></li>
+        <li>Un usuario sin permiso no entra aunque escriba la dirección de la pantalla en el navegador.</li>
+        <li>Un campo obligatorio vacío muestra un mensaje claro y no guarda el registro.</li>
+        <li>Se provocó un error, como guardar sin conexión, y el aviso salió en español, sin códigos.</li>
+        <li>Se probó con datos ficticios realistas: el volumen de un mes de operación <span class="muted">(valor inicial)</span>. <b>(E)</b></li>
+      </ul>
+
+      <h3 style="margin-top:12pt;"><span data-campo="lista.clave">L2</span> · <span data-campo="lista.nombre">Conexión con otro sistema</span> <span class="small muted" style="margin-left:4pt;font-weight:600;"><span data-campo="lista.version">v1</span></span></h3>
+      <ul class="check">
+        <li>Se probó contra el sistema real del cliente, no contra una simulación. <b>(E)</b></li>
+        <li>Los registros de prueba se acordaron por escrito con el contacto de sistemas y se borraron al terminar.</li>
+        <li>Cada intercambio queda registrado: fecha, hora, qué se envió, qué se recibió y resultado. <b>(E)</b></li>
+        <li>Está escrito qué pasa si el otro sistema falla: reintentos y a quién se avisa.</li>
+        <li>Se simuló esa falla sin tocar el sistema del cliente, y ocurrió lo escrito.</li>
+        <li>Enviar dos veces el mismo dato no lo duplica del otro lado.</li>
+        <li>El contacto de sistemas recibió la evidencia; confirmó por escrito o pasaron 3 días hábiles <span class="muted">(valor inicial)</span> sin objeción.</li>
+      </ul>
+    </div>
+    <div data-lista="listas_detalle">
+      <h3><span data-campo="lista.clave">L3</span> · <span data-campo="lista.nombre">Base de datos</span> <span class="small muted" style="margin-left:4pt;font-weight:600;"><span data-campo="lista.version">v1</span></span></h3>
+      <ul class="check">
+        <li>El cambio está guardado como archivo, con fecha y nombre, en el repositorio de código.</li>
+        <li>El archivo se aplicó sin errores en desarrollo y en el ambiente de pruebas.</li>
+        <li>Cada tabla nueva tiene permisos por usuario; sin sesión iniciada no se lee nada. <b>(E)</b></li>
+        <li>Hay respaldo de producción previo al cambio, con fecha y hora anotadas. <b>(E)</b></li>
+        <li>Está escrita la forma de deshacer el cambio.</li>
+        <li>Lo aplicado en producción coincide con los archivos: nadie cambió la base a mano.</li>
+      </ul>
+
+      <h3 style="margin-top:12pt;"><span data-campo="lista.clave">L4</span> · <span data-campo="lista.nombre">Reporte o indicador</span> <span class="small muted" style="margin-left:4pt;font-weight:600;"><span data-campo="lista.version">v1</span></span></h3>
+      <ul class="check">
+        <li>Las cifras cuadran contra la fuente en tres fechas o filtros distintos <span class="muted">(valor inicial)</span>.</li>
+        <li>La comparación está guardada: cifra del reporte, cifra de la fuente y diferencia. <b>(E)</b></li>
+        <li>La fórmula de cada cifra está escrita en palabras del cliente.</li>
+        <li>Cada filtro se probó con un resultado conocido; en <span data-campo="proyecto.clave">CE-INV</span>, <span data-campo="lista.filtros">fecha, almacén y producto</span>.</li>
+        <li>Sin datos, el reporte muestra ceros o un aviso, no un error.</li>
+        <li>Exporta en el formato pedido, con las mismas cifras que la pantalla.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="anexo.archivo">CE-INV-D12-anexo-listas-de-calidad-v1</span></span><span>Anexo · 1 / 2</span></div>
+</section>
+
+<section class="page">
+  <div class="hdr"><span>D12 · Plan de calidad</span><span>Uso interno · Ejemplo</span></div>
+
+  <div class="grid2" style="gap:20pt;">
+    <div data-lista="listas_detalle">
+      <h3 style="margin-top:0;"><span data-campo="lista.clave">L5</span> · <span data-campo="lista.nombre">Carga de datos</span> <span class="small muted" style="margin-left:4pt;font-weight:600;"><span data-campo="lista.version">v1</span></span></h3>
+      <ul class="check">
+        <li>El archivo fuente está guardado sin modificar en la carpeta acordada, y no se copió al ambiente de desarrollo.</li>
+        <li>La carga completa se ensayó en un ambiente acordado para datos reales.</li>
+        <li>El conteo de la fuente es igual a registros cargados más registros rechazados. <b>(E)</b></li>
+        <li>Las sumas de control cuadran antes y después; en <span data-campo="proyecto.clave">CE-INV</span>, <span data-campo="lista.sumas_control">existencias por almacén</span>. <b>(E)</b></li>
+        <li>Los registros rechazados están listados con su motivo, y el cliente recibió la lista.</li>
+        <li>El responsable del cliente validó por escrito una muestra de 30 registros <span class="muted">(valor inicial)</span>.</li>
+        <li>Hay respaldo previo a la carga y forma escrita de deshacerla completa.</li>
+      </ul>
+      <h3 style="margin-top:12pt;"><span data-campo="lista.clave">L7</span> · <span data-campo="lista.nombre">Documento o capacitación</span> <span class="small muted" style="margin-left:4pt;font-weight:600;"><span data-campo="lista.version">v1</span></span></h3>
+      <ul class="check">
+        <li>Usa la plantilla estándar y el nombre de archivo con clave, código y versión.</li>
+        <li>Alguien distinto a quien lo escribió lo leyó completo, y sus observaciones están atendidas.</li>
+        <li>Las capturas son de la versión vigente y no muestran datos reales ni contraseñas.</li>
+        <li>Alguien que no construyó siguió el manual paso a paso y logró el resultado.</li>
+        <li>La capacitación cubrió cada rol con sus propias tareas.</li>
+        <li>Hay constancia: correo de entrega del documento o lista de asistencia firmada. <b>(E)</b></li>
+      </ul>
+    </div>
+    <div data-lista="listas_detalle">
+      <h3 style="margin-top:0;"><span data-campo="lista.clave">L6</span> · <span data-campo="lista.nombre">Liberación a producción</span> <span class="small muted" style="margin-left:4pt;font-weight:600;"><span data-campo="lista.version">v1</span></span></h3>
+      <div class="k" style="margin:6pt 0 4pt;">Antes de liberar</div>
+      <ul class="check">
+        <li>Las pruebas automáticas pasaron sobre la misma versión que se probó en el ambiente de pruebas.</li>
+        <li>Todas las actividades incluidas tienen revisión interna aprobada.</li>
+        <li>Las pruebas del cliente de lo que se libera están cerradas.</li>
+        <li>Hay respaldo de producción del mismo día, con fecha y hora anotadas. <b>(E)</b></li>
+        <li>La forma de regresar está escrita y dice a qué versión se regresa.</li>
+        <li>Aprobó la liberación quien revisa, y no construyó lo liberado.</li>
+      </ul>
+      <div class="k" style="margin:8pt 0 4pt;">Después de liberar</div>
+      <ul class="check">
+        <li>Quien liberó entró con la cuenta de verificación del despacho y abrió las pantallas del guion, sin capturar movimientos.</li>
+        <li>La nota de versión está en la bitácora de trabajo: qué cambió, quién liberó, cuándo y con qué respaldo. <b>(E)</b></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="anexo.archivo">CE-INV-D12-anexo-listas-de-calidad-v1</span></span><span>Anexo · 2 / 2</span></div>
+</section>
+
+</body>
+</html>

@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { DemoRepository } from '../data/demoRepo'
-import { DataError, type Repository } from '../data/repository'
+import { DataError, type ProjectSummary, type Repository } from '../data/repository'
 import { getSupabase, supabaseConfigured } from '../data/supabase'
 import { SupabaseRepository } from '../data/supabaseRepo'
 
@@ -9,7 +9,10 @@ export type Session =
   | { status: 'signedOut'; error?: string }
   | { status: 'notStaff'; userId: string; email: string }
   | { status: 'noSchema'; message: string }
-  | { status: 'ready'; repo: Repository; userId: string | null; email: string | null }
+  /** Socio del despacho */
+  | { status: 'ready'; repo: Repository; userId: string | null; email: string | null; isAdmin: boolean; name: string | null }
+  /** Usuario del cliente: solo el portal de sus proyectos */
+  | { status: 'client'; repo: Repository; userId: string; email: string; projects: ProjectSummary[] }
 
 interface SessionApi {
   session: Session
@@ -43,9 +46,14 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     }
     const repo = new SupabaseRepository(db)
     try {
-      const ok = await repo.isStaff()
-      if (!ok) setSession({ status: 'notStaff', userId: user.id, email: user.email ?? '' })
-      else setSession({ status: 'ready', repo, userId: user.id, email: user.email ?? null })
+      const me = await repo.whoAmI()
+      if (me.staff) {
+        setSession({ status: 'ready', repo, userId: user.id, email: user.email ?? null, isAdmin: me.isAdmin, name: me.name })
+        return
+      }
+      const projects = await repo.portalProjects().catch(() => [])
+      if (projects.length) setSession({ status: 'client', repo, userId: user.id, email: user.email ?? '', projects })
+      else setSession({ status: 'notStaff', userId: user.id, email: user.email ?? '' })
     } catch (e) {
       if (e instanceof DataError && e.code === 'missing_schema') setSession({ status: 'noSchema', message: e.message })
       else setSession({ status: 'signedOut', error: e instanceof Error ? e.message : String(e) })
@@ -54,7 +62,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (demo) {
-      setSession({ status: 'ready', repo: new DemoRepository(), userId: null, email: null })
+      setSession({ status: 'ready', repo: new DemoRepository(), userId: null, email: null, isAdmin: true, name: null })
       return
     }
     const db = getSupabase()!
@@ -121,9 +129,16 @@ export function useSession(): SessionApi {
   return v
 }
 
-/** El repositorio de la sesión lista (las pantallas internas solo existen con sesión lista). */
+/** El repositorio de la sesión (socio o cliente). */
 export function useRepo(): Repository {
   const { session } = useSession()
-  if (session.status !== 'ready') throw new Error('Sin sesión')
+  if (session.status !== 'ready' && session.status !== 'client') throw new Error('Sin sesión')
   return session.repo
+}
+
+/** Permisos: las puertas, la tabla de horas base y los parámetros los aprueba un administrador (Santiago). */
+export function useCan() {
+  const { session } = useSession()
+  const isAdmin = session.status === 'ready' && session.isAdmin
+  return { approveGates: isAdmin, approveBaseHours: isAdmin, isStaff: session.status === 'ready' }
 }

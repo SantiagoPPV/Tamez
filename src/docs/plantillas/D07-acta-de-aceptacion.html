@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>D07 · Acta de aceptación del hito · Ejemplo</title>
+<link rel="stylesheet" href="base.css">
+</head>
+<body>
+
+<!-- ============================== HOJA 1 ============================== -->
+<section class="page">
+  <div class="hdr"><span>D07 · Acta de aceptación del hito</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <div class="doc-head">
+    <div class="eyebrow">D07 · Acta de aceptación del hito</div>
+    <h1><span data-campo="proyecto.nombre">Control de inventario en almacenes</span></h1>
+    <p class="sub">Acta con la que aceptan el <span data-campo="hito.numero">Hito 1</span>, «<span data-campo="hito.nombre">Prueba piloto en un almacén</span>», y se libera su factura.</p>
+    <div class="meta" style="grid-template-columns:2fr 0.9fr 1.9fr 0.8fr;">
+      <div><div class="k">Cliente</div><div class="v"><span data-campo="cliente.nombre">Cliente Ejemplo, S.A. de C.V.</span></div></div>
+      <div><div class="k">Clave</div><div class="v"><span data-campo="proyecto.clave">CE-INV</span></div></div>
+      <div><div class="k">Fecha del acta</div><div class="v"><span data-campo="documento.fecha">Jueves 18 de febrero de 2027</span></div></div>
+      <div><div class="k">Versión</div><div class="v"><span data-campo="documento.version">v1</span></div></div>
+    </div>
+  </div>
+
+  <h2 class="s"><span class="n">1</span>Datos del hito</h2>
+  <div class="kv" style="grid-template-columns:1.3in 1fr;gap:4pt 10pt;">
+    <div class="k">Hito</div><div><b><span data-campo="hito.numero">Hito 1</span> · <span data-campo="hito.nombre">Prueba piloto en un almacén</span></b></div>
+    <div class="k">Especificación</div><div><span data-campo="hito.especificacion">CE-INV-D04-especificacion-hito-1-v1</span>, confirmada el <span data-campo="hito.fecha_especificacion">25 de enero de 2027</span></div>
+    <div class="k">Archivo</div><div><span data-campo="documento.archivo_pdf">CE-INV-D07-acta-de-aceptacion-hito-1-v1.pdf</span></div>
+    <div class="k">Avisos</div><div>Entrega, <span data-campo="aviso.entrega.fecha">vie 12 feb</span>; correcciones, <span data-campo="aviso.correcciones.fecha">mié 17 feb</span>; los dos correos están en la bitácora.</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:9pt;margin-top:10pt;">
+    <div class="hito">
+      <div class="h">Entrega</div>
+      <div class="t"><span data-campo="hito.fecha_entrega">Vie 12 feb</span></div>
+      <p class="small muted" style="margin:0;line-height:1.35;">Con aviso por correo.</p>
+    </div>
+    <div class="hito">
+      <div class="h">Pruebas</div>
+      <div class="t"><span data-campo="hito.fecha_sesion">Lun 15 feb</span></div>
+      <p class="small muted" style="margin:0;line-height:1.35;"><span data-campo="hito.lugar_sesion">En el Almacén 1</span>.</p>
+    </div>
+    <div class="hito">
+      <div class="h">Observaciones</div>
+      <div class="t"><span data-campo="hito.fecha_observaciones">Mar 16 feb</span></div>
+      <p class="small muted" style="margin:0;line-height:1.35;">Por escrito, de <span data-campo="cliente.responsable.nombre">Laura Méndez</span>.</p>
+    </div>
+    <div class="hito">
+      <div class="h">Correcciones</div>
+      <div class="t"><span data-campo="hito.fecha_correcciones">Mié 17 feb</span></div>
+      <p class="small muted" style="margin:0;line-height:1.35;">Segunda revisión de <span data-campo="regla.dias_verificacion">3</span> días hábiles.</p>
+    </div>
+    <div class="hito">
+      <div class="h">Aceptación</div>
+      <div class="t"><span data-campo="hito.fecha_aceptacion">Jue 18 feb</span></div>
+      <p class="small muted" style="margin:0;line-height:1.35;">A los <span data-campo="hito.dias_para_aceptar">4</span> días hábiles.</p>
+    </div>
+    <div class="hito" style="border-top-color:var(--rule);">
+      <div class="h" style="color:var(--muted);">Vencimiento</div>
+      <div class="t"><span data-campo="hito.fecha_vencimiento">Mar 23 feb</span></div>
+      <p class="small muted" style="margin:0;line-height:1.35;">Plazo de <span data-campo="regla.dias_revision">7</span> días hábiles.</p>
+    </div>
+  </div>
+
+  <h2 class="s"><span class="n">2</span>Qué se entregó</h2>
+  <table style="table-layout:fixed;">
+    <thead><tr><th style="width:34%">Entregable</th><th style="width:9%">Versión</th><th style="width:24%">Ambiente</th><th>Evidencia</th></tr></thead>
+    <tbody data-lista="entregables">
+      <tr>
+        <td class="fuerte"><span data-campo="entregable.numero">1.1</span> · <span data-campo="entregable.nombre">Catálogo de productos cargado</span></td>
+        <td><span data-campo="entregable.version">1.1</span></td>
+        <td><span data-campo="entregable.ambiente">Producción</span><br><span class="small muted">Desde el <span data-campo="entregable.fecha_produccion">mié 17 feb</span></span></td>
+        <td><span data-campo="entregable.evidencia">Su catálogo, de la plantilla de carga del 2 de febrero, cargado completo.</span></td>
+      </tr>
+      <tr>
+        <td class="fuerte"><span data-campo="entregable.numero">1.2</span> · <span data-campo="entregable.nombre">Existencias del almacén piloto</span></td>
+        <td><span data-campo="entregable.version">1.1</span></td>
+        <td><span data-campo="entregable.ambiente">Producción</span><br><span class="small muted">Desde el <span data-campo="entregable.fecha_produccion">mié 17 feb</span></span></td>
+        <td><span data-campo="entregable.evidencia">Existencias del Almacén 1 en celular y en computadora.</span></td>
+      </tr>
+      <tr>
+        <td class="fuerte"><span data-campo="entregable.numero">1.3</span> · <span data-campo="entregable.nombre">Captura del inventario inicial desde el celular</span></td>
+        <td><span data-campo="entregable.version">1.1</span></td>
+        <td><span data-campo="entregable.ambiente">Producción</span><br><span class="small muted">Desde el <span data-campo="entregable.fecha_produccion">mié 17 feb</span></span></td>
+        <td><span data-campo="entregable.evidencia">Conteo inicial del Almacén 1, capturado desde el celular.</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="small muted" style="margin-top:6pt;margin-bottom:0;">La versión <span data-campo="hito.version_entrega">1.0</span> pasó a pruebas el <span data-campo="hito.fecha_entrega_larga">viernes 12 de febrero de 2027</span>; la versión <span data-campo="hito.version_final">1.1</span> trae las correcciones de <span data-campo="hito.observaciones_incluidas">las observaciones 1 y 2 y los ajustes 4 y 5</span>. Evidencia: el guion de casos con resultados (anexo) y sus imágenes de pantalla, en <span data-campo="proyecto.carpeta_hitos">04-hitos</span>.</p>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D07-acta-de-aceptacion-hito-1-v1</span></span><span>1 / 3</span></div>
+</section>
+
+<!-- ============================== HOJA 2 ============================== -->
+<section class="page">
+  <div class="hdr"><span>D07 · Acta de aceptación del hito</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <h2 class="s"><span class="n">3</span>Criterios de aceptación con resultado</h2>
+  <div style="display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:9pt;">
+    <div class="tile" style="background:var(--accent-soft);border-color:var(--accent-mid);">
+      <div class="big"><span data-campo="criterios.cumplen">16</span> de <span data-campo="criterios.total">16</span> <small>cumplen</small></div>
+      <div class="lbl">Criterios de la especificación del hito</div>
+    </div>
+    <div data-lista="criterios_por_entregable" style="display:contents;">
+    <div class="tile">
+      <div class="big"><span data-campo="criterio_entregable.cumplen">4</span> de <span data-campo="criterio_entregable.total">4</span></div>
+      <div class="lbl"><span data-campo="criterio_entregable.nombre">1.1 · Catálogo</span></div>
+    </div>
+    <div class="tile">
+      <div class="big"><span data-campo="criterio_entregable.cumplen">6</span> de <span data-campo="criterio_entregable.total">6</span></div>
+      <div class="lbl"><span data-campo="criterio_entregable.nombre">1.2 · Existencias</span></div>
+    </div>
+    <div class="tile">
+      <div class="big"><span data-campo="criterio_entregable.cumplen">6</span> de <span data-campo="criterio_entregable.total">6</span></div>
+      <div class="lbl"><span data-campo="criterio_entregable.nombre">1.3 · Inventario inicial</span></div>
+    </div>
+    </div>
+  </div>
+  <div class="kv" style="grid-template-columns:1.3in 1fr;gap:4pt 10pt;margin-top:9pt;">
+    <div class="k">No cumplen</div><div data-lista="criterios_no_cumplen"><b><span data-campo="criterio_no_cumple.clave">Ninguno</span></b>. El guion de casos, con el resultado de cada criterio, va como anexo.</div>
+    <div class="k">Repetidos</div><div><span data-campo="criterios.repetidos">CA-1.2-05 y CA-1.3-05 no cumplían el 15 de febrero; se corrigieron y se repitieron el 17, con resultado «cumple», antes de salir a producción.</span></div>
+  </div>
+
+  <h2 class="s"><span class="n">4</span>Observaciones clasificadas</h2>
+  <table class="compacta" style="table-layout:fixed;">
+    <thead><tr><th style="width:4%">N.º</th><th style="width:41%">Observación</th><th style="width:19%">Tipo</th><th style="width:11%">Criterio</th><th style="padding-right:0;">Estado</th></tr></thead>
+    <tbody data-lista="observaciones">
+      <tr>
+        <td class="fuerte"><span data-campo="observacion.numero">1</span></td>
+        <td><span data-campo="observacion.texto">Un producto sin captura (EJ-020) aparece con 0 en lugar de «Sin captura».</span></td>
+        <td><span class="chip"><span data-campo="observacion.tipo">Defecto</span></span></td>
+        <td><span data-campo="observacion.criterio">CA-1.2-05</span></td>
+        <td><span class="sem"><span data-campo="observacion.estado">Corregido</span></span> <br><span class="small muted"><span data-campo="observacion.nota">Mié 17 feb; verificado el mismo día</span></span></td>
+      </tr>
+      <tr>
+        <td class="fuerte"><span data-campo="observacion.numero">2</span></td>
+        <td><span data-campo="observacion.texto">Sin conexión, el celular borra la cantidad escrita (15 rollos de EJ-008).</span></td>
+        <td><span class="chip"><span data-campo="observacion.tipo">Defecto</span></span></td>
+        <td><span data-campo="observacion.criterio">CA-1.3-05</span></td>
+        <td><span class="sem"><span data-campo="observacion.estado">Corregido</span></span> <br><span class="small muted"><span data-campo="observacion.nota">Mié 17 feb; verificado el mismo día</span></span></td>
+      </tr>
+      <tr>
+        <td class="fuerte"><span data-campo="observacion.numero">3</span></td>
+        <td><span data-campo="observacion.texto">En «Ubicaciones», la lista del Almacén 1 no sale ordenada por pasillo.</span></td>
+        <td><span class="chip"><span data-campo="observacion.tipo">Defecto</span></span></td>
+        <td><span data-campo="observacion.criterio">Ninguno</span></td>
+        <td><span class="sem amarillo"><span data-campo="observacion.estado">Pendiente</span></span><br><span class="small muted"><span data-campo="observacion.nota">Sección 5</span></span></td>
+      </tr>
+      <tr>
+        <td class="fuerte"><span data-campo="observacion.numero">4</span></td>
+        <td><span data-campo="observacion.texto">Poner el contador «3 de 20 capturados» arriba de la lista.</span></td>
+        <td><span class="chip"><span data-campo="observacion.tipo">Ajuste menor</span></span></td>
+        <td><span data-campo="observacion.criterio">CA-1.3-06</span></td>
+        <td><span class="sem"><span data-campo="observacion.estado">Hecho</span></span><br><span class="small muted"><span data-campo="observacion.nota">Mié 17 feb; 1.5 h de la bolsa</span></span></td>
+      </tr>
+      <tr>
+        <td class="fuerte"><span data-campo="observacion.numero">5</span></td>
+        <td><span data-campo="observacion.texto">Agrandar el botón «Guardar» de «Inventario inicial» en el celular.</span></td>
+        <td><span class="chip"><span data-campo="observacion.tipo">Ajuste menor</span></span></td>
+        <td><span data-campo="observacion.criterio">Ninguno</span></td>
+        <td><span class="sem"><span data-campo="observacion.estado">Hecho</span></span><br><span class="small muted"><span data-campo="observacion.nota">Mié 17 feb; 1.5 h de la bolsa</span></span></td>
+      </tr>
+      <tr>
+        <td class="fuerte"><span data-campo="observacion.numero">6</span></td>
+        <td><span data-campo="observacion.texto">Avisar por correo cuando un producto baje de su mínimo.</span></td>
+        <td><span class="chip"><span data-campo="observacion.tipo">Cambio de alcance</span></span></td>
+        <td><span data-campo="observacion.criterio">Ninguno</span></td>
+        <td><span class="sem gris"><span data-campo="observacion.estado">Pasó a CE-INV-D05-01</span></span><br><span class="small muted"><span data-campo="observacion.nota">Enviada el jue 18 feb</span></span></td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="small muted" style="margin-top:5pt;margin-bottom:0;">Los ajustes menores se hicieron con la bolsa de ajustes; su saldo queda en <span data-campo="bolsa.saldo_horas">28</span> de <span data-campo="bolsa.horas_totales">34</span> horas. El cambio de alcance sale de esta acta y sigue su solicitud de cambio.</p>
+
+  <h2 class="s"><span class="n">5</span>Pendientes menores</h2>
+  <table class="compacta" style="table-layout:fixed;">
+    <thead><tr><th style="width:11%">Tipo</th><th style="width:41%">Pendiente</th><th style="width:19%">Responsable</th><th style="padding-right:0;">Fecha</th></tr></thead>
+    <tbody data-lista="pendientes">
+      <tr>
+        <td><span class="chip"><span data-campo="pendiente.tipo">Defecto</span></span></td>
+        <td><span data-campo="pendiente.texto">La lista de ubicaciones no sale ordenada por pasillo (observación 3).</span></td>
+        <td><span data-campo="pendiente.responsable">Sistemas a la medida</span></td>
+        <td class="fuerte"><span data-campo="pendiente.fecha">Viernes 26 de febrero de 2027</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D07-acta-de-aceptacion-hito-1-v1</span></span><span>2 / 3</span></div>
+</section>
+
+<!-- ============================== HOJA 3 ============================== -->
+<section class="page">
+  <div class="hdr"><span>D07 · Acta de aceptación del hito</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <h2 class="s"><span class="n">6</span>Leyenda de aceptación</h2>
+  <div class="garantia">
+    <p style="margin-bottom:4pt;"><span data-campo="cliente.nombre">Cliente Ejemplo, S.A. de C.V.</span> recibe y acepta el <span data-campo="hito.numero">Hito 1</span>, <span data-campo="hito.nombre_minusculas">prueba piloto en un almacén</span>, del proyecto <span data-campo="proyecto.clave">CE-INV</span>. Su personal probó los entregables con el guion de casos y cumplen los criterios de aceptación de la especificación del hito.</p>
+    <p style="margin:0;">Los pendientes menores de esta acta no condicionan la aceptación y se atienden en las fechas indicadas. Con esta acta se emite la factura por <span data-campo="pago.monto_texto">90,000 pesos</span> más IVA. La garantía por defectos de este hito dura <span data-campo="regla.dias_garantia">60</span> días naturales desde la firma.</p>
+  </div>
+
+  <h2 class="s"><span class="n">7</span>Monto que se factura</h2>
+  <table class="compacta" style="width:47%;">
+    <tbody>
+      <tr><td><span data-campo="pago.concepto">Hito 1 · Prueba piloto en un almacén</span></td><td class="num"><span data-campo="pago.monto">$90,000</span></td></tr>
+      <tr><td>IVA <span data-campo="pago.tasa_iva">16 %</span></td><td class="num"><span data-campo="pago.iva">$14,400</span></td></tr>
+      <tr class="total"><td>Total de la factura</td><td class="num"><span data-campo="pago.total">$104,400</span></td></tr>
+    </tbody>
+  </table>
+  <div class="kv" style="grid-template-columns:1.45in 1fr;gap:4pt 10pt;margin-top:9pt;">
+    <div class="k">Orden de compra</div><div><span data-campo="pago.orden_compra">OC-2027-0018, partida 2 de 4</span></div>
+    <div class="k">Fecha de factura</div><div><span data-campo="pago.fecha_factura">Viernes 19 de febrero de 2027</span></div>
+    <div class="k">Se envía</div><div><span data-campo="pago.envio">PDF y XML a facturas@clienteejemplo.mx, con copia a Patricia Luna</span></div>
+    <div class="k">Pago a más tardar</div><div><b><span data-campo="pago.fecha_limite">Sábado 6 de marzo de 2027</span></b>, por transferencia a <span data-campo="regla.dias_pago">15</span> días naturales de la factura</div>
+  </div>
+
+  <h2 class="s"><span class="n">8</span>Satisfacción</h2>
+  <div class="grid2" style="grid-template-columns:0.85in 1fr;gap:10pt;align-items:center;">
+    <div class="tile" style="text-align:center;padding:5pt 6pt;"><div class="big"><span data-campo="satisfaccion.calificacion">9</span> <small>de 10</small></div></div>
+    <div>
+      <p class="small muted" style="margin-bottom:1pt;">«Del 1 al 10, ¿qué tan satisfechos están con este hito y con la forma de trabajar? ¿Qué cambiarían para subir un punto?»</p>
+      <p style="margin:0;"><b>«<span data-campo="satisfaccion.comentario">Los almacenistas lo usaron sin una capacitación larga.</span>»</b> <span class="muted">· <span data-campo="cliente.responsable.nombre">Laura Méndez</span></span></p>
+    </div>
+  </div>
+
+  <h2 class="s"><span class="n">9</span>Firmas</h2>
+  <p class="small muted" style="margin:0;">Vale firma autógrafa, electrónica o un correo corporativo guardado en PDF. Copia a <span data-campo="cliente.decide.nombre">Ricardo Solís</span>, <span data-campo="cliente.decide.puesto_minusculas">director general</span>.</p>
+  <div class="firmas">
+    <div class="firma">
+      <div class="linea"></div>
+      <div class="n"><span data-campo="cliente.responsable.nombre">Laura Méndez</span></div>
+      <div class="r"><span data-campo="cliente.responsable.puesto">Gerente de operaciones</span> · <span data-campo="cliente.nombre">Cliente Ejemplo, S.A. de C.V.</span><br>Responsable del proyecto · Acepta<br>Fecha: <span class="campo-mano"></span></div>
+    </div>
+    <div class="firma">
+      <div class="linea"></div>
+      <div class="n"><span data-campo="despacho.lider.nombre">Santiago</span></div>
+      <div class="r"><span data-campo="despacho.lider.puesto">Socio</span> · <span data-campo="despacho.nombre">Sistemas a la medida</span><br>Líder de proyecto · Entrega<br>Fecha: <span class="campo-mano"></span></div>
+    </div>
+  </div>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D07-acta-de-aceptacion-hito-1-v1</span></span><span>3 / 3</span></div>
+</section>
+
+<!-- ============================== ANEXO · HOJA 1 ============================== -->
+<!-- Documento aparte: guion de casos con resultados. Lleva su propio pie y su propia cuenta de hojas. -->
+<section class="page">
+  <div class="hdr"><span>D07 · Acta de aceptación del hito</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <div class="eyebrow" style="margin-bottom:3pt;">Anexo del acta · documento aparte</div>
+  <h2 class="s" style="margin-top:0;font-size:15pt;"><span>Guion de casos del <span data-campo="hito.numero">Hito 1</span> con resultados</span></h2>
+  <p class="sub" style="margin:0;"><span data-campo="proyecto.nombre">Control de inventario en almacenes</span> (<span data-campo="proyecto.clave">CE-INV</span>) · anexo de <span data-campo="documento.archivo">CE-INV-D07-acta-de-aceptacion-hito-1-v1</span></p>
+  <div class="meta tres" style="margin-top:5pt;margin-bottom:7pt;grid-template-columns:max-content max-content max-content;justify-content:space-between;">
+    <div><div class="k">Sesión de pruebas</div><div class="v"><span data-campo="guion.fecha_sesion">Lunes 15 de febrero de 2027</span>, <span data-campo="guion.hora_sesion">10:00</span></div></div>
+    <div><div class="k">Probaron</div><div class="v"><span data-campo="guion.probaron">Laura Méndez y 3 almacenistas</span></div></div>
+    <div><div class="k">Casos repetidos</div><div class="v"><span data-campo="guion.fecha_repeticion">Miércoles 17 de febrero de 2027</span></div></div>
+  </div>
+
+  <h3 style="margin-top:0;">Entregable <span data-campo="guion_entregable.numero">1.1</span> · <span data-campo="guion_entregable.nombre">Catálogo de productos cargado</span></h3>
+  <table class="compacta" style="table-layout:fixed;">
+    <thead><tr><th style="width:13%">Caso</th><th style="width:27%">Pasos</th><th style="width:26.5%">Resultado esperado</th><th style="width:11.5%">Resultado obtenido</th><th style="width:9.5%">Evidencia</th><th style="padding-right:0;">Clasificación</th></tr></thead>
+    <tbody data-lista="casos">
+      <tr><td><b><span data-campo="caso.clave">CA-1.1-01</span></b><br><span data-campo="caso.nombre">Cargar el catálogo</span></td><td><span data-campo="caso.pasos">Entrar como responsable; cargar el archivo de ejemplo con 20 productos.</span></td><td><span data-campo="caso.esperado">El catálogo muestra los 20, cada uno con clave, descripción y unidad.</span></td><td><span class="sem"><span data-campo="caso.obtenido">Cumple</span></span></td><td><span data-campo="caso.evidencia">Pantalla</span></td><td><span data-campo="caso.clasificacion">Sin observación</span></td></tr>
+      <tr><td><b><span data-campo="caso.clave">CA-1.1-02</span></b><br><span data-campo="caso.nombre">Buscar por clave</span></td><td><span data-campo="caso.pasos">Entrar como almacenista; escribir «EJ-003» en el buscador del catálogo.</span></td><td><span data-campo="caso.esperado">Solo aparece «Guante de nitrilo talla M», con unidad «Par».</span></td><td><span class="sem"><span data-campo="caso.obtenido">Cumple</span></span></td><td><span data-campo="caso.evidencia">Pantalla</span></td><td><span data-campo="caso.clasificacion">Sin observación</span></td></tr>
+      <tr><td><b><span data-campo="caso.clave">CA-1.1-03</span></b><br><span data-campo="caso.nombre">Clave repetida</span></td><td><span data-campo="caso.pasos">Entrar como responsable; cargar un archivo con «EJ-001» en dos renglones.</span></td><td><span data-campo="caso.esperado">No carga el archivo y muestra «Clave repetida: EJ-001».</span></td><td><span class="sem"><span data-campo="caso.obtenido">Cumple</span></span></td><td><span data-campo="caso.evidencia">Pantalla</span></td><td><span data-campo="caso.clasificacion">Sin observación</span></td></tr>
+      <tr><td><b><span data-campo="caso.clave">CA-1.1-04</span></b><br><span data-campo="caso.nombre">Producto sin unidad</span></td><td><span data-campo="caso.pasos">Entrar como responsable; cargar un archivo con «EJ-021» sin unidad.</span></td><td><span data-campo="caso.esperado">No carga el archivo y muestra «Falta la unidad: EJ-021».</span></td><td><span class="sem"><span data-campo="caso.obtenido">Cumple</span></span></td><td><span data-campo="caso.evidencia">Pantalla</span></td><td><span data-campo="caso.clasificacion">Sin observación</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top:6pt;">Entregable <span data-campo="guion_entregable.numero">1.2</span> · <span data-campo="guion_entregable.nombre">Existencias del almacén piloto</span></h3>
+  <table class="compacta" style="table-layout:fixed;">
+    <thead><tr><th style="width:13%">Caso</th><th style="width:27%">Pasos</th><th style="width:26.5%">Resultado esperado</th><th style="width:11.5%">Resultado obtenido</th><th style="width:9.5%">Evidencia</th><th style="padding-right:0;">Clasificación</th></tr></thead>
+    <tbody data-lista="casos">
+      <tr><td><b><span data-campo="caso.clave">CA-1.2-01</span></b><br><span data-campo="caso.nombre">Otro almacén</span></td><td><span data-campo="caso.pasos">Entrar como almacenista del Almacén A; abrir las existencias del Almacén B.</span></td><td><span data-campo="caso.esperado">No las muestra y presenta «Sin permiso para este almacén».</span></td><td><span class="sem"><span data-campo="caso.obtenido">Cumple</span></span></td><td><span data-campo="caso.evidencia">Pantalla</span></td><td><span data-campo="caso.clasificacion">Sin observación</span></td></tr>
+      <tr><td><b><span data-campo="caso.clave">CA-1.2-02</span></b><br><span data-campo="caso.nombre">Consulta en celular</span></td><td><span data-campo="caso.pasos">Entrar como almacenista en su celular; buscar «EJ-002» en «Existencias».</span></td><td><span data-campo="caso.esperado">«Cinta de empaque 48 mm», 40 rollos, con fecha y hora de la última captura.</span></td><td><span class="sem"><span data-campo="caso.obtenido">Cumple</span></span></td><td><span data-campo="caso.evidencia">Pantalla</span></td><td><span data-campo="caso.clasificacion">Sin observación</span></td></tr>
+      <tr><td><b><span data-campo="caso.clave">CA-1.2-03</span></b><br><span data-campo="caso.nombre">Consulta en computadora</span></td><td><span data-campo="caso.pasos">Entrar como responsable en una computadora; buscar «EJ-003».</span></td><td><span data-campo="caso.esperado">120 pares, la misma cantidad que ve el almacenista en su celular.</span></td><td><span class="sem"><span data-campo="caso.obtenido">Cumple</span></span></td><td><span data-campo="caso.evidencia">Pantalla</span></td><td><span data-campo="caso.clasificacion">Sin observación</span></td></tr>
+      <tr><td><b><span data-campo="caso.clave">CA-1.2-04</span></b><br><span data-campo="caso.nombre">Solo consulta</span></td><td><span data-campo="caso.pasos">Entrar como director general en un celular; abrir «Existencias».</span></td><td><span data-campo="caso.esperado">Muestra el almacén piloto, sin botones para capturar ni corregir.</span></td><td><span class="sem"><span data-campo="caso.obtenido">Cumple</span></span></td><td><span data-campo="caso.evidencia">Pantalla</span></td><td><span data-campo="caso.clasificacion">Sin observación</span></td></tr>
+      <tr><td><b><span data-campo="caso.clave">CA-1.2-05</span></b><br><span data-campo="caso.nombre">Producto sin captura</span></td><td><span data-campo="caso.pasos">Entrar como almacenista; buscar «EJ-020», que nadie ha capturado.</span></td><td><span data-campo="caso.esperado">Muestra «Sin captura» en lugar de una cantidad.</span></td><td><span class="sem"><span data-campo="caso.obtenido">Cumple</span></span><br><span class="small muted"><span data-campo="caso.nota">15 feb: mostraba 0</span></span></td><td><span data-campo="caso.evidencia">2 pantallas</span></td><td><span data-campo="caso.clasificacion">Defecto, corregido (obs. 1)</span></td></tr>
+      <tr><td><b><span data-campo="caso.clave">CA-1.2-06</span></b><br><span data-campo="caso.nombre">Conteo de muestra</span></td><td><span data-campo="caso.pasos">La responsable cuenta a mano EJ-001 a EJ-010, ya capturados, y compara.</span></td><td><span data-campo="caso.esperado">Las 10 cantidades coinciden con las de «Existencias».</span></td><td><span class="sem"><span data-campo="caso.obtenido">Cumple</span></span><br><span class="small muted"><span data-campo="caso.nota">10 de 10</span></span></td><td><span data-campo="caso.evidencia">Hoja de conteo</span></td><td><span data-campo="caso.clasificacion">Sin observación</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="anexo.archivo">CE-INV-D07-anexo-guion-de-casos-hito-1-v1</span></span><span>Anexo · 1 / 2</span></div>
+</section>
+
+<!-- ============================== ANEXO · HOJA 2 ============================== -->
+<section class="page">
+  <div class="hdr"><span>D07 · Acta de aceptación del hito</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <h3 style="margin-top:0;">Entregable <span data-campo="guion_entregable.numero">1.3</span> · <span data-campo="guion_entregable.nombre">Captura del inventario inicial desde el celular</span></h3>
+  <table class="compacta" style="table-layout:fixed;">
+    <thead><tr><th style="width:13%">Caso</th><th style="width:27%">Pasos</th><th style="width:26.5%">Resultado esperado</th><th style="width:11.5%">Resultado obtenido</th><th style="width:9.5%">Evidencia</th><th style="padding-right:0;">Clasificación</th></tr></thead>
+    <tbody data-lista="casos">
+      <tr><td><b><span data-campo="caso.clave">CA-1.3-01</span></b><br><span data-campo="caso.nombre">Captura al momento</span></td><td><span data-campo="caso.pasos">Entrar como almacenista en su celular; capturar 25 piezas de un producto.</span></td><td><span data-campo="caso.esperado">«Existencias» del almacén piloto muestra 25 en menos de 10 segundos.</span></td><td><span class="sem"><span data-campo="caso.obtenido">Cumple</span></span><br><span class="small muted"><span data-campo="caso.nota">En 4 segundos</span></span></td><td><span data-campo="caso.evidencia">Pantalla</span></td><td><span data-campo="caso.clasificacion">Sin observación</span></td></tr>
+      <tr><td><b><span data-campo="caso.clave">CA-1.3-02</span></b><br><span data-campo="caso.nombre">Vacía o negativa</span></td><td><span data-campo="caso.pasos">Guardar con la cantidad vacía; después, con −5.</span></td><td><span data-campo="caso.esperado">No guarda y muestra «Escriba una cantidad de cero o mayor».</span></td><td><span class="sem"><span data-campo="caso.obtenido">Cumple</span></span></td><td><span data-campo="caso.evidencia">Pantalla</span></td><td><span data-campo="caso.clasificacion">Sin observación</span></td></tr>
+      <tr><td><b><span data-campo="caso.clave">CA-1.3-03</span></b><br><span data-campo="caso.nombre">Cantidad cero</span></td><td><span data-campo="caso.pasos">Capturar 0 piezas del producto «EJ-004».</span></td><td><span data-campo="caso.esperado">Guarda y «Existencias» muestra 0.</span></td><td><span class="sem"><span data-campo="caso.obtenido">Cumple</span></span></td><td><span data-campo="caso.evidencia">Pantalla</span></td><td><span data-campo="caso.clasificacion">Sin observación</span></td></tr>
+      <tr><td><b><span data-campo="caso.clave">CA-1.3-04</span></b><br><span data-campo="caso.nombre">Corregir una captura</span></td><td><span data-campo="caso.pasos">Corregir a 30 la captura de 25 piezas de «EJ-001».</span></td><td><span data-campo="caso.esperado">«Existencias» muestra 30; el historial conserva las dos capturas, con usuario, fecha y hora.</span></td><td><span class="sem"><span data-campo="caso.obtenido">Cumple</span></span></td><td><span data-campo="caso.evidencia">Pantalla</span></td><td><span data-campo="caso.clasificacion">Sin observación</span></td></tr>
+      <tr><td><b><span data-campo="caso.clave">CA-1.3-05</span></b><br><span data-campo="caso.nombre">Sin conexión</span></td><td><span data-campo="caso.pasos">Quitar la conexión al celular; guardar 15 rollos de «EJ-008».</span></td><td><span data-campo="caso.esperado">No guarda, muestra «Sin conexión. La captura no se guardó» y conserva el 15 escrito.</span></td><td><span class="sem"><span data-campo="caso.obtenido">Cumple</span></span><br><span class="small muted"><span data-campo="caso.nota">15 feb: lo borraba</span></span></td><td><span data-campo="caso.evidencia">2 pantallas</span></td><td><span data-campo="caso.clasificacion">Defecto, corregido (obs. 2)</span></td></tr>
+      <tr><td><b><span data-campo="caso.clave">CA-1.3-06</span></b><br><span data-campo="caso.nombre">Contador de avance</span></td><td><span data-campo="caso.pasos">Capturar 3 de los 20 productos; abrir «Inventario inicial».</span></td><td><span data-campo="caso.esperado">El contador dice «3 de 20 capturados».</span></td><td><span class="sem"><span data-campo="caso.obtenido">Cumple</span></span><br><span class="small muted"><span data-campo="caso.nota">Piden subirlo</span></span></td><td><span data-campo="caso.evidencia">Pantalla</span></td><td><span data-campo="caso.clasificacion">Ajuste menor (obs. 4)</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top:14pt;">Observaciones fuera de los casos</h3>
+  <table class="compacta" style="table-layout:fixed;">
+    <thead><tr><th style="width:15%">Renglón</th><th style="width:42%">Lo que observaron o piden</th><th style="width:16%">Evidencia</th><th style="padding-right:0;">Clasificación</th></tr></thead>
+    <tbody data-lista="observaciones_fuera">
+      <tr><td class="fuerte"><span data-campo="observacion_fuera.renglon">Observación 3</span></td><td><span data-campo="observacion_fuera.texto">En «Ubicaciones», la lista del Almacén 1 sale en el orden de alta y no por pasillo.</span></td><td><span data-campo="observacion_fuera.evidencia">Correo del 16 feb</span></td><td><span data-campo="observacion_fuera.clasificacion">Defecto, pendiente</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="observacion_fuera.renglon">Observación 5</span></td><td><span data-campo="observacion_fuera.texto">Un botón «Guardar» más grande en «Inventario inicial», en el celular.</span></td><td><span data-campo="observacion_fuera.evidencia">Correo del 16 feb</span></td><td><span data-campo="observacion_fuera.clasificacion">Ajuste menor</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="observacion_fuera.renglon">Observación 6</span></td><td><span data-campo="observacion_fuera.texto">Un aviso por correo cuando un producto baje de su mínimo.</span></td><td><span data-campo="observacion_fuera.evidencia">Correo del 16 feb</span></td><td><span data-campo="observacion_fuera.clasificacion">Cambio de alcance</span>: <span data-campo="observacion_fuera.folio" style="white-space:nowrap;">CE-INV-D05-01</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top:14pt;">Resumen del guion</h3>
+  <div class="grid4" style="gap:9pt;margin-top:6pt;">
+    <div class="tile"><div class="big"><span data-campo="guion.casos_cumplen">16</span> <small>de <span data-campo="guion.casos_total">16</span></small></div><div class="lbl">Casos que cumplen</div></div>
+    <div class="tile"><div class="big"><span data-campo="guion.casos_repetidos">2</span></div><div class="lbl">Casos repetidos tras corregir un defecto</div></div>
+    <div class="tile"><div class="big"><span data-campo="guion.observaciones_fuera">3</span></div><div class="lbl">Observaciones fuera de los casos</div></div>
+    <div class="tile"><div class="big"><span data-campo="guion.defectos">3</span></div><div class="lbl">Defectos encontrados en las pruebas</div></div>
+  </div>
+
+  <h3 style="margin-top:14pt;">Confirmación del guion lleno</h3>
+  <p style="margin-bottom:4pt;"><span data-campo="cliente.responsable.nombre">Laura Méndez</span> confirmó por correo el guion lleno el <span data-campo="guion.fecha_confirmacion">lunes 15 de febrero de 2027</span>, y los casos repetidos el <span data-campo="guion.fecha_confirmacion_repeticion">miércoles 17 de febrero de 2027</span>. Anotó los resultados <span data-campo="guion.anoto">el socio operativo, de Sistemas a la medida</span>.</p>
+  <p class="small muted" style="margin:0;">Las imágenes de pantalla de cada caso y los correos de confirmación se guardan en la carpeta <span data-campo="proyecto.carpeta_hitos">04-hitos</span>, junto a esta acta.</p>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="anexo.archivo">CE-INV-D07-anexo-guion-de-casos-hito-1-v1</span></span><span>Anexo · 2 / 2</span></div>
+</section>
+
+</body>
+</html>

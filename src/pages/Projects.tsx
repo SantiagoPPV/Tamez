@@ -4,6 +4,7 @@ import { useRepo, useSession } from '../app/session'
 import { DemoRepository } from '../data/demoRepo'
 import type { ProjectSummary } from '../data/repository'
 import { emptyProject } from '../domain/factory'
+import { freezeSent } from '../docs/autofill'
 import { fmtDate } from '../domain/format'
 import { TextField } from '../ui/fields'
 import { Button, Card, Drawer, Empty, Eyebrow, Notice, Spinner } from '../ui/kit'
@@ -32,8 +33,10 @@ export function Projects() {
     setBusy(true)
     setError(null)
     try {
-      const { buildCeInv } = await import('../data/ceinv')
-      const id = await repo.createProject(buildCeInv())
+      const { buildCeInv, buildDemoProposals, buildDemoProspects, DEMO_FIRM } = await import('../data/ceinv')
+      const firm = await repo.getFirm().catch(() => DEMO_FIRM)
+      const data = freezeSent({ data: buildCeInv(), firm: firm.supportEmail ? firm : DEMO_FIRM, proposals: buildDemoProposals(), prospects: buildDemoProspects() })
+      const id = await repo.createProject(data)
       navigate(`/p/${id}`)
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e))
@@ -49,7 +52,7 @@ export function Projects() {
           <Eyebrow>Proyectos</Eyebrow>
           <h1 className="text-2xl font-extrabold tracking-tight">El único lugar donde vive un proyecto</h1>
           <p className="mt-1 max-w-2xl text-sm text-ink2">
-            De sus datos salen los indicadores, los reportes y, en la versión 2, los documentos.
+            De sus datos salen los documentos, los reportes y los indicadores.
           </p>
         </div>
         <Button variant="primary" onClick={() => setCreating(true)}>

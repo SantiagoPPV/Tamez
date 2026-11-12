@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>D03 · Plan del proyecto · Ejemplo</title>
+<link rel="stylesheet" href="base.css">
+</head>
+<body>
+
+<!-- ============================== HOJA 1 ============================== -->
+<section class="page">
+  <div class="hdr"><span>D03 · Plan del proyecto</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <div class="doc-head">
+    <div class="eyebrow">D03 · Plan del proyecto</div>
+    <h1><span data-campo="proyecto.nombre">Control de inventario en almacenes</span></h1>
+    <p class="sub">Alcance, fechas y montos definitivos del proyecto. Lo firma <span data-campo="cliente.responsable.nombre">Laura Méndez</span> en la hoja <span data-campo="documento.hoja_firmas">9</span>.</p>
+    <div class="meta" style="grid-template-columns:1.85fr .9fr 2.05fr 1.3fr;">
+      <div><div class="k">Cliente</div><div class="v"><span data-campo="cliente.nombre">Cliente Ejemplo, S.A. de C.V.</span></div></div>
+      <div><div class="k">Clave</div><div class="v"><span data-campo="proyecto.clave">CE-INV</span></div></div>
+      <div><div class="k">Fecha</div><div class="v"><span data-campo="documento.fecha">Viernes 22 de enero de 2027</span></div></div>
+      <div><div class="k">Versión</div><div class="v"><span data-campo="documento.version">v1</span> · línea base</div></div>
+      <div><div class="k">Arranque</div><div class="v"><span data-campo="proyecto.fecha_arranque">Lunes 11 de enero de 2027</span></div></div>
+      <div><div class="k">Duración</div><div class="v"><span data-campo="proyecto.duracion">13 semanas</span></div></div>
+      <div><div class="k">Cierre</div><div class="v"><span data-campo="proyecto.fecha_cierre">Viernes 9 de abril de 2027</span></div></div>
+      <div><div class="k">Precio fijo</div><div class="v"><span data-campo="proyecto.precio_total">$330,000</span> más IVA</div></div>
+    </div>
+  </div>
+
+  <h2 class="s"><span class="n">1</span>Portada y versiones</h2>
+  <div class="kv" style="margin-top:4pt;">
+    <div class="k">Archivo</div><div><span data-campo="documento.archivo_pdf">CE-INV-D03-plan-del-proyecto-v1.pdf</span></div>
+  </div>
+  <table style="margin-top:9pt;">
+    <thead><tr><th style="width:16%">Versión</th><th style="width:26%">Fecha</th><th style="width:28%">Qué cambió</th><th>Respaldo</th></tr></thead>
+    <tbody data-lista="versiones">
+      <tr>
+        <td class="fuerte"><span data-campo="version.numero">v1</span> · línea base</td>
+        <td><span data-campo="version.fecha">Viernes 22 de enero de 2027</span></td>
+        <td><span data-campo="version.cambio">Primera línea base. Confirma el alcance, las fechas y los montos de la propuesta, sin cambios.</span></td>
+        <td><span data-campo="version.respaldo">Firma de Laura Méndez en la hoja 9; propuesta definitiva (CE-INV-D01-propuesta-definitiva-v1.pdf), aceptada por Ricardo Solís el mismo día.</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 class="s" style="margin-top:16pt;"><span class="n">2</span>Alcance definitivo</h2>
+  <p>El diagnóstico confirmó el alcance de la propuesta y lo detalla así.</p>
+  <div class="grid2" style="margin-top:2pt;">
+    <div>
+      <h3 style="margin-top:4pt;">Qué incluye</h3>
+      <ul class="clean" style="margin-top:6pt;" data-lista="alcance_incluye">
+        <li><span data-campo="alcance.incluye">Diagnóstico por escrito del proceso actual, los datos y la conexión.</span></li>
+        <li><span data-campo="alcance.incluye">Sistema web de inventario por almacén, en celular o computadora, con cuatro perfiles de usuario y sus permisos.</span></li>
+        <li><span data-campo="alcance.incluye">Existencias en tiempo real de los tres almacenes, por almacén y en una sola pantalla.</span></li>
+        <li><span data-campo="alcance.incluye">Registro de entradas, salidas y traspasos entre almacenes, con responsable.</span></li>
+        <li><span data-campo="alcance.incluye">Conexión con su sistema contable: entradas y salidas llegan sin volver a capturarlas.</span></li>
+        <li><span data-campo="alcance.incluye">Carga inicial del catálogo y de las existencias de los tres almacenes.</span></li>
+        <li><span data-campo="alcance.incluye">Capacitación a cuatro grupos, uno por almacén y uno de supervisión, en su turno y con manuales.</span></li>
+        <li><span data-campo="alcance.incluye">Pruebas con guion, salida a producción por hito y acompañamiento de dos semanas.</span></li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="margin-top:4pt;">Qué queda fuera</h3>
+      <ul class="clean neutral" style="margin-top:6pt;" data-lista="alcance_no_incluye">
+        <li><span data-campo="alcance.no_incluye">Compra de equipos: celulares, tabletas, lectores o impresoras.</span></li>
+        <li><span data-campo="alcance.no_incluye">Licencias o conectores de su sistema contable.</span></li>
+        <li><span data-campo="alcance.no_incluye">Cambios o configuración dentro de su sistema contable.</span></li>
+        <li><span data-campo="alcance.no_incluye">Almacenes adicionales u otras empresas.</span></li>
+        <li><span data-campo="alcance.no_incluye">Módulos de compras, ventas o facturación.</span></li>
+        <li><span data-campo="alcance.no_incluye">Depuración de su catálogo: corregir claves o quitar duplicados.</span></li>
+        <li><span data-campo="alcance.no_incluye">El servicio mensual posterior a la capacitación final: se contrata aparte, por $12,000 más IVA al mes.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D03-plan-del-proyecto-v1</span></span><span>1 / 9</span></div>
+</section>
+
+<!-- ============================== HOJA 2 ============================== -->
+<section class="page">
+  <div class="hdr"><span>D03 · Plan del proyecto</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <h2 class="s"><span class="n">2</span>Alcance definitivo (continuación)</h2>
+  <h3 style="margin-top:4pt;">Lo que confirmó el diagnóstico</h3>
+  <div class="grid2" style="gap:7pt 16pt; margin-top:6pt;" data-lista="diagnostico_hallazgos">
+    <div style="border-top:1px solid var(--rule); padding-top:5pt;">
+      <div class="k">Almacenes</div>
+      <div><span data-campo="hallazgo.texto">Son tres almacenes. El Almacén 1 es el piloto del Hito 1; los almacenes 2 y 3 entran en el Hito 3.</span></div>
+    </div>
+    <div style="border-top:1px solid var(--rule); padding-top:5pt;">
+      <div class="k">Catálogo</div>
+      <div><span data-campo="hallazgo.texto">Un solo catálogo para los tres almacenes, con clave única por producto. El del piloto no hace falta depurarlo; lo que agreguen los almacenes 2 y 3 se revisa antes de cargarlo.</span></div>
+    </div>
+    <div style="border-top:1px solid var(--rule); padding-top:5pt;">
+      <div class="k">Conexión</div>
+      <div><span data-campo="hallazgo.texto">La prueba técnica, terminada el miércoles 20 de enero, confirmó que su sistema contable recibe entradas y salidas.</span></div>
+    </div>
+    <div style="border-top:1px solid var(--rule); padding-top:5pt;">
+      <div class="k">Usuarios</div>
+      <div><span data-campo="hallazgo.texto">Cuatro perfiles: almacenista, responsable del proyecto, director general y sistemas.</span></div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:8pt;">Lo que cuenta el alcance</h3>
+  <div class="grid4" style="margin-top:6pt;" data-lista="alcance_unidades">
+    <div class="tile"><div class="big"><span data-campo="unidad.cantidad">3</span> <small>almacenes</small></div><div class="lbl"><span data-campo="unidad.detalle">Uno piloto y dos en el Hito 3.</span></div></div>
+    <div class="tile"><div class="big"><span data-campo="unidad.cantidad">13</span> <small>pantallas</small></div><div class="lbl"><span data-campo="unidad.detalle">Detalladas en cada especificación.</span></div></div>
+    <div class="tile"><div class="big"><span data-campo="unidad.cantidad">4</span> <small>reportes</small></div><div class="lbl"><span data-campo="unidad.detalle">Uno en el Hito 2 y tres en el Hito 3.</span></div></div>
+    <div class="tile"><div class="big"><span data-campo="unidad.cantidad">1</span> <small>conexión</small></div><div class="lbl"><span data-campo="unidad.detalle">Envía entradas y salidas.</span></div></div>
+  </div>
+  <p class="small muted" style="margin:6pt 0 0;">Una unidad más, como un cuarto almacén o una pantalla nueva, es cambio de alcance.</p>
+
+  <h2 class="s" style="margin-top:9pt;"><span class="n">3</span>Desglose del trabajo resumido</h2>
+  <div class="grid3" style="margin-top:6pt; row-gap:6pt;" data-lista="desglose">
+    <div class="hito">
+      <div class="h"><span data-campo="bloque.numero">0</span> · <span data-campo="bloque.semanas">Semanas 1 y 2</span></div>
+      <div class="t"><span data-campo="bloque.nombre">Diagnóstico y plan</span></div>
+      <ul style="list-style:none; padding-left:0;" data-lista="entregables">
+        <li><b>0.1</b> <span data-campo="entregable.nombre">Diagnóstico por escrito</span></li>
+        <li><b>0.2</b> <span data-campo="entregable.nombre">Prueba técnica de la conexión</span></li>
+        <li><b>0.3</b> <span data-campo="entregable.nombre">Diseño de la solución y prototipo</span></li>
+        <li><b>0.4</b> <span data-campo="entregable.nombre">Plan del proyecto y propuesta definitiva</span></li>
+      </ul>
+      <p class="small muted" style="margin:5pt 0 0;"><span data-campo="bloque.pago">Sin pago propio: lo cubre el pago inicial.</span></p>
+    </div>
+    <div class="hito">
+      <div class="h">Hito <span data-campo="bloque.numero">1</span> · <span data-campo="bloque.semanas">Semanas 3 a 5</span></div>
+      <div class="t"><span data-campo="bloque.nombre">Prueba piloto en un almacén</span></div>
+      <ul style="list-style:none; padding-left:0;" data-lista="entregables">
+        <li><b>1.1</b> <span data-campo="entregable.nombre">Catálogo de productos cargado</span></li>
+        <li><b>1.2</b> <span data-campo="entregable.nombre">Existencias del almacén piloto</span></li>
+        <li><b>1.3</b> <span data-campo="entregable.nombre">Captura del inventario inicial desde el celular</span></li>
+      </ul>
+    </div>
+    <div class="hito">
+      <div class="h">Hito <span data-campo="bloque.numero">2</span> · <span data-campo="bloque.semanas">Semanas 6 a 8</span></div>
+      <div class="t"><span data-campo="bloque.nombre">Entradas, salidas y conexión con su sistema contable</span></div>
+      <ul style="list-style:none; padding-left:0;" data-lista="entregables">
+        <li><b>2.1</b> <span data-campo="entregable.nombre">Registro de entradas con responsable</span></li>
+        <li><b>2.2</b> <span data-campo="entregable.nombre">Registro de salidas con responsable</span></li>
+        <li><b>2.3</b> <span data-campo="entregable.nombre">Conexión con su sistema contable</span></li>
+        <li><b>2.4</b> <span data-campo="entregable.nombre">Reporte de movimientos</span></li>
+      </ul>
+    </div>
+    <div class="hito">
+      <div class="h">Hito <span data-campo="bloque.numero">3</span> · <span data-campo="bloque.semanas">Semanas 9 a 11</span></div>
+      <div class="t"><span data-campo="bloque.nombre">Uso completo en los tres almacenes</span></div>
+      <ul style="list-style:none; padding-left:0;" data-lista="entregables">
+        <li><b>3.1</b> <span data-campo="entregable.nombre">Existencias de los almacenes 2 y 3 cargadas</span></li>
+        <li><b>3.2</b> <span data-campo="entregable.nombre">Traspasos entre almacenes</span></li>
+        <li><b>3.3</b> <span data-campo="entregable.nombre">Existencias de los tres almacenes en una sola pantalla</span></li>
+        <li><b>3.4</b> <span data-campo="entregable.nombre">Capacitación de arranque y manuales</span></li>
+        <li><b>3.5</b> <span data-campo="entregable.nombre">Reportes de existencias, traspasos y conteo de muestra</span></li>
+      </ul>
+    </div>
+    <div class="hito">
+      <div class="h"><span data-campo="bloque.numero">4</span> · <span data-campo="bloque.semanas">Semanas 12 y 13</span></div>
+      <div class="t"><span data-campo="bloque.nombre">Acompañamiento y cierre</span></div>
+      <ul style="list-style:none; padding-left:0;" data-lista="entregables">
+        <li><b>4.1</b> <span data-campo="entregable.nombre">Acompañamiento en cada almacén</span></li>
+        <li><b>4.2</b> <span data-campo="entregable.nombre">Capacitación final</span></li>
+        <li><b>4.3</b> <span data-campo="entregable.nombre">Paquete de entrega y acta de cierre</span></li>
+      </ul>
+      <p class="small muted" style="margin:5pt 0 0;"><span data-campo="bloque.pago">Sin pago propio.</span></p>
+    </div>
+    <div class="nota" style="align-self:start;">
+      Cada entregable conserva su número en la especificación de su hito, en el guion de pruebas y en el acta de aceptación. Lo que ustedes reciben y pagan vive dentro de un hito.
+    </div>
+  </div>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D03-plan-del-proyecto-v1</span></span><span>2 / 9</span></div>
+</section>
+
+<!-- ============================== HOJA 3 ============================== -->
+<section class="page">
+  <div class="hdr"><span>D03 · Plan del proyecto</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <h2 class="s"><span class="n">4</span>Entregables y criterios de aceptación</h2>
+  <p class="muted">La entrega de un hito es el día en que pasa a pruebas de ustedes; de ahí corren sus 7 días hábiles de revisión. Los criterios detallados, con claves como CA-1.3-01, van en la especificación de cada hito.</p>
+  <table class="compacta">
+    <thead><tr><th style="width:5%">N.º</th><th style="width:21.5%">Entregable</th><th style="width:43%">Criterio de aceptación general</th><th style="width:13.5%">Responsable</th><th>Entrega</th></tr></thead>
+    <tbody data-lista="entregables_criterios">
+      <tr><td class="fuerte"><span data-campo="entregable.numero">0.1</span></td><td class="fuerte"><span data-campo="entregable.nombre">Diagnóstico por escrito</span></td><td><span data-campo="entregable.criterio">Laura Méndez recibe el documento y confirma por correo que describe su proceso, sus datos, sus usuarios y su sistema contable.</span></td><td><span data-campo="entregable.responsable">Análisis</span></td><td style="white-space:nowrap;"><span data-campo="entregable.fecha">Mar 19 ene 2027</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="entregable.numero">0.2</span></td><td class="fuerte"><span data-campo="entregable.nombre">Prueba técnica de la conexión</span></td><td><span data-campo="entregable.criterio">Un movimiento de prueba aparece en el ambiente de pruebas de su sistema contable; el resultado se les envía por escrito.</span></td><td><span data-campo="entregable.responsable">Arquitectura</span></td><td style="white-space:nowrap;"><span data-campo="entregable.fecha">Mié 20 ene 2027</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="entregable.numero">0.3</span></td><td class="fuerte"><span data-campo="entregable.nombre">Diseño de la solución y prototipo</span></td><td><span data-campo="entregable.criterio">Laura Méndez revisa los prototipos de las pantallas clave y sus comentarios quedan en la especificación del Hito 1.</span></td><td><span data-campo="entregable.responsable">Arquitectura</span></td><td style="white-space:nowrap;"><span data-campo="entregable.fecha">Mié 20 ene 2027</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="entregable.numero">0.4</span></td><td class="fuerte"><span data-campo="entregable.nombre">Plan del proyecto y propuesta definitiva</span></td><td><span data-campo="entregable.criterio">Ricardo Solís acepta la propuesta definitiva y Laura Méndez firma este plan.</span></td><td><span data-campo="entregable.responsable">Líder de proyecto</span></td><td style="white-space:nowrap;"><span data-campo="entregable.fecha">Vie 22 ene 2027</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="entregable.numero">1.1</span></td><td class="fuerte"><span data-campo="entregable.nombre">Catálogo de productos cargado</span></td><td><span data-campo="entregable.criterio">La responsable del proyecto carga el catálogo desde un archivo y cada producto aparece con clave única, descripción y unidad.</span><div class="small muted" style="margin-top:1pt;"><span data-campo="entregable.criterios_clave">CA-1.1-01 a CA-1.1-04</span></div></td><td><span data-campo="entregable.responsable">Construcción</span></td><td style="white-space:nowrap;"><span data-campo="entregable.fecha">Vie 12 feb 2027</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="entregable.numero">1.2</span></td><td class="fuerte"><span data-campo="entregable.nombre">Existencias del almacén piloto</span></td><td><span data-campo="entregable.criterio">La existencia de cada producto del almacén piloto se consulta en celular y en computadora, y cuadra con un conteo de muestra.</span><div class="small muted" style="margin-top:1pt;"><span data-campo="entregable.criterios_clave">CA-1.2-01 a CA-1.2-06</span></div></td><td><span data-campo="entregable.responsable">Construcción</span></td><td style="white-space:nowrap;"><span data-campo="entregable.fecha">Vie 12 feb 2027</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="entregable.numero">1.3</span></td><td class="fuerte"><span data-campo="entregable.nombre">Captura del inventario inicial desde el celular</span></td><td><span data-campo="entregable.criterio">Un almacenista captura desde su celular el conteo inicial y la existencia se actualiza en menos de 10 segundos.</span><div class="small muted" style="margin-top:1pt;"><span data-campo="entregable.criterios_clave">CA-1.3-01 a CA-1.3-06</span></div></td><td><span data-campo="entregable.responsable">Construcción</span></td><td style="white-space:nowrap;"><span data-campo="entregable.fecha">Vie 12 feb 2027</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="entregable.numero">2.1</span></td><td class="fuerte"><span data-campo="entregable.nombre">Registro de entradas con responsable</span></td><td><span data-campo="entregable.criterio">Cada entrada se registra al momento, con su responsable, fecha y hora, y suma a la existencia de su almacén.</span></td><td><span data-campo="entregable.responsable">Construcción</span></td><td style="white-space:nowrap;"><span data-campo="entregable.fecha">Vie 5 mar 2027</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="entregable.numero">2.2</span></td><td class="fuerte"><span data-campo="entregable.nombre">Registro de salidas con responsable</span></td><td><span data-campo="entregable.criterio">Cada salida se registra al momento, con su responsable, y resta de la existencia; no se acepta una salida mayor que la existencia.</span></td><td><span data-campo="entregable.responsable">Construcción</span></td><td style="white-space:nowrap;"><span data-campo="entregable.fecha">Vie 5 mar 2027</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="entregable.numero">2.3</span></td><td class="fuerte"><span data-campo="entregable.nombre">Conexión con su sistema contable</span></td><td><span data-campo="entregable.criterio">Una salida registrada aparece en su sistema contable sin volver a capturarla; lo mismo una entrada.</span></td><td><span data-campo="entregable.responsable">Líder de proyecto</span></td><td style="white-space:nowrap;"><span data-campo="entregable.fecha">Vie 5 mar 2027</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="entregable.numero">2.4</span></td><td class="fuerte"><span data-campo="entregable.nombre">Reporte de movimientos</span></td><td><span data-campo="entregable.criterio">El reporte muestra las entradas y salidas de un producto por fecha y por responsable, y se descarga en hoja de cálculo.</span></td><td><span data-campo="entregable.responsable">Construcción</span></td><td style="white-space:nowrap;"><span data-campo="entregable.fecha">Vie 5 mar 2027</span></td></tr>
+    </tbody>
+  </table>
+  <p class="small muted" style="margin-top:6pt;">Análisis, Arquitectura y Construcción son funciones de nuestro equipo; responde por todas el líder de proyecto, <span data-campo="despacho.cuenta.nombre">Santiago</span>.</p>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D03-plan-del-proyecto-v1</span></span><span>3 / 9</span></div>
+</section>
+
+<!-- ============================== HOJA 4 ============================== -->
+<section class="page">
+  <div class="hdr"><span>D03 · Plan del proyecto</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <h2 class="s"><span class="n">4</span>Entregables y criterios de aceptación (continuación)</h2>
+  <table class="compacta">
+    <thead><tr><th style="width:5%">N.º</th><th style="width:21.5%">Entregable</th><th style="width:43%">Criterio de aceptación general</th><th style="width:13.5%">Responsable</th><th>Entrega</th></tr></thead>
+    <tbody data-lista="entregables_criterios">
+      <tr><td class="fuerte"><span data-campo="entregable.numero">3.1</span></td><td class="fuerte"><span data-campo="entregable.nombre">Existencias de los almacenes 2 y 3 cargadas</span></td><td><span data-campo="entregable.criterio">Las existencias de los almacenes 2 y 3 quedan cargadas y cuadran con un conteo de muestra que valida Laura Méndez.</span></td><td><span data-campo="entregable.responsable">Construcción</span></td><td style="white-space:nowrap;"><span data-campo="entregable.fecha">Mié 24 mar 2027</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="entregable.numero">3.2</span></td><td class="fuerte"><span data-campo="entregable.nombre">Traspasos entre almacenes</span></td><td><span data-campo="entregable.criterio">Un traspaso resta del almacén de origen y suma al de destino, con su responsable, fecha y hora.</span></td><td><span data-campo="entregable.responsable">Construcción</span></td><td style="white-space:nowrap;"><span data-campo="entregable.fecha">Mié 24 mar 2027</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="entregable.numero">3.3</span></td><td class="fuerte"><span data-campo="entregable.nombre">Existencias de los tres almacenes en una sola pantalla</span></td><td><span data-campo="entregable.criterio">La existencia de cada producto se ve por almacén y en total, en una sola pantalla, en celular y en computadora.</span></td><td><span data-campo="entregable.responsable">Construcción</span></td><td style="white-space:nowrap;"><span data-campo="entregable.fecha">Mié 24 mar 2027</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="entregable.numero">3.4</span></td><td class="fuerte"><span data-campo="entregable.nombre">Capacitación de arranque y manuales</span></td><td><span data-campo="entregable.criterio">Los almacenistas de los almacenes 2 y 3 reciben su sesión de arranque, con constancia de asistencia (el del Almacén 1 la recibe con el Hito 1, el jueves 11 de febrero); el manual del usuario y la guía rápida quedan entregados.</span></td><td><span data-campo="entregable.responsable">Análisis</span></td><td style="white-space:nowrap;"><span data-campo="entregable.fecha">Mié 24 mar 2027</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="entregable.numero">3.5</span></td><td class="fuerte"><span data-campo="entregable.nombre">Reportes de existencias, traspasos y conteo de muestra</span></td><td><span data-campo="entregable.criterio">Los tres reportes se consultan por almacén y por fecha, y cuadran con lo que muestra la pantalla de existencias.</span></td><td><span data-campo="entregable.responsable">Construcción</span></td><td style="white-space:nowrap;"><span data-campo="entregable.fecha">Mié 24 mar 2027</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="entregable.numero">4.1</span></td><td class="fuerte"><span data-campo="entregable.nombre">Acompañamiento en cada almacén</span></td><td><span data-campo="entregable.criterio">Estamos presentes el primer día de uso en cada almacén (el del Almacén 1, al salir el Hito 1) y atendemos dudas y defectos durante dos semanas.</span></td><td><span data-campo="entregable.responsable">Análisis</span></td><td><span data-campo="entregable.fecha">29 mar al 9 abr 2027</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="entregable.numero">4.2</span></td><td class="fuerte"><span data-campo="entregable.nombre">Capacitación final</span></td><td><span data-campo="entregable.criterio">La sesión final, que es también la de supervisión, se imparte a los tres almacenistas y a Laura Méndez con constancia de asistencia.</span></td><td><span data-campo="entregable.responsable">Análisis</span></td><td style="white-space:nowrap;"><span data-campo="entregable.fecha">Jue 8 abr 2027</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="entregable.numero">4.3</span></td><td class="fuerte"><span data-campo="entregable.nombre">Paquete de entrega y acta de cierre</span></td><td><span data-campo="entregable.criterio">Ustedes reciben accesos, manual técnico y de operación, documentación técnica y respaldos, y se firma el acta de cierre.</span></td><td><span data-campo="entregable.responsable">Líder de proyecto</span></td><td style="white-space:nowrap;"><span data-campo="entregable.fecha">Vie 9 abr 2027</span></td></tr>
+    </tbody>
+  </table>
+  <h3 style="margin-top:18pt;">Cómo se acepta cada hito</h3>
+  <div class="grid3" style="margin-top:7pt;" data-lista="reglas_aceptacion">
+    <div class="caja suave">
+      <div class="k">Revisión</div>
+      <div><span data-campo="regla.dias_revision">7</span> días hábiles para probar con el guion, desde el día hábil siguiente a la entrega. Sus observaciones llegan por escrito, en una sola lista.</div>
+    </div>
+    <div class="caja suave">
+      <div class="k">Correcciones</div>
+      <div>Los defectos se corrigen sin costo y ustedes tienen <span data-campo="regla.dias_verificacion">3</span> días hábiles para verificar solo lo corregido.</div>
+    </div>
+    <div class="caja suave">
+      <div class="k">Acta</div>
+      <div>Solo detiene el acta un defecto que impide cumplir un criterio. Los demás se anotan con fecha y se corrigen dentro de la garantía de <span data-campo="regla.dias_garantia">60</span> días naturales.</div>
+    </div>
+  </div>
+  <p class="small muted" style="margin-top:8pt;">Si el plazo de revisión vence sin observaciones por escrito, el hito se considera aceptado y les enviamos un aviso de aceptación por plazo vencido. Las reglas completas están en el acta de inicio, sección 9.</p>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D03-plan-del-proyecto-v1</span></span><span>4 / 9</span></div>
+</section>
+
+<!-- ============================== HOJA 5 ============================== -->
+<section class="page">
+  <div class="hdr"><span>D03 · Plan del proyecto</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <h2 class="s"><span class="n">5</span>Cronograma</h2>
+  <p class="muted">Son <span data-campo="proyecto.duracion">13 semanas</span>, del <span data-campo="proyecto.fecha_arranque">lunes 11 de enero</span> al <span data-campo="proyecto.fecha_cierre">viernes 9 de abril de 2027</span>. Cada columna es una semana de lunes a viernes.</p>
+  <table style="table-layout:fixed;">
+    <thead>
+      <tr>
+        <th style="width:24.6%">Actividad</th>
+        <th style="width:5.8%; text-align:center; padding:0 0 5pt;">S1<div style="text-transform:none; letter-spacing:0; font-weight:600; white-space:nowrap;"><span data-campo="semana.fecha_inicio">11 ene</span></div></th>
+        <th style="width:5.8%; text-align:center; padding:0 0 5pt;">S2<div style="text-transform:none; letter-spacing:0; font-weight:600; white-space:nowrap;"><span data-campo="semana.fecha_inicio">18 ene</span></div></th>
+        <th style="width:5.8%; text-align:center; padding:0 0 5pt;">S3<div style="text-transform:none; letter-spacing:0; font-weight:600; white-space:nowrap;"><span data-campo="semana.fecha_inicio">25 ene</span></div></th>
+        <th style="width:5.8%; text-align:center; padding:0 0 5pt;">S4<div style="text-transform:none; letter-spacing:0; font-weight:600; white-space:nowrap;"><span data-campo="semana.fecha_inicio">1 feb</span></div></th>
+        <th style="width:5.8%; text-align:center; padding:0 0 5pt;">S5<div style="text-transform:none; letter-spacing:0; font-weight:600; white-space:nowrap;"><span data-campo="semana.fecha_inicio">8 feb</span></div></th>
+        <th style="width:5.8%; text-align:center; padding:0 0 5pt;">S6<div style="text-transform:none; letter-spacing:0; font-weight:600; white-space:nowrap;"><span data-campo="semana.fecha_inicio">15 feb</span></div></th>
+        <th style="width:5.8%; text-align:center; padding:0 0 5pt;">S7<div style="text-transform:none; letter-spacing:0; font-weight:600; white-space:nowrap;"><span data-campo="semana.fecha_inicio">22 feb</span></div></th>
+        <th style="width:5.8%; text-align:center; padding:0 0 5pt;">S8<div style="text-transform:none; letter-spacing:0; font-weight:600; white-space:nowrap;"><span data-campo="semana.fecha_inicio">1 mar</span></div></th>
+        <th style="width:5.8%; text-align:center; padding:0 0 5pt;">S9<div style="text-transform:none; letter-spacing:0; font-weight:600; white-space:nowrap;"><span data-campo="semana.fecha_inicio">8 mar</span></div></th>
+        <th style="width:5.8%; text-align:center; padding:0 0 5pt;">S10<div style="text-transform:none; letter-spacing:0; font-weight:600; white-space:nowrap;"><span data-campo="semana.fecha_inicio">15 mar</span></div></th>
+        <th style="width:5.8%; text-align:center; padding:0 0 5pt;">S11<div style="text-transform:none; letter-spacing:0; font-weight:600; white-space:nowrap;"><span data-campo="semana.fecha_inicio">22 mar</span></div></th>
+        <th style="width:5.8%; text-align:center; padding:0 0 5pt;">S12<div style="text-transform:none; letter-spacing:0; font-weight:600; white-space:nowrap;"><span data-campo="semana.fecha_inicio">29 mar</span></div></th>
+        <th style="width:5.8%; text-align:center; padding:0 0 5pt;">S13<div style="text-transform:none; letter-spacing:0; font-weight:600; white-space:nowrap;"><span data-campo="semana.fecha_inicio">5 abr</span></div></th>
+      </tr>
+    </thead>
+    <tbody data-lista="cronograma">
+      <tr><td style="padding:4.2pt 4pt 4.2pt 0; vertical-align:middle;"><b style="white-space:nowrap;"><span data-campo="actividad.nombre">Diagnóstico y plan</span></b><div class="small muted" style="line-height:1.25; white-space:nowrap;"><span data-campo="actividad.fechas">11 al 22 de enero</span></div></td><td colspan="2" style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:left;"><div class="barra"><i style="width:100%"></i></div></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td></tr>
+      <tr><td style="padding:4.2pt 4pt 4.2pt 0; vertical-align:middle;"><b style="white-space:nowrap;"><span data-campo="actividad.nombre">Especificación</span></b><div class="small muted" style="line-height:1.25; white-space:nowrap;">Confirma <span data-campo="actividad.responsable">Laura Méndez</span></div></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"><span class="chip">H1</span><div class="small muted" style="font-size:8pt; line-height:1.2; margin-top:1.5pt; white-space:nowrap;"><span data-campo="hito.fecha_especificacion_dia">25</span></div></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"><span class="chip">H2</span><div class="small muted" style="font-size:8pt; line-height:1.2; margin-top:1.5pt; white-space:nowrap;"><span data-campo="hito.fecha_especificacion_dia">11</span></div></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"><span class="chip">H3</span><div class="small muted" style="font-size:8pt; line-height:1.2; margin-top:1.5pt; white-space:nowrap;"><span data-campo="hito.fecha_especificacion_dia">4</span></div></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td></tr>
+      <tr><td style="padding:4.2pt 4pt 4.2pt 0; vertical-align:middle;"><b style="white-space:nowrap;"><span data-campo="actividad.nombre">Hito 1 · construcción</span></b><div class="small muted" style="line-height:1.25; white-space:nowrap;"><span data-campo="actividad.fechas">25 de enero al 12 de febrero</span></div></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td colspan="3" style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:left;"><div class="barra"><i style="width:100%"></i></div></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td></tr>
+      <tr><td style="padding:4.2pt 4pt 4.2pt 0; vertical-align:middle;"><b style="white-space:nowrap;"><span data-campo="actividad.nombre">Hito 1 · sus pruebas</span></b><div class="small muted" style="line-height:1.25; white-space:nowrap;"><span data-campo="actividad.fechas">15 al 23 de febrero</span></div></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td colspan="2" style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:left;"><div class="barra" style="background:transparent;"><i style="width:70%; background:var(--accent-mid)"></i></div></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td></tr>
+      <tr><td style="padding:4.2pt 4pt 4.2pt 0; vertical-align:middle;"><b style="white-space:nowrap;"><span data-campo="actividad.nombre">Hito 2 · construcción</span></b><div class="small muted" style="line-height:1.25; white-space:nowrap;"><span data-campo="actividad.fechas">12 de febrero al 5 de marzo</span></div></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td colspan="4" style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:left;"><div class="barra" style="background:transparent;"><i style="left:20%; width:80%"></i></div></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td></tr>
+      <tr><td style="padding:4.2pt 4pt 4.2pt 0; vertical-align:middle;"><b style="white-space:nowrap;"><span data-campo="actividad.nombre">Hito 2 · sus pruebas</span></b><div class="small muted" style="line-height:1.25; white-space:nowrap;"><span data-campo="actividad.fechas">8 al 17 de marzo</span></div></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td colspan="2" style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:left;"><div class="barra" style="background:transparent;"><i style="width:80%; background:var(--accent-mid)"></i></div></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td></tr>
+      <tr><td style="padding:4.2pt 4pt 4.2pt 0; vertical-align:middle;"><b style="white-space:nowrap;"><span data-campo="actividad.nombre">Hito 3 · construcción</span></b><div class="small muted" style="line-height:1.25; white-space:nowrap;"><span data-campo="actividad.fechas">8 al 24 de marzo</span></div></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td colspan="3" style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:left;"><div class="barra" style="background:transparent;"><i style="width:86.7%"></i></div></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td></tr>
+      <tr><td style="padding:4.2pt 4pt 4.2pt 0; vertical-align:middle;"><b style="white-space:nowrap;"><span data-campo="actividad.nombre">Hito 3 · sus pruebas</span></b><div class="small muted" style="line-height:1.25; white-space:nowrap;"><span data-campo="actividad.fechas">29 de marzo al 6 de abril</span></div></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td colspan="2" style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:left;"><div class="barra" style="background:transparent;"><i style="width:70%; background:var(--accent-mid)"></i></div></td></tr>
+      <tr><td style="padding:4.2pt 4pt 4.2pt 0; vertical-align:middle;"><b style="white-space:nowrap;"><span data-campo="actividad.nombre">Entrega de cada hito</span></b><div class="small muted" style="line-height:1.25; white-space:nowrap;">Pasa a pruebas de ustedes</div></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"><span class="chip ok">H1</span><div class="small muted" style="font-size:8pt; line-height:1.2; margin-top:1.5pt; white-space:nowrap;"><span data-campo="hito.fecha_entrega_dia">12</span></div></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"><span class="chip ok">H2</span><div class="small muted" style="font-size:8pt; line-height:1.2; margin-top:1.5pt; white-space:nowrap;"><span data-campo="hito.fecha_entrega_dia">5</span></div></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"><span class="chip ok">H3</span><div class="small muted" style="font-size:8pt; line-height:1.2; margin-top:1.5pt; white-space:nowrap;"><span data-campo="hito.fecha_entrega_dia">24</span></div></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td></tr>
+      <tr><td style="padding:4.2pt 4pt 4.2pt 0; vertical-align:middle;"><b style="white-space:nowrap;"><span data-campo="actividad.nombre">Salida a producción</span></b><div class="small muted" style="line-height:1.25; white-space:nowrap;">Fecha prevista</div></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"><span class="chip">H1</span><div class="small muted" style="font-size:8pt; line-height:1.2; margin-top:1.5pt; white-space:nowrap;"><span data-campo="hito.fecha_produccion_dia">19</span></div></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"><span class="chip">H2</span><div class="small muted" style="font-size:8pt; line-height:1.2; margin-top:1.5pt; white-space:nowrap;"><span data-campo="hito.fecha_produccion_dia">12</span></div></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"><span class="chip">H3</span><div class="small muted" style="font-size:8pt; line-height:1.2; margin-top:1.5pt; white-space:nowrap;"><span data-campo="hito.fecha_produccion_dia">29</span></div></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td></tr>
+      <tr><td style="padding:4.2pt 4pt 4.2pt 0; vertical-align:middle;"><b style="white-space:nowrap;"><span data-campo="actividad.nombre">Capacitación de arranque</span></b><div class="small muted" style="line-height:1.25; white-space:nowrap;"><span data-campo="actividad.fechas">11 de febrero y 22 y 23 de marzo</span></div></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:left;"><div class="barra" style="background:transparent;"><i style="left:60%; width:20%"></i></div></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:left;"><div class="barra" style="background:transparent;"><i style="width:40%"></i></div></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td></tr>
+      <tr><td style="padding:4.2pt 4pt 4.2pt 0; vertical-align:middle;"><b style="white-space:nowrap;"><span data-campo="actividad.nombre">Acompañamiento</span></b><div class="small muted" style="line-height:1.25; white-space:nowrap;"><span data-campo="actividad.fechas">29 de marzo al 9 de abril</span></div></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td colspan="2" style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:left;"><div class="barra"><i style="width:100%"></i></div></td></tr>
+      <tr><td style="padding:4.2pt 4pt 4.2pt 0; vertical-align:middle;"><b style="white-space:nowrap;"><span data-campo="actividad.nombre">Capacitación final y cierre</span></b><div class="small muted" style="line-height:1.25; white-space:nowrap;"><span data-campo="actividad.fechas">8 y 9 de abril</span></div></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:left;"><div class="barra" style="background:transparent;"><i style="left:60%; width:40%"></i></div></td></tr>
+      <tr><td style="padding:4.2pt 4pt 4.2pt 0; vertical-align:middle;"><b style="white-space:nowrap;"><span data-campo="actividad.nombre">Días inhábiles</span></b><div class="small muted" style="line-height:1.25; white-space:nowrap;">De las dos partes</div></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"><span style="font-size:8pt; font-weight:700; color:var(--ambar); line-height:1.15; display:block;"><span data-campo="cronograma.inhabil">1 feb</span></span></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"><span style="font-size:8pt; font-weight:700; color:var(--ambar); line-height:1.15; display:block;"><span data-campo="cronograma.inhabil">15 mar</span></span></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"><span style="font-size:8pt; font-weight:700; color:var(--ambar); line-height:1.15; display:block;"><span data-campo="cronograma.inhabil">25 y 26 mar</span></span></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td><td style="border-left:1px solid var(--rule); padding:4.2pt 2pt; vertical-align:middle; text-align:center;"></td></tr>
+    </tbody>
+  </table>
+  <div class="grid2" style="margin-top:8pt; gap:12pt; grid-template-columns:1.3fr 1fr;">
+    <div class="nota">
+      <b>Cómo se lee.</b> Barra oscura: trabajo de nuestro equipo. Barra clara: sus 7 días hábiles de revisión. H1, H2 y H3 marcan el día en que cada hito pasa a pruebas de ustedes. El Hito 3 se entrega el <span data-campo="hito.fecha_entrega">miércoles 24 de marzo</span> por Semana Santa. Sale a producción el <span data-campo="hito.fecha_produccion">lunes 29 de marzo</span>, al empezar el acompañamiento, y sus pruebas se hacen ya en uso.
+    </div>
+    <div class="nota">
+      <b>Días inhábiles de las dos partes.</b> <span data-campo="cronograma.inhabiles">Lunes 1 de febrero, lunes 15 de marzo, y jueves 25 y viernes 26 de marzo de 2027 (Semana Santa).</span> Ninguna de las dos partes tiene otros días inhábiles en el periodo.
+    </div>
+  </div>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D03-plan-del-proyecto-v1</span></span><span>5 / 9</span></div>
+</section>
+
+<!-- ============================== HOJA 6 ============================== -->
+<section class="page">
+  <div class="hdr"><span>D03 · Plan del proyecto</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <h2 class="s"><span class="n">6</span>Fechas del cliente</h2>
+  <div class="garantia">
+    <p style="margin-bottom:4pt;"><b>Pendientes de ustedes.</b> Las fechas de los hitos cuentan con que lo de esta tabla llegue en su fecha. Si algo llega tarde, les avisamos por escrito ese mismo día y la fecha prevista del hito se recorre un día hábil por cada día hábil de espera.</p>
+    <p style="margin:0;">Las especificaciones de los hitos 2 y 3 se les envían con 3 días hábiles para confirmarlas; la del Hito 1 se les entregó con este plan. Un retraso de ustedes no cambia esta línea base; aparece en el reporte semanal.</p>
+  </div>
+  <table class="compacta" style="margin-top:8pt;">
+    <thead><tr><th style="width:5%">N.º</th><th style="width:37%">Qué entregan o hacen ustedes</th><th style="width:21%">Quién</th><th style="width:21%">Fecha compromiso</th><th>Para qué</th></tr></thead>
+    <tbody data-lista="fechas_cliente">
+      <tr><td class="fuerte">1</td><td><span data-campo="fecha_cliente.que">Confirmar la especificación del Hito 1</span></td><td><span data-campo="fecha_cliente.quien">Laura Méndez</span></td><td><span data-campo="fecha_cliente.fecha">Lunes 25 de enero</span></td><td><span data-campo="fecha_cliente.para">Construir el Hito 1</span></td></tr>
+      <tr><td class="fuerte">2</td><td><span data-campo="fecha_cliente.que">Internet estable y un celular de la empresa en el almacén piloto</span></td><td><span data-campo="fecha_cliente.quien">Iván Torres</span></td><td><span data-campo="fecha_cliente.fecha">Viernes 29 de enero</span></td><td><span data-campo="fecha_cliente.para">Probar en el almacén</span></td></tr>
+      <tr><td class="fuerte">3</td><td><span data-campo="fecha_cliente.que">Confirmar la especificación del Hito 2 (se envía el lunes 8)</span></td><td><span data-campo="fecha_cliente.quien">Laura Méndez</span></td><td><span data-campo="fecha_cliente.fecha">Jueves 11 de febrero</span></td><td><span data-campo="fecha_cliente.para">Construir el Hito 2</span></td></tr>
+      <tr><td class="fuerte">4</td><td><span data-campo="fecha_cliente.que">Probar el Hito 1 con el guion y enviar observaciones por escrito</span></td><td><span data-campo="fecha_cliente.quien">Laura Méndez, con los tres almacenistas</span></td><td><span data-campo="fecha_cliente.fecha">Del lunes 15 al martes 23 de febrero</span></td><td><span data-campo="fecha_cliente.para">Aceptar el Hito 1</span></td></tr>
+      <tr><td class="fuerte">5</td><td><span data-campo="fecha_cliente.que">Cuenta de acceso para conectar con su sistema contable</span></td><td><span data-campo="fecha_cliente.quien">Iván Torres</span></td><td><span data-campo="fecha_cliente.fecha">Martes 23 de febrero</span></td><td><span data-campo="fecha_cliente.para">Entregable 2.3</span></td></tr>
+      <tr><td class="fuerte">6</td><td><span data-campo="fecha_cliente.que">Confirmar la especificación del Hito 3 (se envía el lunes 1)</span></td><td><span data-campo="fecha_cliente.quien">Laura Méndez</span></td><td><span data-campo="fecha_cliente.fecha">Jueves 4 de marzo</span></td><td><span data-campo="fecha_cliente.para">Construir el Hito 3</span></td></tr>
+      <tr><td class="fuerte">7</td><td><span data-campo="fecha_cliente.que">Usuarios de los almacenes 2 y 3, con puesto y permisos</span></td><td><span data-campo="fecha_cliente.quien">Laura Méndez</span></td><td><span data-campo="fecha_cliente.fecha">Viernes 5 de marzo</span></td><td><span data-campo="fecha_cliente.para">Usuarios y permisos del Hito 3</span></td></tr>
+      <tr><td class="fuerte">8</td><td><span data-campo="fecha_cliente.que">Probar el Hito 2 con el guion y enviar observaciones por escrito</span></td><td><span data-campo="fecha_cliente.quien">Laura Méndez, con los tres almacenistas</span></td><td><span data-campo="fecha_cliente.fecha">Del lunes 8 al miércoles 17 de marzo</span></td><td><span data-campo="fecha_cliente.para">Aceptar el Hito 2</span></td></tr>
+      <tr><td class="fuerte">9</td><td><span data-campo="fecha_cliente.que">Internet y un celular de la empresa en los almacenes 2 y 3</span></td><td><span data-campo="fecha_cliente.quien">Iván Torres</span></td><td><span data-campo="fecha_cliente.fecha">Viernes 12 de marzo</span></td><td><span data-campo="fecha_cliente.para">Hito 3</span></td></tr>
+      <tr><td class="fuerte">10</td><td><span data-campo="fecha_cliente.que">Grupos y horarios de la capacitación de arranque</span></td><td><span data-campo="fecha_cliente.quien">Laura Méndez</span></td><td><span data-campo="fecha_cliente.fecha">Viernes 12 de marzo</span></td><td><span data-campo="fecha_cliente.para">Entregable 3.4</span></td></tr>
+      <tr><td class="fuerte">11</td><td><span data-campo="fecha_cliente.que">Conteo físico de los almacenes 2 y 3 para la carga inicial</span></td><td><span data-campo="fecha_cliente.quien">Laura Méndez, con los almacenistas de los almacenes 2 y 3</span></td><td><span data-campo="fecha_cliente.fecha">Viernes 19 de marzo</span></td><td><span data-campo="fecha_cliente.para">Entregable 3.1</span></td></tr>
+      <tr><td class="fuerte">12</td><td><span data-campo="fecha_cliente.que">Probar el Hito 3 con el guion y enviar observaciones por escrito</span></td><td><span data-campo="fecha_cliente.quien">Laura Méndez, con los tres almacenistas</span></td><td><span data-campo="fecha_cliente.fecha">Del lunes 29 de marzo al martes 6 de abril</span></td><td><span data-campo="fecha_cliente.para">Aceptar el Hito 3</span></td></tr>
+      <tr><td class="fuerte">13</td><td><span data-campo="fecha_cliente.que">Tres almacenistas, 2 horas a la semana, para demostraciones y pruebas</span></td><td><span data-campo="fecha_cliente.quien">Laura Méndez</span></td><td><span data-campo="fecha_cliente.fecha">Semanas 3 a 13</span></td><td><span data-campo="fecha_cliente.para">Todos los hitos</span></td></tr>
+    </tbody>
+  </table>
+  <p class="small muted" style="margin-top:7pt;">Todas las fechas son de 2027. Ya entregado en el diagnóstico, en fecha: días inhábiles de su empresa, catálogo y existencias, almacén piloto y quienes prueban, acceso de pruebas al sistema contable, y usuarios con puesto y permisos.</p>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D03-plan-del-proyecto-v1</span></span><span>6 / 9</span></div>
+</section>
+
+<!-- ============================== HOJA 7 ============================== -->
+<section class="page">
+  <div class="hdr"><span>D03 · Plan del proyecto</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <h2 class="s"><span class="n">7</span>Montos, pagos y bolsa de ajustes</h2>
+  <p>El precio es fijo para este alcance y se paga en cuatro pagos. Los montos son los de la propuesta definitiva, sin cambios, y no incluyen IVA.</p>
+  <table>
+    <thead><tr><th style="width:24%">Pago</th><th style="width:40%">Qué dispara la factura</th><th style="width:22%">Fecha prevista</th><th class="num">Monto</th></tr></thead>
+    <tbody data-lista="pagos">
+      <tr><td class="fuerte"><span data-campo="pago.nombre">Pago inicial</span></td><td><span data-campo="pago.disparador">Firma del acta de inicio. Cubre el diagnóstico.</span></td><td><span data-campo="pago.fecha">Jueves 7 de enero</span> <span class="chip ok">Facturado</span></td><td class="num"><span data-campo="pago.monto">$40,000</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="pago.nombre">Hito 1 · Prueba piloto en un almacén</span></td><td><span data-campo="pago.disparador">Acta de aceptación del Hito 1 firmada, o aviso de aceptación por plazo vencido.</span></td><td><span data-campo="pago.fecha">A más tardar el martes 23 de febrero</span></td><td class="num"><span data-campo="pago.monto">$90,000</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="pago.nombre">Hito 2 · Entradas, salidas y conexión con su sistema contable</span></td><td><span data-campo="pago.disparador">Acta de aceptación del Hito 2 firmada, o aviso de aceptación por plazo vencido.</span></td><td><span data-campo="pago.fecha">A más tardar el miércoles 17 de marzo</span></td><td class="num"><span data-campo="pago.monto">$90,000</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="pago.nombre">Hito 3 · Uso completo en los tres almacenes</span></td><td><span data-campo="pago.disparador">Acta de aceptación del Hito 3 firmada, o aviso de aceptación por plazo vencido.</span></td><td><span data-campo="pago.fecha">A más tardar el martes 6 de abril</span></td><td class="num"><span data-campo="pago.monto">$110,000</span></td></tr>
+      <tr class="total"><td colspan="3">Precio fijo total</td><td class="num"><span data-campo="proyecto.precio_total">$330,000</span> más IVA</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top:16pt;">Facturación y cobro</h3>
+  <div class="caja suave" style="margin-top:6pt;">
+    <div class="kv">
+      <div class="k">Orden de compra</div><div><span data-campo="facturacion.orden_compra_detalle">OC-2027-0018, por $330,000 más IVA, con cuatro partidas: una por pago.</span></div>
+      <div class="k">Envío de facturas</div><div><span data-campo="facturacion.envio">PDF y XML por correo a facturas@clienteejemplo.mx, con copia a Patricia Luna, cuentas por pagar.</span></div>
+      <div class="k">Documento exigido</div><div><span data-campo="facturacion.documento_exigido">Número de orden de compra en cada factura y, en los pagos de hito, el acta de aceptación o el aviso de aceptación por plazo vencido.</span></div>
+      <div class="k">Pago</div><div><span data-campo="facturacion.dias_pago">Transferencia a 15 días naturales de recibida la factura. El IVA se suma en cada factura.</span></div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:16pt;">Fuera del precio fijo</h3>
+  <div class="grid2" style="margin-top:6pt; gap:12pt;">
+    <div class="caja">
+      <div class="k">Servicio mensual</div>
+      <div><b><span data-campo="mensualidad.monto">$12,000</span> más IVA al mes</b>, al terminar la capacitación final; la fecha exacta de arranque la fija el acta de cierre. Se contrata aparte.</div>
+    </div>
+    <div class="caja">
+      <div class="k">Cambios de alcance</div>
+      <div>Cada uno lleva su solicitud de cambio, con su costo y su efecto en las fechas. No se trabaja sin su aprobación por escrito.</div>
+    </div>
+  </div>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D03-plan-del-proyecto-v1</span></span><span>7 / 9</span></div>
+</section>
+
+<!-- ============================== HOJA 8 ============================== -->
+<section class="page">
+  <div class="hdr"><span>D03 · Plan del proyecto</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <h2 class="s"><span class="n">7</span>Montos, pagos y bolsa de ajustes (continuación)</h2>
+  <h3 style="margin-top:6pt;">Bolsa de ajustes</h3>
+  <div class="grid4" style="grid-template-columns:1.1fr 3fr; gap:12pt; margin-top:6pt;">
+    <div class="tile" style="align-self:start;"><div class="big"><span data-campo="bolsa.horas">34</span> <small>horas</small></div><div class="lbl">Incluidas en el precio fijo.</div></div>
+    <div>
+      <ul class="clean" style="margin-top:2pt;">
+        <li>Cubre los ajustes menores: lo que cabe en la especificación, pero lo quieren distinto, y toma menos de 2 horas.</li>
+        <li>Su saldo aparece en horas en cada reporte semanal; les avisamos cuando llegue a 75 % de uso.</li>
+        <li>Lo que toma 2 horas o más es cambio de alcance; pueden pedir que se cubra con el saldo de la bolsa.</li>
+        <li style="margin-bottom:0;">Cuando se acaba, lo siguiente es solicitud de cambio. El saldo no usado no se devuelve en dinero.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="s" style="margin-top:20pt;"><span class="n">8</span>Riesgos compartidos</h2>
+  <p class="muted">Se revisan cada semana y su estado va en el reporte semanal.</p>
+  <table class="compacta">
+    <thead><tr><th style="width:27%">Qué puede pasar</th><th style="width:27%">Qué hacen ustedes</th><th style="width:29%">Qué hacemos nosotros</th><th>Lo vigila</th></tr></thead>
+    <tbody data-lista="riesgos">
+      <tr><td><span data-campo="riesgo.que">El acceso al sistema contable se retrasa.</span></td><td><span data-campo="riesgo.cliente">Iván Torres lo gestiona y entrega la cuenta el martes 23 de febrero.</span></td><td><span data-campo="riesgo.nosotros">Avanzamos la conexión en el ambiente de pruebas y avisamos el mismo día si no llega.</span></td><td><span data-campo="riesgo.vigila">Laura Méndez</span></td></tr>
+      <tr><td><span data-campo="riesgo.que">Hay claves duplicadas en el catálogo del almacén 2.</span></td><td><span data-campo="riesgo.cliente">Laura Méndez corrige las claves antes de la carga.</span></td><td><span data-campo="riesgo.nosotros">Revisamos el archivo y les enviamos la lista de duplicados el mismo día.</span></td><td><span data-campo="riesgo.vigila">Nuestro líder de proyecto</span></td></tr>
+      <tr><td><span data-campo="riesgo.que">Los almacenistas no tienen tiempo para probar un hito.</span></td><td><span data-campo="riesgo.cliente">Laura Méndez aparta las 2 horas por semana de cada almacenista desde el lunes siguiente a cada entrega.</span></td><td><span data-campo="riesgo.nosotros">Enviamos el guion con el aviso de entrega del hito y probamos en su turno.</span></td><td><span data-campo="riesgo.vigila">Laura Méndez</span></td></tr>
+      <tr><td><span data-campo="riesgo.que">La señal de internet falla en un almacén.</span></td><td><span data-campo="riesgo.cliente">Iván Torres revisa señal y equipo antes de cada salida a producción.</span></td><td><span data-campo="riesgo.nosotros">Probamos en cada almacén antes de capacitar y avisamos el mismo día si la señal no alcanza.</span></td><td><span data-campo="riesgo.vigila">Iván Torres</span></td></tr>
+      <tr><td><span data-campo="riesgo.que">Semana Santa deja poco margen para el Hito 3.</span></td><td><span data-campo="riesgo.cliente">Laura Méndez cierra el conteo físico a más tardar el viernes 19 de marzo.</span></td><td><span data-campo="riesgo.nosotros">Cargamos y validamos la muestra antes del miércoles 24 de marzo.</span></td><td><span data-campo="riesgo.vigila">Nuestro líder de proyecto</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D03-plan-del-proyecto-v1</span></span><span>8 / 9</span></div>
+</section>
+
+<!-- ============================== HOJA 9 ============================== -->
+<section class="page">
+  <div class="hdr"><span>D03 · Plan del proyecto</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <h2 class="s"><span class="n">9</span>Calendario de comunicación</h2>
+  <table class="compacta">
+    <thead><tr><th style="width:15%">Qué</th><th style="width:25%">Día y hora</th><th style="width:10.5%">Duración</th><th style="width:28.5%">Asistentes</th><th>Cómo</th></tr></thead>
+    <tbody data-lista="comunicacion">
+      <tr><td class="fuerte"><span data-campo="comunicacion.que">Demostración</span></td><td><span data-campo="comunicacion.cuando">Jueves, 10:00, semanas 3 a 11; en la 11, miércoles 24 de marzo</span></td><td><span data-campo="comunicacion.duracion">30 minutos</span></td><td><span data-campo="comunicacion.asistentes">Laura Méndez, un almacenista y nuestro contacto diario</span></td><td><span data-campo="comunicacion.como">Videollamada; lo que pidan se registra ese día.</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="comunicacion.que">Reporte semanal</span></td><td><span data-campo="comunicacion.cuando">Viernes antes de las 14:00, semanas 1 a 13; en la 11, miércoles 24 de marzo</span></td><td><span data-campo="comunicacion.duracion">—</span></td><td><span data-campo="comunicacion.asistentes">Laura Méndez, con copia a Ricardo Solís</span></td><td><span data-campo="comunicacion.como">Correo con el reporte en PDF.</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="comunicacion.que">Aviso de entrega de hito</span></td><td><span data-campo="comunicacion.cuando">Viernes 12 de febrero, viernes 5 de marzo y miércoles 24 de marzo</span></td><td><span data-campo="comunicacion.duracion">—</span></td><td><span data-campo="comunicacion.asistentes">Laura Méndez, con copia a Ricardo Solís</span></td><td><span data-campo="comunicacion.como">Correo con el guion de pruebas.</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="comunicacion.que">Sesión de pruebas</span></td><td><span data-campo="comunicacion.cuando">Lunes 15 de febrero, 8 de marzo y 29 de marzo, 10:00</span></td><td><span data-campo="comunicacion.duracion">2 horas</span></td><td><span data-campo="comunicacion.asistentes">Laura Méndez, los tres almacenistas y nuestro equipo</span></td><td><span data-campo="comunicacion.como">En el almacén, con el guion.</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="comunicacion.que">Firma del acta de aceptación</span></td><td><span data-campo="comunicacion.cuando">Al cumplirse los criterios, dentro del plazo de revisión</span></td><td><span data-campo="comunicacion.duracion">30 minutos</span></td><td><span data-campo="comunicacion.asistentes">Laura Méndez y nuestro líder de proyecto, con copia a Ricardo Solís</span></td><td><span data-campo="comunicacion.como">Videollamada; el acta se firma y se envía por correo.</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="comunicacion.que">Junta de cierre</span></td><td><span data-campo="comunicacion.cuando">Viernes 9 de abril, 10:00</span></td><td><span data-campo="comunicacion.duracion">1 hora</span></td><td><span data-campo="comunicacion.asistentes">Ricardo Solís, Laura Méndez, Santiago y el socio operativo</span></td><td><span data-campo="comunicacion.como">En sus oficinas; se firma el acta de cierre.</span></td></tr>
+    </tbody>
+  </table>
+  <div class="nota" style="margin-top:9pt;">
+    <b>Contacto diario:</b> <span data-campo="despacho.contacto.nombre">Socio operativo</span>, <span data-campo="despacho.contacto.correo">socio@sistemasalamedida.mx</span>, <span data-campo="despacho.contacto.telefono">55 5550 0110</span>. <b>Líder de proyecto:</b> <span data-campo="despacho.cuenta.nombre">Santiago</span>, <span data-campo="despacho.cuenta.correo">cuenta@sistemasalamedida.mx</span>, <span data-campo="despacho.cuenta.telefono">55 5550 0111</span>. Los avisos de pendientes, riesgos y cambios van por correo el mismo día; lo acordado en junta o llamada lo confirmamos por correo ese día.
+  </div>
+
+  <h2 class="s" style="margin-top:16pt;"><span class="n">10</span>Hoja de firmas</h2>
+  <div class="callout">
+    <div class="k">Leyenda de línea base</div>
+    <p style="margin:0 0 5pt; font-size:10.4pt; line-height:1.45; font-weight:600;">Con esta firma queda fijada la línea base versión <span data-campo="documento.version">v1</span> del proyecto <span data-campo="proyecto.clave">CE-INV</span>: alcance, fechas y montos. El avance se mide contra esta versión. Solo cambia con una solicitud de cambio aprobada por escrito; un retraso por pendientes suyos recorre la fecha prevista, no la línea base.</p>
+    <p style="margin:0; font-size:10.4pt; line-height:1.45; font-weight:600;">Cada cambio se anota en la tabla de versiones y se avisa en el reporte semanal. No hace falta volver a firmar el plan.</p>
+  </div>
+  <div class="firmas" style="margin-top:18pt;">
+    <div class="firma">
+      <div class="linea"></div>
+      <div class="n"><span data-campo="cliente.responsable.nombre">Laura Méndez</span></div>
+      <div class="r"><span data-campo="cliente.responsable.puesto">Gerente de operaciones</span> · <span data-campo="cliente.nombre">Cliente Ejemplo, S.A. de C.V.</span><br>Responsable del proyecto<br>Fecha: <span class="campo-mano"></span></div>
+    </div>
+    <div class="firma">
+      <div class="linea"></div>
+      <div class="n"><span data-campo="despacho.cuenta.nombre">Santiago</span></div>
+      <div class="r"><span data-campo="despacho.cuenta.puesto">Socio</span> · <span data-campo="despacho.nombre">Sistemas a la medida</span><br>Líder de proyecto<br>Fecha: <span class="campo-mano"></span></div>
+    </div>
+  </div>
+  <p class="small muted" style="margin:6pt 0 0;">Copia firmada a <span data-campo="cliente.decide.nombre">Ricardo Solís</span>, <span data-campo="cliente.decide.puesto_minusculas">director general</span>.</p>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D03-plan-del-proyecto-v1</span></span><span>9 / 9</span></div>
+</section>
+
+</body>
+</html>

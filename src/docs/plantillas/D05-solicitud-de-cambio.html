@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>D05 · Solicitud de cambio · Ejemplo</title>
+<link rel="stylesheet" href="base.css">
+</head>
+<body>
+<!-- Extensión: 2 hojas. La especificación pide 1; con las ocho secciones, los tres textos modelo con casillas, las dos firmas y la tabla de la línea base, a letra de la guía (nunca menos de 8 pt) no cabe en una. Ya se quitaron los datos repetidos (folio y fecha límite en la meta, nota de la sección 5). -->
+
+<section class="page">
+  <div class="hdr"><span>D05 · Solicitud de cambio</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <div class="doc-head">
+    <div class="eyebrow">D05 · Solicitud de cambio</div>
+    <h1><span data-campo="proyecto.nombre">Control de inventario en almacenes</span></h1>
+    <p class="sub">Cambio «<span data-campo="cambio.nombre">Avisos de mínimo</span>»: qué cuesta, qué mueve y sus opciones. Decide y firma <span data-campo="cliente.decide.nombre">Ricardo Solís</span>; <span data-campo="cliente.responsable.nombre">Laura Méndez</span> firma de enterada (hoja <span data-campo="documento.hoja_firmas">2</span>).</p>
+    <div class="meta" style="grid-template-columns:1.9fr 0.9fr 2.1fr 0.8fr;">
+      <div><div class="k">Cliente</div><div class="v"><span data-campo="cliente.nombre">Cliente Ejemplo, S.A. de C.V.</span></div></div>
+      <div><div class="k">Clave</div><div class="v"><span data-campo="proyecto.clave">CE-INV</span></div></div>
+      <div><div class="k">Fecha de envío</div><div class="v"><span data-campo="documento.fecha">Jueves 18 de febrero de 2027</span></div></div>
+      <div><div class="k">Versión</div><div class="v"><span data-campo="documento.version">v1</span></div></div>
+    </div>
+  </div>
+
+  <!-- Secciones 1 y 2 -->
+  <div class="grid2" style="grid-template-columns:3.8in 1fr;gap:14pt;">
+    <div>
+      <h2 class="s"><span class="n">1</span>Folio</h2>
+      <div class="kv" style="grid-template-columns:0.7in 1fr;">
+        <div class="k">Folio</div><div><b><span data-campo="cambio.folio">CE-INV-D05-01</span></b></div>
+        <div class="k">Archivo</div><div><span data-campo="documento.archivo_pdf" style="white-space:nowrap;">CE-INV-D05-solicitud-de-cambio-01-v1.pdf</span></div>
+        <div class="k">Línea base</div><div>Plan del proyecto (<span data-campo="linea_base.version_actual">D03 v1</span>), firmado el <span data-campo="linea_base.fecha">viernes 22 de enero de 2027</span></div>
+      </div>
+    </div>
+    <div>
+      <h2 class="s"><span class="n">2</span>Quién lo pide y fecha</h2>
+      <div class="kv" style="grid-template-columns:0.62in 1fr;">
+        <div class="k">Pide</div><div><b><span data-campo="solicitante.nombre">Laura Méndez</span></b>, <span data-campo="solicitante.puesto">gerente de operaciones</span></div>
+        <div class="k">Medio</div><div><span data-campo="solicitud.medio">Observaciones por escrito de las pruebas del Hito 1</span></div>
+        <div class="k">Registro</div><div><span data-campo="solicitud.fecha_registro">Martes 16 de febrero de 2027</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sección 3 -->
+  <h2 class="s" style="margin-top:21pt;"><span class="n">3</span>Descripción en palabras del cliente</h2>
+  <div class="callout">
+    <div class="k">Lo que pidió · <span data-campo="solicitante.nombre">Laura Méndez</span></div>
+    <div class="v"><span data-campo="solicitud.peticion">«Queremos que el sistema avise por correo cuando un producto baje de su mínimo.»</span></div>
+  </div>
+  <div class="kv" style="grid-template-columns:1.25in 1fr;margin-top:9pt;">
+    <div class="k">Lo que entendimos</div><div><span data-campo="solicitud.entendido">Cada producto tendrá un mínimo en cada almacén. Cuando su existencia baje de ese mínimo, el sistema enviará un correo a Laura Méndez y al almacenista de ese almacén.</span></div>
+  </div>
+
+  <!-- Sección 4 -->
+  <h2 class="s" style="margin-top:21pt;"><span class="n">4</span>Clasificación</h2>
+  <div class="caja" style="padding:8pt 11pt;">
+    <span class="chip alerta"><span data-campo="clasificacion.tipo">Cambio de alcance</span></span>&nbsp; <b>Razón: <span data-campo="clasificacion.razon">la especificación no incluye avisos ni mínimos por producto.</span></b>
+    <p class="small muted" style="margin:4pt 0 0;"><span data-campo="clasificacion.descartadas">No es defecto: ningún criterio de aceptación lo cubre. No es ajuste menor: no cabe en la especificación confirmada.</span></p>
+  </div>
+
+  <!-- Sección 5 -->
+  <h2 class="s" style="margin-top:21pt;"><span class="n">5</span>Impacto</h2>
+  <div class="grid4" style="grid-template-columns:1fr 1.7fr 2.1fr 1.5fr;gap:8pt;">
+    <div class="tile"><div class="big"><span data-campo="impacto.horas">24</span> <small>horas</small></div><div class="lbl">Horas adicionales estimadas</div></div>
+    <div class="tile"><div class="big"><span data-campo="impacto.precio">$18,864</span> <small>más IVA</small></div><div class="lbl">Precio adicional: <span data-campo="impacto.horas">24</span> horas × <span data-campo="impacto.tarifa">$786</span> por hora, tarifa del proyecto</div></div>
+    <div class="tile"><div class="big"><span data-campo="impacto.hito_fecha_actual_corta">24 mar</span> → <span data-campo="impacto.hito_fecha_nueva">31 mar</span></div><div class="lbl"><span data-campo="impacto.hito">Hito 3</span>: del <span data-campo="impacto.hito_fecha_actual_texto">miércoles 24</span> al <span data-campo="impacto.hito_fecha_nueva_larga">miércoles 31 de marzo</span></div></div>
+    <div class="tile"><div class="big"><span data-campo="impacto.cierre_fecha">9 abr</span> <small><span data-campo="impacto.cierre_efecto">sin cambio</span></small></div><div class="lbl">Cierre del proyecto: <span data-campo="impacto.cierre_fecha_texto">viernes 9 de abril</span></div></div>
+  </div>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D05-solicitud-de-cambio-01-v1</span></span><span>1 / 2</span></div>
+</section>
+
+<section class="page">
+  <div class="hdr"><span>D05 · Solicitud de cambio</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <!-- Sección 6 -->
+  <h2 class="s" style="margin:0 0 4pt;"><span class="n">6</span>Opciones</h2>
+  <table class="compacta" style="table-layout:fixed;">
+    <thead><tr><th style="width:27%">Opción</th><th>Consecuencia</th></tr></thead>
+    <tbody data-lista="opciones">
+      <tr><td class="fuerte"><span data-campo="opcion.letra">A</span>. <span data-campo="opcion.nombre">Hacerlo ahora</span></td><td><span data-campo="opcion.consecuencia">Entra al Hito 3. Cuesta $18,864 más IVA; el Hito 3 se entrega el miércoles 31 de marzo y el cierre sigue el viernes 9 de abril.</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="opcion.letra">B</span>. <span data-campo="opcion.nombre">Dejarlo para después</span></td><td><span data-campo="opcion.consecuencia">Se estima de nuevo tras el cierre. Alcance, fechas y montos quedan como están.</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="opcion.letra">C</span>. <span data-campo="opcion.nombre">No hacerlo</span></td><td><span data-campo="opcion.consecuencia">No se hace. Alcance, fechas y montos quedan como están.</span></td></tr>
+    </tbody>
+  </table>
+  <p class="small" style="margin:4pt 0 0;">Les pedimos su decisión antes del <b><span data-campo="decision.fecha_limite">viernes 26 de febrero de 2027</span></b>.</p>
+
+  <!-- Sección 7 -->
+  <h2 class="s" style="margin-top:18pt;"><span class="n">7</span>Decisión y firma del cliente</h2>
+  <p class="small" style="margin:0 0 4pt;">Marquen una opción y firmen abajo. También vale un correo de <span data-campo="cliente.decide.nombre">Ricardo Solís</span> desde <span data-campo="cliente.decide.correo">rsolis@clienteejemplo.mx</span> a <span data-campo="despacho.cuenta.correo">cuenta@sistemasalamedida.mx</span> con el texto de la opción elegida.</p>
+  <ul class="check" data-lista="decision_textos">
+    <li><b>Opción A.</b> «Aprobamos la solicitud de cambio <span data-campo="cambio.folio">CE-INV-D05-01</span> en la opción A. Aceptamos el precio adicional de <span data-campo="impacto.precio_texto">18,864 pesos</span> más IVA y la entrega del <span data-campo="impacto.hito">Hito 3</span> el <span data-campo="impacto.hito_fecha_nueva_texto">31 de marzo de 2027</span>. El trabajo inicia con esta aprobación.»</li>
+    <li><b>Opción B.</b> «Elegimos la opción B. La solicitud <span data-campo="cambio.folio">CE-INV-D05-01</span> queda para después del cierre y se estimará de nuevo. Alcance, fechas y montos quedan como están.»</li>
+    <li style="margin-bottom:0;"><b>Opción C.</b> «Elegimos la opción C. La solicitud <span data-campo="cambio.folio">CE-INV-D05-01</span> no se hará. Alcance, fechas y montos quedan como están.»</li>
+  </ul>
+  <div class="firmas" style="margin-top:28pt;">
+    <div class="firma">
+      <div class="linea"></div>
+      <div class="n"><span data-campo="cliente.decide.nombre">Ricardo Solís</span></div>
+      <div class="r"><span data-campo="cliente.decide.puesto">Director general</span> · Decide y paga<br>Opción elegida: <span class="campo-mano"></span><br>Fecha: <span class="campo-mano"></span></div>
+    </div>
+    <div class="firma">
+      <div class="linea"></div>
+      <div class="n"><span data-campo="cliente.responsable.nombre">Laura Méndez</span></div>
+      <div class="r"><span data-campo="cliente.responsable.puesto">Gerente de operaciones</span> · Firma de enterada<br>Fecha: <span class="campo-mano"></span></div>
+    </div>
+  </div>
+
+  <!-- Sección 8 -->
+  <h2 class="s" style="margin-top:22pt;"><span class="n">8</span>Cómo queda la línea base</h2>
+  <table class="compacta" style="table-layout:fixed;">
+    <thead><tr><th style="width:17%">Concepto</th><th style="width:35%">Vigente</th><th>Con la opción A</th></tr></thead>
+    <tbody data-lista="linea_base">
+      <tr><td class="fuerte">Monto total</td><td><span data-campo="linea_base.total_actual">$330,000</span> más IVA</td><td><b><span data-campo="linea_base.total_nuevo">$348,864</span> más IVA</b></td></tr>
+      <tr><td class="fuerte">Cobro del cambio</td><td>—</td><td><span data-campo="linea_base.cobro_cambio">$18,864 más IVA, se factura aparte, con el Hito 3</span></td></tr>
+      <tr><td class="fuerte">Fechas</td><td><span data-campo="linea_base.fechas_actuales">Hito 3: 24 de marzo; cierre: 9 de abril</span></td><td><span data-campo="linea_base.fechas_nuevas">Hito 3: 31 de marzo; cierre: 9 de abril</span></td></tr>
+      <tr><td class="fuerte">Orden de compra</td><td><span data-campo="linea_base.orden_compra">OC-2027-0018</span> por <span data-campo="linea_base.orden_compra_monto">$330,000</span> más IVA</td><td><span data-campo="linea_base.orden_compra_cambio">Patricia Luna la amplía a $348,864 más IVA</span></td></tr>
+      <tr><td class="fuerte">Plan del proyecto</td><td><span data-campo="linea_base.version_actual">D03 v1</span></td><td><span data-campo="linea_base.version_nueva">D03 v2</span>; esta solicitud aprobada es su anexo</td></tr>
+    </tbody>
+  </table>
+  <p class="small muted" style="margin:3pt 0 0;">Con la opción B o C, la línea base sigue siendo el <span data-campo="linea_base.version_actual">D03 v1</span>.</p>
+
+  <div class="garantia" style="margin-top:24pt;"><b>Ningún cambio de alcance se trabaja sin aprobación escrita.</b></div>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D05-solicitud-de-cambio-01-v1</span></span><span>2 / 2</span></div>
+</section>
+
+</body>
+</html>

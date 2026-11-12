@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>D04 · Especificación del hito · Ejemplo</title>
+<link rel="stylesheet" href="base.css">
+</head>
+<body>
+
+
+<!-- ============================== HOJA 1 ============================== -->
+<section class="page">
+  <div class="hdr"><span>D04 · Especificación del hito</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <!-- Encabezado (sección 1 de la especificación; no lleva número visible) -->
+  <div class="doc-head">
+    <div class="eyebrow">D04 · Especificación del hito</div>
+    <h1><span data-campo="proyecto.nombre">Control de inventario en almacenes</span></h1>
+    <p class="sub">Especificación del <span data-campo="hito.numero">Hito 1</span>, «<span data-campo="hito.nombre">Prueba piloto en un almacén</span>»: qué hará el sistema, pantalla por pantalla, y con qué criterios se va a aceptar. La confirma <span data-campo="cliente.responsable.nombre">Laura Méndez</span> en la hoja <span data-campo="documento.hoja_confirmacion">7</span>.</p>
+    <div class="meta" style="grid-template-columns:1.9fr 0.9fr 2fr 1.3fr;">
+      <div><div class="k">Cliente</div><div class="v"><span data-campo="cliente.nombre">Cliente Ejemplo, S.A. de C.V.</span></div></div>
+      <div><div class="k">Clave</div><div class="v"><span data-campo="proyecto.clave">CE-INV</span></div></div>
+      <div><div class="k">Hito</div><div class="v"><span data-campo="hito.numero">Hito 1</span> · <span data-campo="hito.nombre">Prueba piloto en un almacén</span></div></div>
+      <div><div class="k">Versión</div><div class="v"><span data-campo="documento.version">v1</span></div></div>
+      <div><div class="k">Fecha</div><div class="v"><span data-campo="documento.fecha">Viernes 22 de enero de 2027</span></div></div>
+      <div><div class="k">Línea base</div><div class="v"><span data-campo="proyecto.linea_base">v1</span></div></div>
+      <div><div class="k">Se confirma a más tardar</div><div class="v"><span data-campo="documento.fecha_limite_confirmacion">Lunes 25 de enero de 2027</span></div></div>
+      <div><div class="k">Confirma</div><div class="v"><span data-campo="cliente.responsable.nombre">Laura Méndez</span></div></div>
+    </div>
+  </div>
+
+  <h2 class="s" style="margin-top:30pt;"><span class="n">1</span>Objetivo del hito</h2>
+  <div class="callout" style="margin-top:10pt; padding-top:14pt; padding-bottom:14pt;">
+    <div class="k">Resultado que ustedes aceptan y pagan</div>
+    <div class="v"><span data-campo="hito.objetivo">El almacén piloto consulta sus existencias en tiempo real desde el celular.</span></div>
+  </div>
+  <p class="small muted" style="margin-top:12pt;">El almacén piloto es el <span data-campo="hito.almacen_piloto">Almacén 1</span>. El alcance del proyecto, las fechas y el pago de este hito están en el plan del proyecto (D03), línea base <span data-campo="proyecto.linea_base">v1</span>; aquí no se repiten.</p>
+
+  <h2 class="s" style="margin-top:38pt;"><span class="n">2</span>Entregables</h2>
+  <table style="margin-top:8pt;">
+    <thead><tr><th style="width:6%">N.º</th><th style="width:24%">Entregable</th><th style="width:32%">Qué reciben ustedes</th><th style="width:28%">Pantalla</th><th class="num">Criterios</th></tr></thead>
+    <tbody data-lista="entregables">
+      <tr>
+        <td class="fuerte"><span data-campo="entregable.numero">1.1</span></td>
+        <td class="fuerte"><span data-campo="entregable.nombre">Catálogo de productos cargado</span></td>
+        <td><span data-campo="entregable.resultado">Su catálogo en el sistema: cada producto con clave única, descripción y unidad.</span></td>
+        <td><span data-campo="entregable.pantalla">«Catálogo de productos», «Almacenes», «Unidades y categorías» y «Ubicaciones»</span></td>
+        <td class="num"><span data-campo="entregable.criterios">4</span></td>
+      </tr>
+      <tr>
+        <td class="fuerte"><span data-campo="entregable.numero">1.2</span></td>
+        <td class="fuerte"><span data-campo="entregable.nombre">Existencias del almacén piloto</span></td>
+        <td><span data-campo="entregable.resultado">La existencia de cada producto del almacén piloto, en celular y en computadora.</span></td>
+        <td><span data-campo="entregable.pantalla">«Existencias» y «Consulta por producto»</span></td>
+        <td class="num"><span data-campo="entregable.criterios">6</span></td>
+      </tr>
+      <tr>
+        <td class="fuerte"><span data-campo="entregable.numero">1.3</span></td>
+        <td class="fuerte"><span data-campo="entregable.nombre">Captura del inventario inicial desde el celular</span></td>
+        <td><span data-campo="entregable.resultado">Los almacenistas capturan en su celular el conteo con el que arranca el sistema.</span></td>
+        <td><span data-campo="entregable.pantalla">«Inventario inicial»</span></td>
+        <td class="num"><span data-campo="entregable.criterios">6</span></td>
+      </tr>
+      <tr class="total"><td colspan="4">Criterios de aceptación del <span data-campo="hito.numero">Hito 1</span></td><td class="num"><span data-campo="hito.total_criterios">16</span></td></tr>
+    </tbody>
+  </table>
+  <p class="small muted" style="margin-top:12pt;">Cada entregable lleva el mismo número que en el plan del proyecto (D03).</p>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D04-especificacion-hito-1-v1</span></span><span>1 / 7</span></div>
+</section>
+
+<!-- ============================== HOJA 2 ============================== -->
+<section class="page">
+  <div class="hdr"><span>D04 · Especificación del hito</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <h2 class="s"><span class="n">3</span>Pantallas y funciones</h2>
+  <p>Son <span data-campo="hito.total_pantallas">siete</span> pantallas: cuatro de catálogos (entregable 1.1), dos de existencias (1.2) y la de inventario inicial (1.3). De cada una se dice quién la usa, qué hace, sus reglas, sus permisos y qué pasa con los errores y los campos vacíos. Los prototipos de las tres pantallas clave van en el <span data-campo="prototipo.anexo">anexo A</span>, que <span data-campo="cliente.responsable.nombre">Laura Méndez</span> revisó el <span data-campo="prototipo.fecha_revision">miércoles 20 de enero de 2027</span>; los catálogos son pantallas simples y no llevan prototipo.</p>
+  <div class="grid3" style="margin-top:8pt; gap:10pt;" data-lista="pantallas">
+    <div class="caja" style="padding:10pt 11pt; display:flex; flex-direction:column;">
+      <div class="eyebrow" style="margin-bottom:1pt;">Entregable <span data-campo="pantalla.entregable">1.1</span></div>
+      <h3 style="margin:0 0 7pt;"><span data-campo="pantalla.nombre">Catálogo de productos</span></h3>
+      <div class="k">Quién la usa</div><p class="small" style="margin:0 0 7pt;"><span data-campo="pantalla.quien">La responsable del proyecto, que la administra; los almacenistas, el director general y sistemas la consultan.</span></p>
+      <div class="k">Qué hace</div><p class="small" style="margin:0 0 7pt;"><span data-campo="pantalla.que_hace">Muestra los productos con clave, descripción y unidad. Busca por clave o por descripción. Carga el catálogo desde un archivo.</span></p>
+      <div class="k">Reglas</div><p class="small" style="margin:0 0 7pt;"><span data-campo="pantalla.reglas">La clave de un producto no se repite. El catálogo es uno solo para todos los almacenes. Un archivo se carga completo o no se carga.</span></p>
+      <div class="k">Permisos</div><p class="small" style="margin:0 0 7pt;"><span data-campo="pantalla.permisos">Solo la responsable del proyecto carga archivos. Los demás perfiles solo consultan.</span></p>
+      <div class="k">Errores y vacíos</div><p class="small" style="margin:0 0 9pt;"><span data-campo="pantalla.errores">Si una clave se repite, no carga el archivo y muestra «Clave repetida: EJ-001». Producto sin descripción o sin unidad: no carga y dice qué falta, por ejemplo «Falta la unidad: EJ-021».</span></p>
+      <div class="rule" style="margin:auto 0 7pt;"></div>
+      <div class="k">Prototipo</div><p class="small" style="margin:0;"><span data-campo="pantalla.prototipo">No lleva: es un catálogo simple; el anexo A trae solo las pantallas clave.</span></p>
+    </div>
+    <div class="caja" style="padding:10pt 11pt; display:flex; flex-direction:column;">
+      <div class="eyebrow" style="margin-bottom:1pt;">Entregable <span data-campo="pantalla.entregable">1.2</span></div>
+      <h3 style="margin:0 0 7pt;"><span data-campo="pantalla.nombre">Existencias</span></h3>
+      <div class="k">Quién la usa</div><p class="small" style="margin:0 0 7pt;"><span data-campo="pantalla.quien">El almacenista del almacén piloto, la responsable del proyecto, el director general y sistemas.</span></p>
+      <div class="k">Qué hace</div><p class="small" style="margin:0 0 7pt;"><span data-campo="pantalla.que_hace">Muestra, por producto, clave, descripción, unidad, existencia y la fecha y hora de la última captura. Busca por clave o por descripción. Funciona en celular y en computadora.</span></p>
+      <div class="k">Reglas</div><p class="small" style="margin:0 0 7pt;"><span data-campo="pantalla.reglas">La existencia es la última cantidad capturada. Se actualiza en menos de 10 segundos después de cada captura. En este hito solo el almacén piloto tiene existencias.</span></p>
+      <div class="k">Permisos</div><p class="small" style="margin:0 0 7pt;"><span data-campo="pantalla.permisos">El almacenista solo ve su almacén. La responsable del proyecto, el director general y sistemas ven el almacén piloto. Nadie cambia cantidades desde esta pantalla.</span></p>
+      <div class="k">Errores y vacíos</div><p class="small" style="margin:0 0 9pt;"><span data-campo="pantalla.errores">Existencias de otro almacén: no las muestra y presenta «Sin permiso para este almacén». Producto que nadie ha capturado: muestra «Sin captura», no un cero. Búsqueda sin resultados: muestra «No hay productos con ese texto».</span></p>
+      <div class="rule" style="margin:auto 0 7pt;"></div>
+      <div class="k">Prototipo</div><p class="small" style="margin:0;"><span data-campo="pantalla.prototipo">Anexo A, lámina 1.</span></p>
+    </div>
+    <div class="caja" style="padding:10pt 11pt; display:flex; flex-direction:column;">
+      <div class="eyebrow" style="margin-bottom:1pt;">Entregable <span data-campo="pantalla.entregable">1.3</span></div>
+      <h3 style="margin:0 0 7pt;"><span data-campo="pantalla.nombre">Inventario inicial</span></h3>
+      <div class="k">Quién la usa</div><p class="small" style="margin:0 0 7pt;"><span data-campo="pantalla.quien">El almacenista, desde su celular.</span></p>
+      <div class="k">Qué hace</div><p class="small" style="margin:0 0 7pt;"><span data-campo="pantalla.que_hace">El almacenista busca un producto, escribe la cantidad que contó y guarda. Un contador dice cuántos productos lleva: «3 de 20 capturados».</span></p>
+      <div class="k">Reglas</div><p class="small" style="margin:0 0 7pt;"><span data-campo="pantalla.reglas">Cada captura guarda cantidad, usuario, fecha y hora. Cero es una cantidad válida. Una captura se puede corregir: vale la última y el historial conserva las anteriores.</span></p>
+      <div class="k">Permisos</div><p class="small" style="margin:0 0 7pt;"><span data-campo="pantalla.permisos">El almacenista solo ve su almacén y solo él captura. La responsable del proyecto consulta el avance y el historial.</span></p>
+      <div class="k">Errores y vacíos</div><p class="small" style="margin:0 0 9pt;"><span data-campo="pantalla.errores">No acepta cantidades vacías ni negativas: no guarda y muestra «Escriba una cantidad de cero o mayor». Sin conexión: no guarda, muestra «Sin conexión. La captura no se guardó» y conserva lo escrito.</span></p>
+      <div class="rule" style="margin:auto 0 7pt;"></div>
+      <div class="k">Prototipo</div><p class="small" style="margin:0;"><span data-campo="pantalla.prototipo">Anexo A, lámina 2.</span></p>
+    </div>
+  </div>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D04-especificacion-hito-1-v1</span></span><span>2 / 7</span></div>
+</section>
+
+<!-- ============================== HOJA 3 ============================== -->
+<section class="page">
+  <div class="hdr"><span>D04 · Especificación del hito</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <h2 class="s"><span class="n">3</span>Pantallas y funciones (continuación)</h2>
+  <div class="grid2" style="margin-top:8pt; gap:12pt;" data-lista="pantallas">
+    <div class="caja" style="padding:10pt 11pt; display:flex; flex-direction:column;">
+      <div class="eyebrow" style="margin-bottom:1pt;">Entregable <span data-campo="pantalla.entregable">1.1</span></div>
+      <h3 style="margin:0 0 7pt;"><span data-campo="pantalla.nombre">Almacenes</span></h3>
+      <div class="k">Quién la usa</div><p class="small" style="margin:0 0 7pt;"><span data-campo="pantalla.quien">La responsable del proyecto, que la administra; los demás perfiles la consultan.</span></p>
+      <div class="k">Qué hace</div><p class="small" style="margin:0 0 7pt;"><span data-campo="pantalla.que_hace">Da de alta y edita los almacenes, con su nombre y su almacenista.</span></p>
+      <div class="k">Reglas</div><p class="small" style="margin:0 0 7pt;"><span data-campo="pantalla.reglas">El nombre de un almacén no se repite. En este hito solo el almacén piloto tiene existencias.</span></p>
+      <div class="k">Permisos</div><p class="small" style="margin:0 0 7pt;"><span data-campo="pantalla.permisos">Solo la responsable del proyecto da de alta y edita.</span></p>
+      <div class="k">Errores y vacíos</div><p class="small" style="margin:0 0 9pt;"><span data-campo="pantalla.errores">Nombre vacío o repetido: no guarda y dice qué falta.</span></p>
+      <div class="rule" style="margin:auto 0 7pt;"></div>
+      <div class="k">Prototipo</div><p class="small" style="margin:0;"><span data-campo="pantalla.prototipo">No lleva.</span></p>
+    </div>
+    <div class="caja" style="padding:10pt 11pt; display:flex; flex-direction:column;">
+      <div class="eyebrow" style="margin-bottom:1pt;">Entregable <span data-campo="pantalla.entregable">1.1</span></div>
+      <h3 style="margin:0 0 7pt;"><span data-campo="pantalla.nombre">Unidades y categorías</span></h3>
+      <div class="k">Quién la usa</div><p class="small" style="margin:0 0 7pt;"><span data-campo="pantalla.quien">La responsable del proyecto; los demás perfiles la consultan.</span></p>
+      <div class="k">Qué hace</div><p class="small" style="margin:0 0 7pt;"><span data-campo="pantalla.que_hace">Da de alta las unidades de medida y las categorías que agrupan los productos.</span></p>
+      <div class="k">Reglas</div><p class="small" style="margin:0 0 7pt;"><span data-campo="pantalla.reglas">Una unidad que usa algún producto no se borra.</span></p>
+      <div class="k">Permisos</div><p class="small" style="margin:0 0 7pt;"><span data-campo="pantalla.permisos">Solo la responsable del proyecto da de alta y edita.</span></p>
+      <div class="k">Errores y vacíos</div><p class="small" style="margin:0 0 9pt;"><span data-campo="pantalla.errores">Unidad en uso: no la borra y muestra «La unidad está en uso».</span></p>
+      <div class="rule" style="margin:auto 0 7pt;"></div>
+      <div class="k">Prototipo</div><p class="small" style="margin:0;"><span data-campo="pantalla.prototipo">No lleva.</span></p>
+    </div>
+    <div class="caja" style="padding:10pt 11pt; display:flex; flex-direction:column;">
+      <div class="eyebrow" style="margin-bottom:1pt;">Entregable <span data-campo="pantalla.entregable">1.1</span></div>
+      <h3 style="margin:0 0 7pt;"><span data-campo="pantalla.nombre">Ubicaciones</span></h3>
+      <div class="k">Quién la usa</div><p class="small" style="margin:0 0 7pt;"><span data-campo="pantalla.quien">La responsable del proyecto; el almacenista consulta las de su almacén.</span></p>
+      <div class="k">Qué hace</div><p class="small" style="margin:0 0 7pt;"><span data-campo="pantalla.que_hace">Da de alta los pasillos y anaqueles de cada almacén.</span></p>
+      <div class="k">Reglas</div><p class="small" style="margin:0 0 7pt;"><span data-campo="pantalla.reglas">La lista sale ordenada por pasillo y anaquel. Una ubicación no se repite en el mismo almacén.</span></p>
+      <div class="k">Permisos</div><p class="small" style="margin:0 0 7pt;"><span data-campo="pantalla.permisos">Solo la responsable del proyecto da de alta y edita.</span></p>
+      <div class="k">Errores y vacíos</div><p class="small" style="margin:0 0 9pt;"><span data-campo="pantalla.errores">Ubicación repetida: no la guarda y muestra «La ubicación ya existe».</span></p>
+      <div class="rule" style="margin:auto 0 7pt;"></div>
+      <div class="k">Prototipo</div><p class="small" style="margin:0;"><span data-campo="pantalla.prototipo">No lleva.</span></p>
+    </div>
+    <div class="caja" style="padding:10pt 11pt; display:flex; flex-direction:column;">
+      <div class="eyebrow" style="margin-bottom:1pt;">Entregable <span data-campo="pantalla.entregable">1.2</span></div>
+      <h3 style="margin:0 0 7pt;"><span data-campo="pantalla.nombre">Consulta por producto</span></h3>
+      <div class="k">Quién la usa</div><p class="small" style="margin:0 0 7pt;"><span data-campo="pantalla.quien">El almacenista, la responsable del proyecto, el director general y sistemas.</span></p>
+      <div class="k">Qué hace</div><p class="small" style="margin:0 0 7pt;"><span data-campo="pantalla.que_hace">Busca un producto por clave o por descripción y muestra su existencia por almacén y ubicación, con la fecha y hora de la última captura. Exporta la consulta a hoja de cálculo.</span></p>
+      <div class="k">Reglas</div><p class="small" style="margin:0 0 7pt;"><span data-campo="pantalla.reglas">Muestra las mismas cantidades que «Existencias».</span></p>
+      <div class="k">Permisos</div><p class="small" style="margin:0 0 7pt;"><span data-campo="pantalla.permisos">El almacenista solo ve su almacén. Nadie cambia cantidades.</span></p>
+      <div class="k">Errores y vacíos</div><p class="small" style="margin:0 0 9pt;"><span data-campo="pantalla.errores">Búsqueda sin resultados: muestra «No hay productos con ese texto».</span></p>
+      <div class="rule" style="margin:auto 0 7pt;"></div>
+      <div class="k">Prototipo</div><p class="small" style="margin:0;"><span data-campo="pantalla.prototipo">Anexo A, lámina 3.</span></p>
+    </div>
+  </div>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D04-especificacion-hito-1-v1</span></span><span>3 / 7</span></div>
+</section>
+
+<!-- ============================== HOJA 4 ============================== -->
+<section class="page">
+  <div class="hdr"><span>D04 · Especificación del hito</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <h2 class="s"><span class="n">3</span>Pantallas y funciones (continuación)</h2>
+  <h3 style="margin-top:4pt;">Permisos por perfil</h3>
+  <table class="compacta" style="margin-top:6pt;">
+    <thead><tr><th style="width:28%">Perfil</th><th style="width:24%">Catálogo de productos</th><th style="width:24%">Existencias</th><th>Inventario inicial</th></tr></thead>
+    <tbody data-lista="perfiles">
+      <tr>
+        <td class="fuerte"><span data-campo="perfil.nombre">Almacenista</span><br><span class="muted" style="font-weight:400;"><span data-campo="perfil.quien">Uno por almacén</span></span></td>
+        <td><span data-campo="perfil.catalogo">Consulta</span></td>
+        <td><span data-campo="perfil.existencias">Consulta, solo su almacén</span></td>
+        <td><span data-campo="perfil.inventario_inicial">Captura y corrige, solo su almacén</span></td>
+      </tr>
+      <tr>
+        <td class="fuerte"><span data-campo="perfil.nombre">Responsable del proyecto</span><br><span class="muted" style="font-weight:400;"><span data-campo="perfil.quien">Laura Méndez</span></span></td>
+        <td><span data-campo="perfil.catalogo">Consulta y carga archivos</span></td>
+        <td><span data-campo="perfil.existencias">Consulta</span></td>
+        <td><span data-campo="perfil.inventario_inicial">Consulta avance e historial</span></td>
+      </tr>
+      <tr>
+        <td class="fuerte"><span data-campo="perfil.nombre">Director general</span><br><span class="muted" style="font-weight:400;"><span data-campo="perfil.quien">Ricardo Solís</span></span></td>
+        <td><span data-campo="perfil.catalogo">Consulta</span></td>
+        <td><span data-campo="perfil.existencias">Consulta</span></td>
+        <td><span data-campo="perfil.inventario_inicial">Sin acceso</span></td>
+      </tr>
+      <tr>
+        <td class="fuerte"><span data-campo="perfil.nombre">Sistemas</span><br><span class="muted" style="font-weight:400;"><span data-campo="perfil.quien">Iván Torres</span></span></td>
+        <td><span data-campo="perfil.catalogo">Consulta</span></td>
+        <td><span data-campo="perfil.existencias">Consulta</span></td>
+        <td><span data-campo="perfil.inventario_inicial">Sin acceso</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="small" style="margin-top:6pt;">«Almacenes», «Unidades y categorías» y «Ubicaciones» siguen los permisos de «Catálogo de productos»: solo la responsable del proyecto da de alta y edita, y el almacenista ve las ubicaciones de su almacén. «Consulta por producto» sigue los permisos de «Existencias».</p>
+
+  <h2 class="s" style="margin-top:12pt;"><span class="n">4</span>Datos de ejemplo</h2>
+  <p>Con estos datos ficticios se construye y se prueba; no son datos reales de ustedes. Son <span data-campo="ejemplo.total_productos">20</span> productos con clave, descripción, unidad y existencia inicial. Los criterios de la sección 6 usan estas claves y cantidades.</p>
+  <div class="grid2" style="margin-top:8pt; gap:11pt;" data-lista="productos_ejemplo">
+    <table class="compacta">
+      <thead><tr><th style="width:16%">Clave</th><th>Descripción</th><th style="width:15%">Unidad</th><th class="num" style="width:10%">Inicial</th></tr></thead>
+      <tbody>
+        <tr><td class="fuerte"><span data-campo="producto.clave">EJ-001</span></td><td><span data-campo="producto.descripcion">Tornillo hexagonal de 1/4"</span></td><td><span data-campo="producto.unidad">Pieza</span></td><td class="num"><span data-campo="producto.existencia_inicial">25</span></td></tr>
+        <tr><td class="fuerte"><span data-campo="producto.clave">EJ-002</span></td><td><span data-campo="producto.descripcion">Cinta de empaque 48 mm</span></td><td><span data-campo="producto.unidad">Rollo</span></td><td class="num"><span data-campo="producto.existencia_inicial">40</span></td></tr>
+        <tr><td class="fuerte"><span data-campo="producto.clave">EJ-003</span></td><td><span data-campo="producto.descripcion">Guante de nitrilo talla M</span></td><td><span data-campo="producto.unidad">Par</span></td><td class="num"><span data-campo="producto.existencia_inicial">120</span></td></tr>
+        <tr><td class="fuerte"><span data-campo="producto.clave">EJ-004</span></td><td><span data-campo="producto.descripcion">Caja de cartón 40 × 30 cm</span></td><td><span data-campo="producto.unidad">Pieza</span></td><td class="num"><span data-campo="producto.existencia_inicial">0</span></td></tr>
+        <tr><td class="fuerte"><span data-campo="producto.clave">EJ-005</span></td><td><span data-campo="producto.descripcion">Aceite multiusos de 1 L</span></td><td><span data-campo="producto.unidad">Botella</span></td><td class="num"><span data-campo="producto.existencia_inicial">12</span></td></tr>
+        <tr><td class="fuerte"><span data-campo="producto.clave">EJ-006</span></td><td><span data-campo="producto.descripcion">Tarima de madera estándar</span></td><td><span data-campo="producto.unidad">Pieza</span></td><td class="num"><span data-campo="producto.existencia_inicial">8</span></td></tr>
+        <tr><td class="fuerte"><span data-campo="producto.clave">EJ-007</span></td><td><span data-campo="producto.descripcion">Etiqueta térmica 4" × 6"</span></td><td><span data-campo="producto.unidad">Rollo</span></td><td class="num"><span data-campo="producto.existencia_inicial">36</span></td></tr>
+        <tr><td class="fuerte"><span data-campo="producto.clave">EJ-008</span></td><td><span data-campo="producto.descripcion">Película estirable de 18"</span></td><td><span data-campo="producto.unidad">Rollo</span></td><td class="num"><span data-campo="producto.existencia_inicial">15</span></td></tr>
+        <tr><td class="fuerte"><span data-campo="producto.clave">EJ-009</span></td><td><span data-campo="producto.descripcion">Fleje de plástico de 1/2"</span></td><td><span data-campo="producto.unidad">Rollo</span></td><td class="num"><span data-campo="producto.existencia_inicial">6</span></td></tr>
+        <tr><td class="fuerte"><span data-campo="producto.clave">EJ-010</span></td><td><span data-campo="producto.descripcion">Esquinero de cartón de 1 m</span></td><td><span data-campo="producto.unidad">Pieza</span></td><td class="num"><span data-campo="producto.existencia_inicial">200</span></td></tr>
+      </tbody>
+    </table>
+    <table class="compacta">
+      <thead><tr><th style="width:16%">Clave</th><th>Descripción</th><th style="width:15%">Unidad</th><th class="num" style="width:10%">Inicial</th></tr></thead>
+      <tbody>
+        <tr><td class="fuerte"><span data-campo="producto.clave">EJ-011</span></td><td><span data-campo="producto.descripcion">Bolsa de polietileno 30 × 40 cm</span></td><td><span data-campo="producto.unidad">Paquete</span></td><td class="num"><span data-campo="producto.existencia_inicial">50</span></td></tr>
+        <tr><td class="fuerte"><span data-campo="producto.clave">EJ-012</span></td><td><span data-campo="producto.descripcion">Cúter industrial</span></td><td><span data-campo="producto.unidad">Pieza</span></td><td class="num"><span data-campo="producto.existencia_inicial">10</span></td></tr>
+        <tr><td class="fuerte"><span data-campo="producto.clave">EJ-013</span></td><td><span data-campo="producto.descripcion">Marcador permanente negro</span></td><td><span data-campo="producto.unidad">Pieza</span></td><td class="num"><span data-campo="producto.existencia_inicial">24</span></td></tr>
+        <tr><td class="fuerte"><span data-campo="producto.clave">EJ-014</span></td><td><span data-campo="producto.descripcion">Casco de seguridad</span></td><td><span data-campo="producto.unidad">Pieza</span></td><td class="num"><span data-campo="producto.existencia_inicial">9</span></td></tr>
+        <tr><td class="fuerte"><span data-campo="producto.clave">EJ-015</span></td><td><span data-campo="producto.descripcion">Chaleco reflejante</span></td><td><span data-campo="producto.unidad">Pieza</span></td><td class="num"><span data-campo="producto.existencia_inicial">14</span></td></tr>
+        <tr><td class="fuerte"><span data-campo="producto.clave">EJ-016</span></td><td><span data-campo="producto.descripcion">Foco LED de 18 W</span></td><td><span data-campo="producto.unidad">Pieza</span></td><td class="num"><span data-campo="producto.existencia_inicial">30</span></td></tr>
+        <tr><td class="fuerte"><span data-campo="producto.clave">EJ-017</span></td><td><span data-campo="producto.descripcion">Pila alcalina AA</span></td><td><span data-campo="producto.unidad">Paquete</span></td><td class="num"><span data-campo="producto.existencia_inicial">18</span></td></tr>
+        <tr><td class="fuerte"><span data-campo="producto.clave">EJ-018</span></td><td><span data-campo="producto.descripcion">Candado de 40 mm</span></td><td><span data-campo="producto.unidad">Pieza</span></td><td class="num"><span data-campo="producto.existencia_inicial">7</span></td></tr>
+        <tr><td class="fuerte"><span data-campo="producto.clave">EJ-019</span></td><td><span data-campo="producto.descripcion">Desengrasante de 5 L</span></td><td><span data-campo="producto.unidad">Garrafa</span></td><td class="num"><span data-campo="producto.existencia_inicial">4</span></td></tr>
+        <tr><td class="fuerte"><span data-campo="producto.clave">EJ-020</span></td><td><span data-campo="producto.descripcion">Extintor de 4.5 kg</span></td><td><span data-campo="producto.unidad">Pieza</span></td><td class="num"><span data-campo="producto.existencia_inicial">—</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="caja suave" style="margin-top:9pt;">
+    <div class="kv">
+      <div class="k">Almacenes</div><div><span data-campo="ejemplo.almacenes">Dos almacenes ficticios: «Almacén A», que representa al Almacén 1 (el almacén piloto), y «Almacén B», que sirve para probar permisos.</span></div>
+      <div class="k">Usuarios</div><div><span data-campo="ejemplo.usuarios">Cinco usuarios ficticios: un almacenista por almacén, una responsable del proyecto, un director general y uno de sistemas.</span></div>
+      <div class="k">Casos especiales</div><div><span data-campo="ejemplo.casos">EJ-004 arranca en cero; EJ-020 queda sin capturar (—). La clave EJ-021 solo existe en los archivos con error.</span></div>
+    </div>
+  </div>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D04-especificacion-hito-1-v1</span></span><span>4 / 7</span></div>
+</section>
+
+<!-- ============================== HOJA 5 ============================== -->
+<section class="page">
+  <div class="hdr"><span>D04 · Especificación del hito</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <h2 class="s"><span class="n">5</span>Accesos necesarios</h2>
+  <p>Lo que debe existir antes de construir y antes de probar en el almacén piloto, con quién lo entrega y en qué fecha.</p>
+  <table style="margin-top:4pt;">
+    <thead><tr><th style="width:4%">N.º</th><th style="width:33%">Qué debe existir</th><th style="width:18%">Para qué se usa</th><th style="width:15%">Quién</th><th style="width:18%">Fecha compromiso</th><th>Estado</th></tr></thead>
+    <tbody data-lista="accesos">
+      <tr><td class="fuerte">1</td><td><span data-campo="acceso.que">Catálogo de productos en archivo, con una clave única por producto</span></td><td><span data-campo="acceso.para_que">Entregable 1.1</span></td><td><span data-campo="acceso.quien">Laura Méndez</span></td><td><span data-campo="acceso.fecha">Miércoles 13 de enero de 2027</span></td><td><span class="chip ok" data-campo="acceso.estado">Entregado</span></td></tr>
+      <tr><td class="fuerte">2</td><td><span data-campo="acceso.que">Almacén piloto elegido</span></td><td><span data-campo="acceso.para_que">Entregables 1.2 y 1.3</span></td><td><span data-campo="acceso.quien">Laura Méndez</span></td><td><span data-campo="acceso.fecha">Miércoles 20 de enero de 2027</span></td><td><span class="chip ok" data-campo="acceso.estado">Entregado</span></td></tr>
+      <tr><td class="fuerte">3</td><td><span data-campo="acceso.que">Lista de almacenistas del almacén piloto que capturan y prueban, con puesto y permisos</span></td><td><span data-campo="acceso.para_que">Usuarios y permisos</span></td><td><span data-campo="acceso.quien">Laura Méndez</span></td><td><span data-campo="acceso.fecha">Viernes 22 de enero de 2027</span></td><td><span class="chip ok" data-campo="acceso.estado">Entregado</span></td></tr>
+      <tr><td class="fuerte">4</td><td><span data-campo="acceso.que">Internet estable y un celular de la empresa en el almacén piloto</span></td><td><span data-campo="acceso.para_que">Solo para las pruebas en el almacén piloto</span></td><td><span data-campo="acceso.quien">Iván Torres</span></td><td><span data-campo="acceso.fecha">Viernes 29 de enero de 2027</span></td><td><span class="chip" data-campo="acceso.estado">Pendiente</span></td></tr>
+    </tbody>
+  </table>
+  <div class="nota" style="margin-top:10pt;">Si algo llega tarde, les avisamos por escrito ese mismo día. La fecha prevista del hito se recorre un día hábil por cada día hábil de espera; el plan del proyecto firmado no cambia.</div>
+
+  <h2 class="s" style="margin-top:20pt;"><span class="n">6</span>Criterios de aceptación</h2>
+  <p>Con estos criterios se prueba y se acepta el <span data-campo="hito.numero">Hito 1</span>. El guion de pruebas y el acta de aceptación usan las mismas claves, con al menos un caso de prueba por criterio.</p>
+  <div class="nota" style="margin-top:8pt;"><b>Forma de un criterio de aceptación.</b> Cada criterio dice quién hace qué, con qué dato, y qué resultado se ve. Su clave es CA-, el número del entregable y un consecutivo de dos cifras, por ejemplo <b>CA-1.3-01</b>.</div>
+  <h3 style="margin-top:14pt;">Entregable <span data-campo="entregable.numero">1.1</span> · <span data-campo="entregable.nombre">Catálogo de productos cargado</span></h3>
+  <table style="margin-top:4pt;">
+    <thead><tr><th style="width:13%">Clave</th><th style="width:44%">Quién hace qué, con qué dato</th><th>Resultado que se ve</th></tr></thead>
+    <tbody data-lista="criterios">
+      <tr><td class="fuerte"><span data-campo="criterio.clave">CA-1.1-01</span></td><td><span data-campo="criterio.accion">La responsable del proyecto carga el archivo de ejemplo con 20 productos.</span></td><td><span data-campo="criterio.resultado">El catálogo muestra los 20, cada uno con clave, descripción y unidad.</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="criterio.clave">CA-1.1-02</span></td><td><span data-campo="criterio.accion">Un almacenista escribe «EJ-003» en el buscador del catálogo.</span></td><td><span data-campo="criterio.resultado">La pantalla muestra solo «Guante de nitrilo talla M», con unidad «Par».</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="criterio.clave">CA-1.1-03</span></td><td><span data-campo="criterio.accion">La responsable del proyecto carga un archivo con la clave «EJ-001» en dos renglones.</span></td><td><span data-campo="criterio.resultado">El sistema no carga el archivo y muestra «Clave repetida: EJ-001».</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="criterio.clave">CA-1.1-04</span></td><td><span data-campo="criterio.accion">La responsable del proyecto carga un archivo con el producto «EJ-021» sin unidad.</span></td><td><span data-campo="criterio.resultado">El sistema no carga el archivo y muestra «Falta la unidad: EJ-021».</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D04-especificacion-hito-1-v1</span></span><span>5 / 7</span></div>
+</section>
+
+<!-- ============================== HOJA 6 ============================== -->
+<section class="page">
+  <div class="hdr"><span>D04 · Especificación del hito</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <h2 class="s"><span class="n">6</span>Criterios de aceptación (continuación)</h2>
+  <h3 style="margin-top:4pt;">Entregable <span data-campo="entregable.numero">1.2</span> · <span data-campo="entregable.nombre">Existencias del almacén piloto</span></h3>
+  <table style="margin-top:4pt;">
+    <thead><tr><th style="width:13%">Clave</th><th style="width:44%">Quién hace qué, con qué dato</th><th>Resultado que se ve</th></tr></thead>
+    <tbody data-lista="criterios">
+      <tr><td class="fuerte"><span data-campo="criterio.clave">CA-1.2-01</span></td><td><span data-campo="criterio.accion">Un almacenista intenta abrir las existencias de otro almacén.</span></td><td><span data-campo="criterio.resultado">El sistema no las muestra y presenta el mensaje «Sin permiso para este almacén».</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="criterio.clave">CA-1.2-02</span></td><td><span data-campo="criterio.accion">Un almacenista busca «EJ-002» en «Existencias», desde su celular.</span></td><td><span data-campo="criterio.resultado">La pantalla muestra «Cinta de empaque 48 mm», 40 rollos, y la fecha y hora de la última captura.</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="criterio.clave">CA-1.2-03</span></td><td><span data-campo="criterio.accion">La responsable del proyecto busca «EJ-003» en «Existencias», desde una computadora.</span></td><td><span data-campo="criterio.resultado">La pantalla muestra 120 pares, la misma cantidad que ve el almacenista en su celular.</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="criterio.clave">CA-1.2-04</span></td><td><span data-campo="criterio.accion">El director general abre «Existencias» en su celular.</span></td><td><span data-campo="criterio.resultado">La pantalla muestra las existencias del almacén piloto y no ofrece botones para capturar ni corregir.</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="criterio.clave">CA-1.2-05</span></td><td><span data-campo="criterio.accion">Un almacenista busca «EJ-020», un producto que nadie ha capturado.</span></td><td><span data-campo="criterio.resultado">La pantalla muestra «Sin captura» en lugar de una cantidad.</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="criterio.clave">CA-1.2-06</span></td><td><span data-campo="criterio.accion">La responsable del proyecto cuenta a mano los productos EJ-001 a EJ-010, ya capturados en el almacén piloto.</span></td><td><span data-campo="criterio.resultado">Las 10 cantidades coinciden con las que muestra la pantalla de existencias.</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top:14pt;">Entregable <span data-campo="entregable.numero">1.3</span> · <span data-campo="entregable.nombre">Captura del inventario inicial desde el celular</span></h3>
+  <table style="margin-top:4pt;">
+    <thead><tr><th style="width:13%">Clave</th><th style="width:44%">Quién hace qué, con qué dato</th><th>Resultado que se ve</th></tr></thead>
+    <tbody data-lista="criterios">
+      <tr><td class="fuerte"><span data-campo="criterio.clave">CA-1.3-01</span></td><td><span data-campo="criterio.accion">Un almacenista captura desde su celular el inventario inicial de 25 piezas de un producto.</span></td><td><span data-campo="criterio.resultado">La pantalla de existencias del almacén piloto muestra 25 en menos de 10 segundos.</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="criterio.clave">CA-1.3-02</span></td><td><span data-campo="criterio.accion">Un almacenista deja vacía la cantidad o captura un número negativo.</span></td><td><span data-campo="criterio.resultado">El sistema no guarda y muestra «Escriba una cantidad de cero o mayor».</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="criterio.clave">CA-1.3-03</span></td><td><span data-campo="criterio.accion">Un almacenista captura 0 piezas del producto «EJ-004».</span></td><td><span data-campo="criterio.resultado">El sistema guarda y la pantalla de existencias muestra 0.</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="criterio.clave">CA-1.3-04</span></td><td><span data-campo="criterio.accion">Un almacenista corrige a 30 una captura de 25 piezas del producto «EJ-001».</span></td><td><span data-campo="criterio.resultado">Existencias muestra 30 y el historial conserva las dos capturas, con usuario, fecha y hora.</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="criterio.clave">CA-1.3-05</span></td><td><span data-campo="criterio.accion">Un almacenista guarda una captura de 15 rollos del producto «EJ-008» con el celular sin conexión.</span></td><td><span data-campo="criterio.resultado">El sistema no guarda, muestra «Sin conexión. La captura no se guardó» y conserva el 15 escrito.</span></td></tr>
+      <tr><td class="fuerte"><span data-campo="criterio.clave">CA-1.3-06</span></td><td><span data-campo="criterio.accion">Un almacenista abre «Inventario inicial» después de capturar 3 de los 20 productos.</span></td><td><span data-campo="criterio.resultado">El contador de la pantalla dice «3 de 20 capturados».</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D04-especificacion-hito-1-v1</span></span><span>6 / 7</span></div>
+</section>
+
+<!-- ============================== HOJA 7 ============================== -->
+<section class="page">
+  <div class="hdr"><span>D04 · Especificación del hito</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <h2 class="s"><span class="n">7</span>Lo que queda fuera</h2>
+  <p>Lo que este hito no entrega. Si se pide durante el hito, se registra y se clasifica según el acta de inicio.</p>
+  <div class="grid2" style="margin-top:6pt; grid-template-columns:1.75fr 1fr;">
+    <div>
+      <h3 style="margin-top:4pt;">Llega después en el proyecto</h3>
+      <table style="margin-top:6pt;">
+        <tbody data-lista="fuera_otro_hito">
+          <tr><td style="width:70%"><span data-campo="fuera.que">Entradas y salidas con responsable</span></td><td class="num"><span class="chip" data-campo="fuera.cuando">Hito 2</span></td></tr>
+          <tr><td><span data-campo="fuera.que">Conexión con su sistema contable</span></td><td class="num"><span class="chip" data-campo="fuera.cuando">Hito 2</span></td></tr>
+          <tr><td><span data-campo="fuera.que">Los otros dos almacenes</span></td><td class="num"><span class="chip" data-campo="fuera.cuando">Hito 3</span></td></tr>
+          <tr><td><span data-campo="fuera.que">Existencias de los tres almacenes en una sola pantalla</span></td><td class="num"><span class="chip" data-campo="fuera.cuando">Hito 3</span></td></tr>
+          <tr><td><span data-campo="fuera.que">Manuales (Hito 3) y capacitación final (acompañamiento)</span></td><td class="num"><span class="chip" data-campo="fuera.cuando">Hito 3 y acompañamiento</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h3 style="margin-top:4pt;">No entra en el proyecto</h3>
+      <ul class="clean neutral" style="margin-top:9pt;" data-lista="fuera_proyecto">
+        <li><span data-campo="fuera.no_entra">Depuración de su catálogo: corregir claves o quitar duplicados.</span></li>
+        <li><span data-campo="fuera.no_entra">Compra de equipos: celulares, tabletas, lectores o impresoras.</span></li>
+        <li><span data-campo="fuera.no_entra">Almacenes adicionales u otras empresas.</span></li>
+        <li><span data-campo="fuera.no_entra">Módulos de compras, ventas o facturación.</span></li>
+      </ul>
+      <p class="small muted" style="margin-top:8pt;">La lista completa está en el plan del proyecto (D03).</p>
+    </div>
+  </div>
+
+  <h2 class="s" style="margin-top:26pt;"><span class="n">8</span>Confirmación</h2>
+  <div class="callout" style="margin-top:8pt;">
+    <div class="k">Leyenda de confirmación</div>
+    <div class="v">Confirmo que esta especificación describe lo que se construirá en el <span data-campo="hito.numero">Hito 1</span>. Sus criterios de aceptación son la base del guion de pruebas y del acta de aceptación. Lo que no aparece aquí se registra y se clasifica según el acta de inicio.</div>
+  </div>
+
+  <div class="grid2" style="margin-top:14pt;">
+    <div class="caja suave">
+      <h3 style="margin-top:0;">Cómo se confirma</h3>
+      <ul class="check" style="margin-top:7pt;" data-lista="medios_confirmacion">
+        <li>Por correo, con la leyenda, desde <span data-campo="cliente.responsable.correo">lmendez@clienteejemplo.mx</span></li>
+        <li style="margin-bottom:0;">Con firma en esta hoja</li>
+      </ul>
+      <div class="kv" style="margin-top:9pt; grid-template-columns:0.95in 1fr;">
+        <div class="k">Se envía a</div><div><span data-campo="despacho.cuenta.correo">cuenta@sistemasalamedida.mx</span></div>
+        <div class="k">A más tardar</div><div><span data-campo="documento.fecha_limite_confirmacion">Lunes 25 de enero de 2027</span></div>
+        <div class="k">Archivo</div><div><span data-campo="documento.archivo_pdf">CE-INV-D04-especificacion-hito-1-v1.pdf</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="firma" style="margin-top:20pt;">
+        <div class="linea"></div>
+        <div class="n"><span data-campo="cliente.responsable.nombre">Laura Méndez</span></div>
+        <div class="r"><span data-campo="cliente.responsable.puesto">Gerente de operaciones</span> · <span data-campo="cliente.nombre">Cliente Ejemplo, S.A. de C.V.</span><br>Responsable del proyecto<br>Fecha: <span class="campo-mano"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nota" style="margin-top:16pt;">La confirmación por correo vale igual que la firma y se guarda junto a este archivo. Con ella, el <span data-campo="hito.numero">Hito 1</span> queda listo para construir. Si la especificación cambia después de confirmada, se emite una versión nueva y se confirma otra vez; las claves de los criterios no se vuelven a usar.</div>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D04-especificacion-hito-1-v1</span></span><span>7 / 7</span></div>
+</section>
+
+</body>
+</html>

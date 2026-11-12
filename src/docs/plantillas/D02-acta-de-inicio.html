@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>D02 · Acta de inicio · Ejemplo</title>
+<link rel="stylesheet" href="base.css">
+</head>
+<body>
+
+<!-- ============================== HOJA 1 ============================== -->
+<section class="page">
+  <div class="hdr"><span>D02 · Acta de inicio</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <div class="doc-head">
+    <div class="eyebrow">D02 · Acta de inicio</div>
+    <h1><span data-campo="proyecto.nombre">Control de inventario en almacenes</span></h1>
+    <p class="sub">Acta que autoriza el proyecto y fija sus reglas. La firman <span data-campo="cliente.decide.nombre">Ricardo Solís</span> y <span data-campo="despacho.cuenta.nombre">Santiago</span> en la hoja <span data-campo="documento.hoja_firmas">7</span>.</p>
+    <div class="meta" style="grid-template-columns:2fr 1fr 1.85fr 1.35fr;">
+      <div><div class="k">Cliente</div><div class="v"><span data-campo="cliente.nombre">Cliente Ejemplo, S.A. de C.V.</span></div></div>
+      <div><div class="k">Clave</div><div class="v"><span data-campo="proyecto.clave">CE-INV</span></div></div>
+      <div><div class="k">Fecha</div><div class="v"><span data-campo="documento.fecha">Jueves 7 de enero de 2027</span></div></div>
+      <div><div class="k">Versión</div><div class="v"><span data-campo="documento.version">v1</span></div></div>
+      <div><div class="k">Arranque</div><div class="v"><span data-campo="proyecto.fecha_arranque">Lunes 11 de enero de 2027</span></div></div>
+      <div><div class="k">Duración</div><div class="v"><span data-campo="proyecto.duracion">13 semanas</span></div></div>
+      <div><div class="k">Cierre estimado</div><div class="v"><span data-campo="proyecto.fecha_cierre">Viernes 9 de abril de 2027</span></div></div>
+      <div><div class="k">Precio fijo</div><div class="v"><span data-campo="proyecto.precio_total">$330,000</span> más IVA</div></div>
+    </div>
+  </div>
+
+  <h2 class="s"><span class="n">1</span>Objetivo del proyecto y resultado esperado</h2>
+  <div class="callout">
+    <div class="k">Objetivo</div>
+    <div class="v"><span data-campo="proyecto.objetivo">Saber en tiempo real cuánto inventario hay en cada uno de sus tres almacenes y eliminar el conteo manual de cada semana.</span></div>
+  </div>
+  <h3 style="margin-top:12pt;">Resultados que se podrán comprobar al final</h3>
+  <div class="grid3" style="margin-top:7pt;" data-lista="resultados">
+    <div class="hito">
+      <div class="h">Resultado 1</div>
+      <div class="t"><span data-campo="resultado.nombre">Inventario en tiempo real</span></div>
+      <p class="small" style="margin:0;"><span data-campo="resultado.comprobacion">La existencia de cada producto se consulta por almacén, en celular o computadora, en los tres almacenes.</span></p>
+    </div>
+    <div class="hito">
+      <div class="h">Resultado 2</div>
+      <div class="t"><span data-campo="resultado.nombre">Sin conteo manual semanal</span></div>
+      <p class="small" style="margin:0;"><span data-campo="resultado.comprobacion">Cada entrada y cada salida se registra al momento, con su responsable; el conteo semanal deja de hacerse.</span></p>
+    </div>
+    <div class="hito">
+      <div class="h">Resultado 3</div>
+      <div class="t"><span data-campo="resultado.nombre">Una sola captura</span></div>
+      <p class="small" style="margin:0;"><span data-campo="resultado.comprobacion">Los movimientos de inventario llegan a su sistema contable sin volver a capturarlos.</span></p>
+    </div>
+  </div>
+
+  <h2 class="s" style="margin-top:18pt;"><span class="n">2</span>Alcance: qué incluye y qué no incluye</h2>
+  <div class="grid2" style="margin-top:2pt;">
+    <div>
+      <h3 style="margin-top:4pt;">Qué incluye</h3>
+      <ul class="clean" style="margin-top:6pt;" data-lista="alcance_incluye">
+        <li><span data-campo="alcance.incluye">Diagnóstico por escrito del proceso actual, los datos y la conexión.</span></li>
+        <li><span data-campo="alcance.incluye">Existencias por almacén en tiempo real, en celular o computadora, con usuarios y permisos.</span></li>
+        <li><span data-campo="alcance.incluye">Registro de entradas y salidas con responsable.</span></li>
+        <li><span data-campo="alcance.incluye">Conexión con su sistema contable.</span></li>
+        <li><span data-campo="alcance.incluye">Carga inicial del catálogo y de las existencias de los tres almacenes.</span></li>
+        <li><span data-campo="alcance.incluye">Capacitación a los almacenistas en su almacén y en su turno, con manuales.</span></li>
+        <li><span data-campo="alcance.incluye">Pruebas con guion, salida a producción y acompañamiento de dos semanas.</span></li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="margin-top:4pt;">Qué no incluye</h3>
+      <ul class="clean neutral" style="margin-top:6pt;" data-lista="alcance_no_incluye">
+        <li><span data-campo="alcance.no_incluye">Compra de equipos: celulares, tabletas, lectores o impresoras.</span></li>
+        <li><span data-campo="alcance.no_incluye">Licencias o conectores de su sistema contable.</span></li>
+        <li><span data-campo="alcance.no_incluye">Cambios o configuración dentro de su sistema contable.</span></li>
+        <li><span data-campo="alcance.no_incluye">Almacenes adicionales u otras empresas.</span></li>
+        <li><span data-campo="alcance.no_incluye">Módulos de compras, ventas o facturación.</span></li>
+        <li><span data-campo="alcance.no_incluye">Depuración de su catálogo: corregir claves o quitar duplicados.</span></li>
+        <li><span data-campo="alcance.no_incluye">El servicio mensual posterior a la capacitación final: se contrata aparte, por $12,000 más IVA al mes.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D02-acta-de-inicio-v1</span></span><span>1 / 7</span></div>
+</section>
+
+<!-- ============================== HOJA 2 ============================== -->
+<section class="page">
+  <div class="hdr"><span>D02 · Acta de inicio</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <h2 class="s"><span class="n">3</span>Entregables e hitos</h2>
+  <table>
+    <thead><tr><th style="width:21.5%">Entregable o hito</th><th style="width:23%">Resultado</th><th style="width:20%">Fecha estimada</th><th>Criterio de aceptación general</th></tr></thead>
+    <tbody data-lista="hitos">
+      <tr>
+        <td class="fuerte"><span data-campo="hito.nombre">Diagnóstico</span></td>
+        <td><span data-campo="hito.resultado">Diagnóstico por escrito, propuesta definitiva y plan del proyecto.</span></td>
+        <td><span data-campo="hito.semana">Semana 2</span><br><span class="muted"><span data-campo="hito.fecha">Viernes 22 de enero de 2027</span></span></td>
+        <td><span data-campo="hito.criterio">Ustedes reciben el diagnóstico y firman el plan del proyecto, con alcance, fechas y montos definitivos.</span></td>
+      </tr>
+      <tr>
+        <td class="fuerte"><span data-campo="hito.numero">Hito 1</span> · <span data-campo="hito.nombre">Prueba piloto en un almacén</span></td>
+        <td><span data-campo="hito.resultado">Inventario en tiempo real en el almacén piloto, con catálogo y existencias cargados.</span></td>
+        <td><span data-campo="hito.semana">Semana 5</span><br><span class="muted"><span data-campo="hito.fecha">Viernes 12 de febrero de 2027</span></span></td>
+        <td><span data-campo="hito.criterio">Las existencias del almacén piloto se consultan en celular y en computadora, y cuadran con un conteo de muestra.</span></td>
+      </tr>
+      <tr>
+        <td class="fuerte"><span data-campo="hito.numero">Hito 2</span> · <span data-campo="hito.nombre">Entradas, salidas y conexión con su sistema contable</span></td>
+        <td><span data-campo="hito.resultado">Entradas y salidas registradas al momento y enviadas a su sistema contable.</span></td>
+        <td><span data-campo="hito.semana">Semana 8</span><br><span class="muted"><span data-campo="hito.fecha">Viernes 5 de marzo de 2027</span></span></td>
+        <td><span data-campo="hito.criterio">Cada entrada y cada salida queda registrada con su responsable y llega a su sistema contable sin volver a capturarla.</span></td>
+      </tr>
+      <tr>
+        <td class="fuerte"><span data-campo="hito.numero">Hito 3</span> · <span data-campo="hito.nombre">Uso completo en los tres almacenes</span></td>
+        <td><span data-campo="hito.resultado">Los tres almacenes operan con el sistema.</span></td>
+        <td><span data-campo="hito.semana">Semana 11</span><br><span class="muted"><span data-campo="hito.fecha">Miércoles 24 de marzo de 2027</span></span></td>
+        <td><span data-campo="hito.criterio">Los tres almacenes registran sus movimientos en el sistema y la existencia por almacén cuadra con un conteo de muestra.</span></td>
+      </tr>
+      <tr>
+        <td class="fuerte"><span data-campo="hito.nombre">Acompañamiento y cierre</span></td>
+        <td><span data-campo="hito.resultado">Capacitación final, manuales y paquete de entrega.</span></td>
+        <td><span data-campo="hito.semana">Semanas 12 y 13</span><br><span class="muted"><span data-campo="hito.fecha">Del 29 de marzo al 9 de abril de 2027</span></span></td>
+        <td><span data-campo="hito.criterio">Capacitación final impartida el jueves 8 de abril y acta de cierre firmada el viernes 9 de abril de 2027.</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="small muted" style="margin-top:7pt;">La fecha estimada de cada hito es el día en que pasa a pruebas de ustedes; de ahí corre el plazo de revisión de la sección 9. Los criterios de aceptación detallados se fijan en el plan del proyecto y en la especificación de cada hito.</p>
+
+  <h2 class="s" style="margin-top:22pt;"><span class="n">4</span>Presupuesto general y calendario de pagos por hito</h2>
+  <div class="pagos" data-lista="pagos">
+    <div class="pago">
+      <div class="cuando"><span data-campo="pago.disparador">Al firmar esta acta</span></div>
+      <div class="monto"><span data-campo="pago.monto">$40,000</span></div>
+      <div class="que"><span data-campo="pago.concepto">Pago inicial. Cubre el diagnóstico.</span></div>
+    </div>
+    <div class="pago">
+      <div class="cuando"><span data-campo="pago.disparador">Hito 1 aceptado</span></div>
+      <div class="monto"><span data-campo="pago.monto">$90,000</span></div>
+      <div class="que"><span data-campo="pago.concepto">Prueba piloto en un almacén.</span></div>
+    </div>
+    <div class="pago">
+      <div class="cuando"><span data-campo="pago.disparador">Hito 2 aceptado</span></div>
+      <div class="monto"><span data-campo="pago.monto">$90,000</span></div>
+      <div class="que"><span data-campo="pago.concepto">Entradas, salidas y conexión con su sistema contable.</span></div>
+    </div>
+    <div class="pago">
+      <div class="cuando"><span data-campo="pago.disparador">Hito 3 aceptado</span></div>
+      <div class="monto"><span data-campo="pago.monto">$110,000</span></div>
+      <div class="que"><span data-campo="pago.concepto">Uso completo en los tres almacenes.</span></div>
+    </div>
+  </div>
+  <table style="margin-top:8pt;">
+    <tbody>
+      <tr class="total"><td>Precio fijo total</td><td class="num"><span data-campo="proyecto.precio_total">$330,000</span> más IVA</td></tr>
+    </tbody>
+  </table>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D02-acta-de-inicio-v1</span></span><span>2 / 7</span></div>
+</section>
+
+<!-- ============================== HOJA 3 ============================== -->
+<section class="page">
+  <div class="hdr"><span>D02 · Acta de inicio</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <h2 class="s"><span class="n">4</span>Presupuesto general y calendario de pagos por hito (continuación)</h2>
+  <h3 style="margin-top:6pt;">Reglas de pago</h3>
+  <div class="clausulas" style="margin-top:7pt;">
+    <div class="clausula" style="margin-bottom:10pt;">
+      <p style="margin-bottom:5pt;"><b>Confirmación de montos y fechas.</b> Los montos y las fechas de esta acta vienen de la propuesta aceptada. Se confirman al terminar el diagnóstico, con la propuesta definitiva y el plan del proyecto. Si el alcance o el monto cambian, ustedes deciden si el proyecto sigue.</p>
+      <p style="margin:0;">El pago inicial cubre el diagnóstico y no se devuelve. Si deciden no seguir, les entregamos el diagnóstico por escrito y no se genera otro cargo.</p>
+    </div>
+    <div class="clausula" style="margin-bottom:10pt;">
+      <p style="margin-bottom:5pt;"><b>Pagos y facturación.</b> El precio es fijo para el alcance confirmado y se paga por hitos. El pago inicial se factura al firmar esta acta. Cada pago de hito se factura con su acta de aceptación o con el aviso de aceptación por plazo vencido.</p>
+      <p style="margin:0;">Las facturas se pagan por transferencia en <span data-campo="regla.dias_pago">15</span> días naturales; los montos no incluyen IVA. Si su empresa pide orden de compra, la necesitamos antes de la primera factura, por el total y con una partida por pago.</p>
+    </div>
+    <div class="clausula" style="margin-bottom:10pt;">
+      <p style="margin:0;"><b>Costos de terceros.</b> El precio no incluye <span data-campo="terceros.servicios">la compra de equipos ni las licencias o conectores de su sistema contable</span>. Los contrata <span data-campo="terceros.quien_contrata">su área de sistemas</span>, a nombre de <span data-campo="terceros.a_nombre_de">Cliente Ejemplo, S.A. de C.V.</span>, y los paga <span data-campo="terceros.quien_paga">Cliente Ejemplo, S.A. de C.V.</span></p>
+    </div>
+  </div>
+
+  <div class="caja suave" style="margin-top:16pt;">
+    <h3 style="margin-top:0;">Datos para facturar y cobrar</h3>
+    <div class="kv" style="margin-top:7pt;">
+      <div class="k">Razón social</div><div><span data-campo="facturacion.razon_social">Cliente Ejemplo, S.A. de C.V.</span></div>
+      <div class="k">RFC</div><div><span data-campo="facturacion.rfc">CEJ150302AB4</span></div>
+      <div class="k">Datos del CFDI</div><div><span data-campo="facturacion.cfdi">Régimen 601, General de Ley Personas Morales; uso G03, gastos en general; método PPD, con complemento de pago; código postal 03100.</span></div>
+      <div class="k">Orden de compra</div><div><span data-campo="facturacion.orden_compra">Sí la piden. OC-2027-0018, por $330,000 más IVA, con cuatro partidas: una por pago.</span></div>
+      <div class="k">Portal de recepción</div><div><span data-campo="facturacion.portal">No usan portal. El PDF y el XML se envían por correo a facturas@clienteejemplo.mx, con copia a Patricia Luna.</span></div>
+      <div class="k">Días de pago</div><div><span data-campo="facturacion.dias_pago">Transferencia a 15 días naturales de recibida la factura.</span></div>
+      <div class="k">Documento exigido</div><div><span data-campo="facturacion.documento_exigido">Número de orden de compra en cada factura. En los pagos de hito, el acta de aceptación o el aviso de aceptación por plazo vencido.</span></div>
+      <div class="k">Tramita</div><div><span data-campo="facturacion.contacto">Patricia Luna, cuentas por pagar · pluna@clienteejemplo.mx</span></div>
+    </div>
+  </div>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D02-acta-de-inicio-v1</span></span><span>3 / 7</span></div>
+</section>
+
+<!-- ============================== HOJA 4 ============================== -->
+<section class="page">
+  <div class="hdr"><span>D02 · Acta de inicio</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <h2 class="s"><span class="n">5</span>Supuestos</h2>
+  <p class="muted">Lo que damos por cierto. Si alguno cambia, se mueve el precio o la fecha que se indica.</p>
+  <table>
+    <thead><tr><th style="width:5%">N.º</th><th style="width:52%">Damos por cierto que</th><th>Si cambia, se mueve</th></tr></thead>
+    <tbody data-lista="supuestos">
+      <tr><td class="fuerte">1</td><td><span data-campo="supuesto.hecho">Son tres almacenes.</span></td><td><span data-campo="supuesto.efecto">Si son más, cambian el precio y la fecha del Hito 3.</span></td></tr>
+      <tr><td class="fuerte">2</td><td><span data-campo="supuesto.hecho">Su sistema contable permite que otro sistema consulte y registre movimientos, y cuenta con acceso de pruebas.</span></td><td><span data-campo="supuesto.efecto">Si no, cambian el precio y la fecha del Hito 2.</span></td></tr>
+      <tr><td class="fuerte">3</td><td><span data-campo="supuesto.hecho">El catálogo de productos existe en un archivo o en su sistema contable, con una clave única por producto.</span></td><td><span data-campo="supuesto.efecto">Si hay que depurarlo, cambian el precio y la fecha del Hito 1.</span></td></tr>
+      <tr><td class="fuerte">4</td><td><span data-campo="supuesto.hecho">Cada almacén tiene internet estable y un celular o tableta de la empresa para registrar movimientos.</span></td><td><span data-campo="supuesto.efecto">Si falta, se mueve la fecha del hito de ese almacén: Hito 1 o Hito 3.</span></td></tr>
+      <tr><td class="fuerte">5</td><td><span data-campo="supuesto.hecho">Los tres almacenistas disponen de 2 horas a la semana para demostraciones y pruebas.</span></td><td><span data-campo="supuesto.efecto">Si no, se mueve la fecha de aceptación de cada hito.</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="s" style="margin-top:26pt;"><span class="n">6</span>Restricciones</h2>
+  <div class="grid3" style="margin-top:8pt;">
+    <div class="hito">
+      <div class="h">Fechas límite</div>
+      <div class="t"><span data-campo="restriccion.fecha_limite">Uso completo en marzo de 2027</span></div>
+      <ul data-lista="restricciones_fechas">
+        <li><span data-campo="restriccion.texto">Los tres almacenes deben operar con el sistema en marzo de 2027.</span></li>
+        <li><span data-campo="restriccion.texto">Jueves 25 y viernes 26 de marzo de 2027, Semana Santa: no se trabaja ni se prueba.</span></li>
+        <li><span data-campo="restriccion.texto">Días inhábiles dentro del plan: lunes 1 de febrero y lunes 15 de marzo de 2027.</span></li>
+      </ul>
+    </div>
+    <div class="hito">
+      <div class="h">Tecnología obligada</div>
+      <div class="t"><span data-campo="restriccion.tecnologia">Su sistema contable se queda</span></div>
+      <ul data-lista="restricciones_tecnologia">
+        <li><span data-campo="restriccion.texto">El sistema se conecta con el sistema contable que ya usan; no lo reemplaza ni lo modifica.</span></li>
+        <li><span data-campo="restriccion.texto">Es una aplicación web: se usa en celular y computadora, sin instalar programas.</span></li>
+      </ul>
+    </div>
+    <div class="hito">
+      <div class="h">Reglas del cliente</div>
+      <div class="t"><span data-campo="restriccion.reglas">Operación y accesos</span></div>
+      <ul data-lista="restricciones_reglas">
+        <li><span data-campo="restriccion.texto">Las pruebas y la capacitación no detienen la operación de los almacenes.</span></li>
+        <li><span data-campo="restriccion.texto">Los accesos a su sistema contable los autoriza Iván Torres y son personales.</span></li>
+        <li><span data-campo="restriccion.texto">Las visitas a los almacenes se acuerdan con Laura Méndez con dos días hábiles de anticipación.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D02-acta-de-inicio-v1</span></span><span>4 / 7</span></div>
+</section>
+
+<!-- ============================== HOJA 5 ============================== -->
+<section class="page">
+  <div class="hdr"><span>D02 · Acta de inicio</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <h2 class="s"><span class="n">7</span>Lo que necesitamos del cliente, con fechas</h2>
+  <div class="garantia">
+    <p style="margin-bottom:4pt;"><b>Pendientes de ustedes.</b> Las fechas de los hitos cuentan con que sus accesos, información y decisiones lleguen en las fechas de esta sección. Si algo llega tarde, les avisamos por escrito ese mismo día. La fecha prevista del hito se recorre un día hábil por cada día hábil de espera.</p>
+    <p style="margin:0;">El plan del proyecto firmado no cambia; el retraso aparece en el reporte semanal.</p>
+  </div>
+  <table style="margin-top:6pt;">
+    <thead><tr><th style="width:5%">N.º</th><th style="width:44%">Qué necesitamos</th><th style="width:20%">Quién lo entrega</th><th>Fecha compromiso</th></tr></thead>
+    <tbody data-lista="pendientes">
+      <tr><td class="fuerte">1</td><td><span data-campo="pendiente.que">Días inhábiles de su empresa, de enero a abril</span></td><td><span data-campo="pendiente.quien">Laura Méndez</span></td><td><span data-campo="pendiente.fecha">Lunes 11 de enero de 2027</span></td></tr>
+      <tr><td class="fuerte">2</td><td><span data-campo="pendiente.que">Catálogo de productos y existencias, en archivo</span></td><td><span data-campo="pendiente.quien">Laura Méndez</span></td><td><span data-campo="pendiente.fecha">Miércoles 13 de enero de 2027</span></td></tr>
+      <tr><td class="fuerte">3</td><td><span data-campo="pendiente.que">Almacén piloto y nombres de quienes prueban</span></td><td><span data-campo="pendiente.quien">Laura Méndez</span></td><td><span data-campo="pendiente.fecha">Miércoles 20 de enero de 2027</span></td></tr>
+      <tr><td class="fuerte">4</td><td><span data-campo="pendiente.que">Acceso de pruebas al sistema contable</span></td><td><span data-campo="pendiente.quien">Iván Torres</span></td><td><span data-campo="pendiente.fecha">Viernes 15 de enero de 2027</span></td></tr>
+      <tr><td class="fuerte">5</td><td><span data-campo="pendiente.que">Usuarios del sistema, con puesto y permisos</span></td><td><span data-campo="pendiente.quien">Laura Méndez</span></td><td><span data-campo="pendiente.fecha">Viernes 22 de enero de 2027</span></td></tr>
+      <tr><td class="fuerte">6</td><td><span data-campo="pendiente.que">Internet y equipo listos en el almacén piloto</span></td><td><span data-campo="pendiente.quien">Iván Torres</span></td><td><span data-campo="pendiente.fecha">Viernes 29 de enero de 2027</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="s" style="margin-top:14pt;"><span class="n">8</span>Roles</h2>
+  <div class="caja suave" style="margin-bottom:6pt;">
+    <p style="margin:0;"><b><span data-campo="cliente.responsable.nombre">Laura Méndez</span></b> es su responsable del proyecto. Puede confirmar especificaciones, firmar el plan del proyecto y las actas de aceptación, y aprobar solicitudes de cambio de hasta <span data-campo="regla.monto_cambios_responsable">$0 (solo cambios sin costo)</span>. Arriba de ese monto aprueba <span data-campo="cliente.decide.nombre">Ricardo Solís</span>; si se ausenta más de <span data-campo="regla.dias_ausencia">2</span> días hábiles, su suplente es <span data-campo="cliente.suplente.nombre">Iván Torres</span>.</p>
+  </div>
+  <table class="compacta">
+    <thead><tr><th style="width:21.2%">Papel</th><th style="width:20.9%">Persona</th><th style="width:27.3%">Correo y teléfono</th><th>Qué puede firmar</th></tr></thead>
+    <tbody data-lista="roles">
+      <tr>
+        <td class="fuerte"><span data-campo="rol.papel">Decide y paga</span></td>
+        <td><span data-campo="rol.persona">Ricardo Solís</span><br><span class="muted"><span data-campo="rol.puesto">Director general</span></span></td>
+        <td><span data-campo="rol.correo">rsolis@clienteejemplo.mx</span><br><span data-campo="rol.telefono">55 5550 0101</span></td>
+        <td><span data-campo="rol.firma">Esta acta y los cambios con costo. Recibe copia de las aceptaciones.</span></td>
+      </tr>
+      <tr>
+        <td class="fuerte"><span data-campo="rol.papel">Responsable del proyecto</span></td>
+        <td><span data-campo="rol.persona">Laura Méndez</span><br><span class="muted"><span data-campo="rol.puesto">Gerente de operaciones</span></span></td>
+        <td><span data-campo="rol.correo">lmendez@clienteejemplo.mx</span><br><span data-campo="rol.telefono">55 5550 0102</span></td>
+        <td><span data-campo="rol.firma">Plan del proyecto, especificaciones, actas y cambios sin costo.</span></td>
+      </tr>
+      <tr>
+        <td class="fuerte"><span data-campo="rol.papel">Contacto de sistemas; suple a la responsable</span></td>
+        <td><span data-campo="rol.persona">Iván Torres</span><br><span class="muted"><span data-campo="rol.puesto">Sistemas</span></span></td>
+        <td><span data-campo="rol.correo">itorres@clienteejemplo.mx</span><br><span data-campo="rol.telefono">55 5550 0103</span></td>
+        <td><span data-campo="rol.firma">Entrega accesos. Firma solo cuando suple a la responsable.</span></td>
+      </tr>
+      <tr>
+        <td class="fuerte"><span data-campo="rol.papel">Tramita órdenes y pagos</span></td>
+        <td><span data-campo="rol.persona">Patricia Luna</span><br><span class="muted"><span data-campo="rol.puesto">Cuentas por pagar</span></span></td>
+        <td><span data-campo="rol.correo">pluna@clienteejemplo.mx</span><br><span data-campo="rol.telefono">55 5550 0104</span></td>
+        <td><span data-campo="rol.firma">No firma. Emite la orden de compra y recibe las facturas.</span></td>
+      </tr>
+      <tr>
+        <td class="fuerte"><span data-campo="rol.papel">Usuarios que prueban</span></td>
+        <td><span data-campo="rol.persona">Tres almacenistas</span><br><span class="muted"><span data-campo="rol.puesto">Uno por almacén</span></span></td>
+        <td><span data-campo="rol.correo">Por medio de Laura Méndez</span></td>
+        <td><span data-campo="rol.firma">No firman. Prueban cada hito con el guion de pruebas.</span></td>
+      </tr>
+      <tr>
+        <td class="fuerte"><span data-campo="rol.papel">Nuestro líder de proyecto y responsable de la cuenta</span></td>
+        <td><span data-campo="rol.persona">Santiago</span><br><span class="muted"><span data-campo="rol.puesto">Socio</span></span></td>
+        <td><span data-campo="rol.correo">cuenta@sistemasalamedida.mx</span><br><span data-campo="rol.telefono">55 5550 0111</span></td>
+        <td><span data-campo="rol.firma">Esta acta, el plan del proyecto, solicitudes de cambio, avisos y actas de aceptación y de cierre.</span></td>
+      </tr>
+      <tr>
+        <td class="fuerte"><span data-campo="rol.papel">Nuestro contacto diario; suplente del líder de proyecto</span></td>
+        <td><span data-campo="rol.persona">Socio operativo</span><br><span class="muted"><span data-campo="rol.puesto">Socio</span></span></td>
+        <td><span data-campo="rol.correo">socio@sistemasalamedida.mx</span><br><span data-campo="rol.telefono">55 5550 0110</span></td>
+        <td><span data-campo="rol.firma">Envía reportes y avisos desde la firma del plan del proyecto. Firma solo cuando suple al líder.</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D02-acta-de-inicio-v1</span></span><span>5 / 7</span></div>
+</section>
+
+<!-- ============================== HOJA 6 ============================== -->
+<section class="page">
+  <div class="hdr"><span>D02 · Acta de inicio</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <h2 class="s"><span class="n">9</span>Reglas</h2>
+  <div class="clausulas" style="margin-top:6pt;">
+
+    <div class="clausula" style="margin-bottom:10pt;">
+      <p style="margin-bottom:4pt;"><b>Cambios.</b> Todo lo que pidan después de firmar el plan del proyecto se registra el mismo día y se clasifica en uno de tres tipos.</p>
+      <ul class="clean" style="margin-bottom:4pt;">
+        <li style="margin-bottom:2pt;"><b>Defecto:</b> el sistema no hace lo que dice la especificación. Se corrige sin costo.</li>
+        <li style="margin-bottom:2pt;"><b>Ajuste menor:</b> cabe en la especificación, pero lo quieren distinto, y toma menos de 2 horas. Se hace con la bolsa de ajustes.</li>
+        <li style="margin-bottom:2pt;"><b>Cambio de alcance:</b> algo que la especificación no incluye, o un ajuste de 2 horas o más. Les enviamos una solicitud de cambio con su efecto en costo y fecha; pueden pedir que un ajuste se cubra con el saldo de la bolsa.</li>
+      </ul>
+      <p style="margin-bottom:4pt;">Nuestro líder de proyecto clasifica cada petición contra la especificación confirmada y les avisa el tipo al siguiente día hábil. Si un criterio de aceptación la cubre y no se cumple, es defecto; si la especificación no la incluye, es cambio de alcance.</p>
+      <p style="margin-bottom:4pt;">Un desacuerdo lo resuelven su responsable y nuestro líder de proyecto; si sigue, quien decide y paga y nuestro responsable de la cuenta. Mientras tanto, el hito avanza.</p>
+      <p style="margin:0;">La bolsa de ajustes se fija en horas en el plan del proyecto y su saldo aparece en el reporte semanal. Cuando se acaba, lo siguiente es solicitud de cambio. Ningún cambio de alcance se trabaja sin su aprobación por escrito.</p>
+    </div>
+
+    <div class="clausula" style="margin-bottom:10pt;">
+      <p style="margin-bottom:4pt;"><b>Aceptación de hitos.</b> Al entregar un hito avisamos por correo a su responsable, con copia a quien decide, y enviamos el guion de pruebas. Tienen <span data-campo="regla.dias_revision">7</span> días hábiles para probar en el ambiente de pruebas, contados desde el día hábil siguiente al aviso. Envíen sus observaciones por escrito, en una sola lista.</p>
+      <p style="margin-bottom:4pt;">Corregimos los defectos sin costo y tienen <span data-campo="regla.dias_verificacion">3</span> días hábiles para verificar solo lo corregido. Un defecto que no impide cumplir un criterio de aceptación se anota en el acta con fecha y se corrige dentro de la garantía. Cumplidos los criterios de aceptación, su responsable firma el acta.</p>
+      <p style="margin-bottom:4pt;">Si el plazo vence sin observaciones por escrito, el hito se considera aceptado. Les enviamos un aviso de aceptación por plazo vencido, que hace las veces del acta para facturar. Una petición nueva no detiene la aceptación: entra a control de cambios y se clasifica.</p>
+      <p style="margin:0;">Mientras ustedes revisan, podemos avanzar con el siguiente hito. Si la aceptación se detiene, pausamos el trabajo y les avisamos por escrito.</p>
+    </div>
+
+    <div class="clausula" style="margin-bottom:10pt;">
+      <p style="margin:0;"><b>Por escrito.</b> Por escrito quiere decir un correo desde las direcciones de la sección 8 o un documento firmado, con firma autógrafa escaneada o electrónica. Lo acordado en junta, llamada o WhatsApp lo confirmamos nosotros por correo el mismo día. Un cambio de alcance requiere su respuesta expresa; lo demás vale si no lo corrigen en <span data-campo="regla.dias_correccion">2</span> días hábiles.</p>
+    </div>
+
+    <div class="clausula" style="margin-bottom:10pt;">
+      <p style="margin:0;"><b>Día hábil.</b> Día hábil es de lunes a viernes, sin descansos obligatorios ni los inhábiles que ustedes avisen en la junta de arranque.</p>
+    </div>
+
+    <div class="clausula" style="margin-bottom:10pt;">
+      <p style="margin-bottom:4pt;"><b>Pausa o terminación.</b> Cualquiera de las dos partes puede pausar o terminar el proyecto al cierre de un hito, con aviso por escrito. Se pagan los hitos aceptados y se entrega lo construido hasta ese hito. Si ustedes lo detienen a medio hito, se pagan los entregables ya entregados, con un mínimo de <span data-campo="regla.porcentaje_minimo_hito">50 %</span> del pago del hito.</p>
+      <p style="margin:0;">Si un pago, un pendiente o una aceptación de ustedes se retrasa más de <span data-campo="regla.dias_para_pausar">10</span> días hábiles, podemos pausar el trabajo. Si la pausa pasa de <span data-campo="regla.dias_para_terminar">20</span> días hábiles, podemos terminar el proyecto en el último hito aceptado. En los dos casos avisamos por escrito; reanudar requiere fechas nuevas, según nuestra disponibilidad.</p>
+    </div>
+
+    <div class="clausula" style="margin-bottom:10pt;">
+      <p style="margin:0;"><b>Qué documento manda.</b> Si dos documentos se contradicen, manda en este orden: contrato firmado, plan del proyecto vigente, especificación confirmada, esta acta y propuesta.</p>
+    </div>
+
+  </div>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D02-acta-de-inicio-v1</span></span><span>6 / 7</span></div>
+</section>
+
+<!-- ============================== HOJA 7 ============================== -->
+<section class="page">
+  <div class="hdr"><span>D02 · Acta de inicio</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <h2 class="s"><span class="n">10</span>Confidencialidad, datos, garantía y firmas</h2>
+  <div class="grid2" style="margin-top:9pt; gap:12pt;">
+    <div class="caja">
+      <h3 style="margin-top:0;">Confidencialidad y datos</h3>
+      <p style="margin:0;">Las dos partes guardan en reserva la información de la otra y la usan solo para este proyecto. Desarrollamos con datos ficticios; sus datos reales viven solo en los ambientes acordados: <span data-campo="regla.ambientes_datos_reales">el ambiente de pruebas y el de producción</span>.</p>
+    </div>
+    <div class="caja">
+      <h3 style="margin-top:0;">Inteligencia artificial</h3>
+      <p style="margin:0;">Construimos con ayuda de herramientas de inteligencia artificial, y una persona revisa cada cambio. No procesamos sus datos reales con esas herramientas sin su autorización por escrito.</p>
+    </div>
+    <div class="caja">
+      <h3 style="margin-top:0;">Garantía</h3>
+      <p style="margin:0;">Cada hito tiene garantía de <span data-campo="regla.dias_garantia">60</span> días naturales a partir de su aceptación; en ese periodo corregimos sin costo los defectos. No cubre cambios de alcance, fallas de otros sistemas ni modificaciones hechas por personas ajenas a nuestro equipo.</p>
+    </div>
+    <div class="caja">
+      <h3 style="margin-top:0;">Dueño del código</h3>
+      <p style="margin-bottom:5pt;"><span data-campo="regla.dueno_codigo">El sistema es de ustedes. El código y la documentación de cada hito son suyos al pagarse ese hito. Conservamos nuestra base técnica reutilizable y les damos licencia permanente para usarla en este sistema.</span></p>
+      <p style="margin:0;">Sus datos son siempre de ustedes y se les entregan cuando los pidan.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:30pt;">Firmas</h3>
+  <p style="margin:0;">Las dos partes firman esta acta de conformidad con sus diez secciones.</p>
+  <div class="firmas" style="margin-top:34pt;">
+    <div class="firma">
+      <div class="linea"></div>
+      <div class="n"><span data-campo="cliente.decide.nombre">Ricardo Solís</span></div>
+      <div class="r"><span data-campo="cliente.decide.puesto">Director general</span> · <span data-campo="cliente.nombre">Cliente Ejemplo, S.A. de C.V.</span><br>Decide y paga<br>Fecha: <span class="campo-mano"></span></div>
+    </div>
+    <div class="firma">
+      <div class="linea"></div>
+      <div class="n"><span data-campo="despacho.cuenta.nombre">Santiago</span></div>
+      <div class="r"><span data-campo="despacho.cuenta.puesto">Socio</span> · <span data-campo="despacho.nombre">Sistemas a la medida</span><br>Responsable de la cuenta<br>Fecha: <span class="campo-mano"></span></div>
+    </div>
+  </div>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D02-acta-de-inicio-v1</span></span><span>7 / 7</span></div>
+</section>
+
+</body>
+</html>

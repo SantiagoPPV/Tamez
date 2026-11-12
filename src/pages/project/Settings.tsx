@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { useRepo } from '../../app/session'
-import { HAT, HAT_LEVEL, options } from '../../domain/catalogs'
+import { CLIENT_ROLE, HAT, HAT_LEVEL, options } from '../../domain/catalogs'
 import { PARAM_FIELDS } from '../../domain/defaults'
 import { localId } from '../../domain/factory'
 import { fmtDate, fmtMoney } from '../../domain/format'
@@ -18,8 +18,113 @@ export function SettingsPage() {
       <People />
       <Segments />
       <Hats />
+      <Facts />
+      <Portal />
       <Danger />
     </div>
+  )
+}
+
+/** Lo que se capturó una vez para todos los documentos del proyecto. */
+function Facts() {
+  const { data, updateProject } = useP()
+  const saver = useSaver()
+  const facts = data.project.facts ?? { fields: {}, lists: {} }
+  const fields = Object.entries(facts.fields)
+  const lists = Object.entries(facts.lists)
+  const drop = (kind: 'fields' | 'lists', k: string) => {
+    const next = structuredClone(facts)
+    delete next[kind][k]
+    void saver.run(() => updateProject({ ...data.project, facts: next }))
+  }
+  return (
+    <section>
+      <SectionTitle>Lo que se captura una vez</SectionTitle>
+      <p className="mb-3 text-sm text-ink2">
+        Datos que usan todos los documentos del proyecto: facturación del cliente, objetivo, alcance, supuestos… Se agregan desde el editor de cada documento con
+        «Al proyecto».
+      </p>
+      {saver.error && <Notice tone="error">{saver.error}</Notice>}
+      {fields.length + lists.length === 0 ? (
+        <p className="text-sm text-muted">Todavía nada.</p>
+      ) : (
+        <Card className="divide-y divide-rule text-sm">
+          {fields.map(([k, v]) => (
+            <div key={k} className="grid gap-1 px-4 py-2 sm:grid-cols-[16rem_1fr_auto] sm:gap-3">
+              <span className="font-mono text-xs text-muted">{k}</span>
+              <span>{v}</span>
+              <button type="button" className="justify-self-start text-xs text-muted hover:text-rojo" onClick={() => drop('fields', k)}>
+                Quitar
+              </button>
+            </div>
+          ))}
+          {lists.map(([k, rows]) => (
+            <div key={k} className="grid gap-1 px-4 py-2 sm:grid-cols-[16rem_1fr_auto] sm:gap-3">
+              <span className="font-mono text-xs text-muted">lista {k}</span>
+              <span>{rows.length} renglones</span>
+              <button type="button" className="justify-self-start text-xs text-muted hover:text-rojo" onClick={() => drop('lists', k)}>
+                Quitar
+              </button>
+            </div>
+          ))}
+        </Card>
+      )}
+    </section>
+  )
+}
+
+/** Quién del cliente entra al portal. */
+function Portal() {
+  const { data, save, remove } = useP()
+  const n = names(data)
+  const saver = useSaver()
+  const [userId, setUserId] = useState('')
+  const [email, setEmail] = useState('')
+  const [contactId, setContactId] = useState<string | null>(null)
+  return (
+    <section>
+      <SectionTitle aside={<Link to={`/portal/${data.project.id}`} className="text-sm font-semibold text-accent">Ver el portal como el cliente</Link>}>Portal del cliente</SectionTitle>
+      <p className="mb-3 text-sm text-ink2">
+        El cliente entra con su propio usuario y solo ve su proyecto: avance, hitos y su aceptación, pendientes, sus solicitudes y los documentos enviados. Nunca
+        costos, horas internas ni márgenes. Crea su usuario en Supabase (Authentication → Users) y pega aquí su identificador.
+      </p>
+      {saver.error && <Notice tone="error">{saver.error}</Notice>}
+      <Card className="divide-y divide-rule">
+        {data.portalAccess.length === 0 && <p className="p-4 text-sm text-muted">Nadie del cliente tiene acceso todavía.</p>}
+        {data.portalAccess.map((a) => (
+          <div key={a.id} className="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 text-sm">
+            <span>
+              <span className="font-semibold">{n.contact(a.contactId) || a.email}</span> <span className="text-muted">{a.email}</span>
+              <span className="block font-mono text-xs text-muted">{a.userId}</span>
+            </span>
+            <Button size="sm" variant="ghost" onClick={() => void saver.run(() => remove('portalAccess', a.id))}>
+              Quitar acceso
+            </Button>
+          </div>
+        ))}
+        <div className="grid gap-3 p-4 sm:grid-cols-[1fr_1fr_1fr_auto] sm:items-end">
+          <TextField label="Usuario (id de Supabase Auth)" value={userId} onChange={setUserId} />
+          <TextField label="Correo" value={email} onChange={setEmail} />
+          <SelectField label="Persona del cliente" value={contactId} onChange={setContactId} options={n.contactOptions} />
+          <Button
+            disabled={!/^[0-9a-f-]{36}$/i.test(userId.trim()) || saver.busy}
+            onClick={() =>
+              void saver
+                .run(() => save('portalAccess', { id: localId('acc'), userId: userId.trim(), email: email.trim(), contactId }))
+                .then((ok) => {
+                  if (ok) {
+                    setUserId('')
+                    setEmail('')
+                    setContactId(null)
+                  }
+                })
+            }
+          >
+            Dar acceso
+          </Button>
+        </div>
+      </Card>
+    </section>
   )
 }
 
@@ -77,6 +182,8 @@ function ProjectForm() {
             <FormGrid>
               {PARAM_FIELDS.filter((f) => f.group === g).map((f) => {
                 const v = draft.params[f.key]
+                if (f.unit === 'date')
+                  return <DateField key={f.key} label={f.label} value={(v as string | null) ?? null} onChange={(x) => setParam(f.key, x as never)} />
                 if (f.unit === 'text')
                   return (
                     <TextField key={f.key} className="sm:col-span-2" label={f.label} value={String(v ?? '')} onChange={(x) => setParam(f.key, x as never)} />
@@ -88,7 +195,7 @@ function ProjectForm() {
                     label={f.label}
                     suffix={isPct ? '%' : f.unit === 'pesos' ? '$' : f.unit === 'hours' ? 'h' : f.unit === 'days' ? 'días' : undefined}
                     value={v == null ? null : isPct ? Math.round((v as number) * 10000) / 100 : (v as number)}
-                    onChange={(x) => setParam(f.key, (x == null ? (f.key === 'minMargin' || f.unit === 'pesos' || f.key === 'creditDays' ? null : 0) : isPct ? x / 100 : x) as never)}
+                    onChange={(x) => setParam(f.key, (x == null ? (f.key === 'minMargin' || f.key === 'expectedMargin' || f.unit === 'pesos' || f.key === 'creditDays' ? null : 0) : isPct ? x / 100 : x) as never)}
                   />
                 )
               })}
@@ -210,6 +317,9 @@ function People() {
             <TextField className="sm:col-span-2" label="Nombre" value={member.draft.name} onChange={(v) => member.set('name', v)} />
             <NumberField label="Costo por hora" help="Sin él se usa el costo para estimar." value={member.draft.hourlyCost} onChange={(v) => member.set('hourlyCost', v)} suffix="$" />
             <NumberField label="Horas por semana comprometidas" value={member.draft.weeklyHours} onChange={(v) => member.set('weeklyHours', v)} suffix="h" />
+            <TextField label="Puesto" value={member.draft.position ?? ''} onChange={(v) => member.set('position', v)} />
+            <TextField label="Correo" value={member.draft.email ?? ''} onChange={(v) => member.set('email', v)} />
+            <TextField label="Teléfono" value={member.draft.phone ?? ''} onChange={(v) => member.set('phone', v)} />
             <TextField
               className="sm:col-span-2"
               label="Usuario (id de Supabase Auth)"
@@ -237,7 +347,20 @@ function People() {
           {saver.error && <Notice tone="error">{saver.error}</Notice>}
           <FormGrid>
             <TextField className="sm:col-span-2" label="Nombre" value={contact.draft.name} onChange={(v) => contact.set('name', v)} />
-            <TextField className="sm:col-span-2" label="Papel en el cliente" help="Decide y paga, responsable del proyecto…" value={contact.draft.role} onChange={(v) => contact.set('role', v)} />
+            <SelectField
+              label="Papel"
+              help="Los documentos y el portal lo usan: quien decide y paga aprueba los cambios con costo."
+              value={contact.draft.roleKey ?? null}
+              onChange={(v) => {
+                contact.set('roleKey', v)
+                if (v && !contact.draft!.role) contact.set('role', CLIENT_ROLE[v])
+              }}
+              options={options(CLIENT_ROLE)}
+            />
+            <TextField label="Papel como se escribe" help="Decide y paga, responsable del proyecto…" value={contact.draft.role} onChange={(v) => contact.set('role', v)} />
+            <TextField label="Puesto" value={contact.draft.position ?? ''} onChange={(v) => contact.set('position', v)} />
+            <TextField label="Correo" value={contact.draft.email ?? ''} onChange={(v) => contact.set('email', v)} />
+            <TextField label="Teléfono" value={contact.draft.phone ?? ''} onChange={(v) => contact.set('phone', v)} />
           </FormGrid>
         </Drawer>
       )}
@@ -307,6 +430,9 @@ function Segments() {
           <FormGrid>
             <TextField label="Nombre" value={seg.draft.name} onChange={(v) => seg.set('name', v)} help="Hasta la puerta 3, Hito 1… El orden importa para los retrasos del cliente." />
             <NumberField label="Orden" value={seg.draft.position} onChange={(v) => seg.set('position', v ?? 0)} />
+            <TextField className="sm:col-span-2" label="Nombre para el cliente" help="Por ejemplo, «Diagnóstico» para «Hasta la puerta 3»." value={seg.draft.title ?? ''} onChange={(v) => seg.set('title', v)} />
+            <TextField className="sm:col-span-2" label="Resultado" value={seg.draft.result ?? ''} onChange={(v) => seg.set('result', v)} />
+            <TextField className="sm:col-span-2" label="Cómo se comprueba" value={seg.draft.criterion ?? ''} onChange={(v) => seg.set('criterion', v)} />
           </FormGrid>
         </Drawer>
       )}

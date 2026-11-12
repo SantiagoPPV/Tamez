@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>D09 · Reporte mensual de servicio · Ejemplo</title>
+<link rel="stylesheet" href="base.css">
+</head>
+<body>
+
+<section class="page">
+  <div class="hdr"><span>D09 · Reporte mensual de servicio</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <!-- Encabezado (sección 1 de la especificación) -->
+  <div class="doc-head" style="margin-bottom:0;">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;">
+      <div class="eyebrow" style="margin-bottom:4pt;">D09 · Reporte mensual de servicio</div>
+      <div class="small muted">Archivo: <span data-campo="documento.archivo_pdf">CE-INV-D09-reporte-mensual-2027-05-v1.pdf</span></div>
+    </div>
+    <h1><span data-campo="proyecto.nombre">Control de inventario en almacenes</span></h1>
+    <p class="sub" style="margin-bottom:8pt;">Lo que recibieron por su mensualidad en <span data-campo="reporte.mes">mayo de 2027</span> y lo que sigue.</p>
+    <div class="meta" style="grid-template-columns:1.75fr 0.7fr 1.2fr 1.35fr;">
+      <div><div class="k">Cliente</div><div class="v"><span data-campo="cliente.nombre">Cliente Ejemplo, S.A. de C.V.</span></div></div>
+      <div><div class="k">Clave</div><div class="v"><span data-campo="proyecto.clave">CE-INV</span></div></div>
+      <div><div class="k">Mes reportado</div><div class="v"><span data-campo="reporte.periodo">1 al 31 de mayo</span></div></div>
+      <div><div class="k">Versión</div><div class="v"><span data-campo="reporte.version">Final · 3 de junio de 2027</span><br><span class="small muted" style="font-weight:400;">Previa: <span data-campo="reporte.version_previa">martes 1 de junio</span></span></div></div>
+    </div>
+  </div>
+
+  <h2 class="s" style="margin-top:11pt;"><span class="n">1</span>Resumen del mes</h2>
+  <div class="garantia" data-lista="resumen">
+    <span data-campo="resumen.frase">El servicio estuvo estable: 99.9 % de disponibilidad y los 31 respaldos correctos.</span>
+    <span data-campo="resumen.frase">Hubo una falla urgente el miércoles 12 de mayo, causada por el proveedor de nube y resuelta en 40 minutos.</span>
+    <span data-campo="resumen.frase">Se propone un reporte de caducidades con la bolsa de horas de junio; quedó aprobado en la revisión del 3 de junio.</span>
+  </div>
+
+  <!-- Disponibilidad (sección 2) -->
+  <h2 class="s"><span class="n">2</span>Disponibilidad y avisos del monitoreo</h2>
+  <p style="margin-bottom:5pt;">En servicio <b><span data-campo="disponibilidad.minutos_en_servicio">44,600</span> de <span data-campo="disponibilidad.minutos_del_mes">44,640</span> minutos</b> del mes (<b><span data-campo="disponibilidad.porcentaje">99.9</span> %</b>). Avisos del monitoreo: <b><span data-campo="disponibilidad.avisos">1</span></b>.</p>
+  <table class="compacta" style="table-layout:fixed;">
+    <thead><tr>
+      <th style="width:16%">Fecha y hora</th>
+      <th style="width:13%">Sin servicio</th>
+      <th style="width:31%">Causa</th>
+      <th style="width:32%">Solución</th>
+      <th style="width:8%;padding-right:0;">Folio</th>
+    </tr></thead>
+    <tbody data-lista="avisos">
+      <tr>
+        <td class="fuerte"><span data-campo="aviso.fecha">Mié 12 may 2027</span><br><span class="small muted" style="font-weight:400;"><span data-campo="aviso.horario">9:20 a 10:00</span></span></td>
+        <td><span data-campo="aviso.duracion">40 minutos</span></td>
+        <td><span data-campo="aviso.causa">Falla del proveedor de nube en la zona donde corre el sistema.</span></td>
+        <td><span data-campo="aviso.solucion">El proveedor restableció el servicio; no se perdió ningún movimiento.</span></td>
+        <td style="padding-right:0;"><span data-campo="aviso.folio">R-09</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Respaldos (sección 3) -->
+  <h2 class="s"><span class="n">3</span>Respaldos y pruebas de recuperación</h2>
+  <div class="caja suave" style="padding:7pt 12pt;">
+    <div class="kv" style="grid-template-columns:1.35in 1fr;gap:4pt 10pt;">
+      <div class="k">Respaldos del mes</div><div><b><span data-campo="respaldos.correctos">31</span> de <span data-campo="respaldos.esperados">31</span> respaldos diarios correctos</b>, cada noche a las <span data-campo="respaldos.hora">23:00</span>.</div>
+      <div class="k">Última prueba</div><div><b><span data-campo="prueba.fecha">Jueves 20 de mayo de 2027</span></b>: <span data-campo="prueba.resultado">datos recuperados completos en 35 minutos, con el respaldo del día anterior</span>.</div>
+      <div class="k">Siguiente prueba</div><div><b><span data-campo="prueba.siguiente">Martes 20 de julio de 2027</span></b> · <span data-campo="prueba.frecuencia">cada bimestre</span></div>
+    </div>
+  </div>
+
+  <!-- Solicitudes atendidas (sección 4) -->
+  <h2 class="s"><span class="n">4</span>Solicitudes atendidas</h2>
+  <table class="compacta" style="table-layout:fixed;">
+    <thead><tr>
+      <th style="width:11%">Tipo</th>
+      <th class="num" style="width:8%">Recibidas</th>
+      <th style="width:35%;padding-left:12pt;">Primera respuesta</th>
+      <th style="width:25%">Solución</th>
+      <th class="num" style="width:8%">Abiertas</th>
+      <th style="width:13%;padding-left:12pt;padding-right:0;">Estado</th>
+    </tr></thead>
+    <tbody data-lista="solicitudes_resumen">
+      <tr>
+        <td class="fuerte"><span data-campo="solicitud_tipo.nombre">Urgentes</span></td>
+        <td class="num"><span data-campo="solicitud_tipo.recibidas">1</span></td>
+        <td style="padding-left:12pt;"><b><span data-campo="solicitud_tipo.respuesta">10 minutos</span></b><br><span class="small muted">Compromiso: <span data-campo="solicitud_tipo.compromiso_respuesta">1 hora en horario hábil; 2&nbsp;horas fuera&nbsp;de&nbsp;él</span></span></td>
+        <td><b><span data-campo="solicitud_tipo.solucion">40 minutos</span></b><br><span class="small muted">Falla del <span data-campo="urgente.fecha">12 de mayo</span> (<span data-campo="urgente.folio">R-09</span>)</span></td>
+        <td class="num"><span data-campo="solicitud_tipo.abiertas">0</span></td>
+        <td style="padding-left:12pt;padding-right:0;"><span class="sem"><span data-campo="solicitud_tipo.estado">Cumple</span></span></td>
+      </tr>
+      <tr>
+        <td class="fuerte"><span data-campo="solicitud_tipo.nombre">Normales</span></td>
+        <td class="num"><span data-campo="solicitud_tipo.recibidas">6</span></td>
+        <td style="padding-left:12pt;"><b><span data-campo="solicitud_tipo.respuesta">3 horas hábiles en promedio; la más larga, 6</span></b><br><span class="small muted">Compromiso: <span data-campo="solicitud_tipo.compromiso_respuesta">1 día hábil</span></span></td>
+        <td><b><span data-campo="solicitud_tipo.solucion">1.5 días hábiles en promedio; la más larga, 4</span></b></td>
+        <td class="num"><span data-campo="solicitud_tipo.abiertas">0</span></td>
+        <td style="padding-left:12pt;padding-right:0;"><span class="sem"><span data-campo="solicitud_tipo.estado">Cumple</span></span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="kv" style="grid-template-columns:1.55in 1fr;gap:4pt 10pt;margin-top:7pt;">
+    <div class="k">Defectos en garantía</div><div><b><span data-campo="garantia.defectos">1</span></b>, sin cargo a la bolsa de horas: <span data-campo="garantia.detalle">el aviso de mínimo llegaba dos veces (Hito 3, garantía hasta el 6 de junio); se corrigió el 20 de mayo</span> (<span data-campo="garantia.folio">C-26</span>).</div>
+  </div>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D09-reporte-mensual-2027-05-v1</span></span><span>1 / 2</span></div>
+</section>
+
+<section class="page">
+  <div class="hdr"><span>D09 · Reporte mensual de servicio</span><span>Ejemplo · Cliente Ejemplo</span></div>
+
+  <!-- Uso de la bolsa de horas (sección 5) -->
+  <h2 class="s"><span class="n">5</span>Uso de la bolsa de horas</h2>
+  <div class="grid2" style="grid-template-columns:1.6in 1fr;gap:16pt;align-items:start;">
+    <div class="caja suave" style="padding:8pt 11pt;">
+      <div class="kv" style="grid-template-columns:1fr auto;gap:5pt 8pt;">
+        <div class="k">Del mes</div><div style="text-align:right;"><b><span data-campo="mensualidad.bolsa_horas">8</span> h</b></div>
+        <div class="k">Usadas</div><div style="text-align:right;"><b><span data-campo="mensualidad.bolsa_horas_usadas">6.5</span> h</b></div>
+        <div class="k">Disponibles</div><div style="text-align:right;"><b><span data-campo="mensualidad.bolsa_horas_disponibles">1.5</span> h</b></div>
+      </div>
+      <div class="barra" style="margin:8pt 0 0;"><i style="width:81%"></i></div>
+      <div class="small muted" style="margin-top:3pt;"><span data-campo="mensualidad.bolsa_porcentaje_usado">81</span> % usado</div>
+    </div>
+    <div>
+      <table class="compacta" style="table-layout:fixed;">
+        <thead><tr>
+          <th style="width:17%">Fechas</th>
+          <th style="width:15%">Solicitud</th>
+          <th>En qué se usó</th>
+          <th class="num" style="width:10%">Horas</th>
+        </tr></thead>
+        <tbody data-lista="bolsa_usos">
+          <tr>
+            <td><span data-campo="uso.fecha">10 al 12 may</span></td>
+            <td><span data-campo="uso.folio">C-23</span></td>
+            <td><span data-campo="uso.descripcion">Reporte de rotación de productos por almacén</span></td>
+            <td class="num"><span data-campo="uso.horas">4</span></td>
+          </tr>
+          <tr>
+            <td><span data-campo="uso.fecha">13 y 14 may</span></td>
+            <td><span data-campo="uso.folio">C-24</span></td>
+            <td><span data-campo="uso.descripcion">Permisos: el almacenista del almacén 2 también consulta las existencias del almacén 3</span></td>
+            <td class="num"><span data-campo="uso.horas">1.5</span></td>
+          </tr>
+          <tr>
+            <td><span data-campo="uso.fecha">21 may</span></td>
+            <td><span data-campo="uso.folio">C-27</span></td>
+            <td><span data-campo="uso.descripcion">Exportación del historial de capturas a hoja de cálculo</span></td>
+            <td class="num"><span data-campo="uso.horas">1</span></td>
+          </tr>
+          <tr class="total"><td colspan="3">Total usado</td><td class="num"><span data-campo="mensualidad.bolsa_horas_usadas">6.5</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <p class="small" style="margin:6pt 0 0;"><b>Horas no usadas:</b> <span data-campo="mensualidad.bolsa_regla_no_usadas">no se acumulan al mes siguiente; las 1.5 horas disponibles de mayo no pasan a junio</span>.</p>
+
+  <!-- Revisión de accesos y actualizaciones (sección 6) -->
+  <h2 class="s"><span class="n">6</span>Revisión de accesos y actualizaciones</h2>
+  <div class="grid2" style="grid-template-columns:1.15fr 0.85fr;gap:12pt;align-items:start;">
+    <div class="kv" style="grid-template-columns:1.2in 1fr;gap:4pt 8pt;">
+      <div class="k">Usuarios activos</div><div><b><span data-campo="accesos.usuarios_activos">9</span></b> · confirmados el <span data-campo="accesos.fecha_confirmacion">28 de mayo</span> por <span data-campo="accesos.confirmo">Laura Méndez</span></div>
+      <div class="k">Altas y bajas</div><div><span data-campo="accesos.altas_bajas">1 baja (pedida por Laura Méndez) ·&nbsp;0&nbsp;altas</span></div>
+      <div class="k">Hallazgos</div><div><span data-campo="accesos.hallazgos">Ninguno</span></div>
+    </div>
+    <div>
+      <p style="margin-bottom:3pt;"><b><span data-campo="actualizaciones.cantidad">2</span> actualizaciones de seguridad aplicadas</b>, <span data-campo="actualizaciones.condiciones">de noche y sin tiempo fuera de servicio</span>:</p>
+      <ul class="clean" data-lista="actualizaciones" style="margin:0;">
+        <li><span data-campo="actualizacion.fecha">11 de mayo</span>: <span data-campo="actualizacion.que">sistema operativo del servidor.</span></li>
+        <li style="margin-bottom:0;"><span data-campo="actualizacion.fecha">25 de mayo</span>: <span data-campo="actualizacion.que">base de datos.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Mejoras propuestas (sección 7) -->
+  <h2 class="s"><span class="n">7</span>Mejoras propuestas</h2>
+  <table class="compacta" style="table-layout:fixed;">
+    <thead><tr>
+      <th style="width:27%">Mejora</th>
+      <th style="width:42%">Beneficio</th>
+      <th style="width:31%;padding-right:0;">Tamaño</th>
+    </tr></thead>
+    <tbody data-lista="mejoras">
+      <tr>
+        <td class="fuerte"><span data-campo="mejora.nombre">Reporte de caducidades</span></td>
+        <td><span data-campo="mejora.beneficio">Ver por almacén qué productos caducan en los próximos 30 días, para moverlos antes de perderlos.</span></td>
+        <td style="padding-right:0;"><span class="chip ok"><span data-campo="mejora.tamano">Cabe en la bolsa de junio</span></span><br><span class="small muted"><span data-campo="mejora.horas">6 horas estimadas, de las 8 del mes</span></span></td>
+      </tr>
+      <tr>
+        <td class="fuerte"><span data-campo="mejora.nombre">Módulo de compras sugeridas</span></td>
+        <td><span data-campo="mejora.beneficio">Sugerir qué comprar y cuánto, con el mínimo y la rotación de cada producto.</span></td>
+        <td style="padding-right:0;"><span class="chip alerta"><span data-campo="mejora.tamano">Requiere propuesta</span></span><br><span class="small muted"><span data-campo="mejora.horas">No cabe en la bolsa del mes</span></span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Acuerdos de la revisión mensual (sección 8) -->
+  <h2 class="s"><span class="n">8</span>Acuerdos de la revisión mensual</h2>
+  <table class="compacta" style="table-layout:fixed;">
+    <thead><tr>
+      <th style="width:55%">Acuerdo</th>
+      <th style="width:17%">Responsable</th>
+      <th style="width:14%">Fecha</th>
+      <th style="width:14%;padding-right:0;">Estado</th>
+    </tr></thead>
+    <tbody>
+      <tr><td colspan="4" class="fuerte" style="padding-top:6pt;">Revisión del <span data-campo="revision.fecha">jueves 3 de junio de 2027</span>, <span data-campo="revision.hora">10:00</span> <span class="muted" style="font-weight:400;">· <span data-campo="revision.duracion">1 hora</span>, con <span data-campo="revision.asistentes">Laura Méndez</span></span></td></tr>
+    </tbody>
+    <tbody data-lista="acuerdos">
+      <tr>
+        <td><span data-campo="acuerdo.que">Se aprueba el reporte de caducidades, con la bolsa de junio.</span></td>
+        <td><span data-campo="acuerdo.responsable">Laura Méndez</span></td>
+        <td><span data-campo="acuerdo.fecha">Jue 3 jun</span></td>
+        <td style="padding-right:0;"><span class="sem"><span data-campo="acuerdo.estado">Aprobado</span></span></td>
+      </tr>
+      <tr>
+        <td><span data-campo="acuerdo.que">Enviar la lista de productos con caducidad de los tres almacenes.</span></td>
+        <td><span data-campo="acuerdo.responsable">Laura Méndez</span></td>
+        <td><span data-campo="acuerdo.fecha">Jue 10 jun</span></td>
+        <td style="padding-right:0;"><span class="sem gris"><span data-campo="acuerdo.estado">Por hacer</span></span></td>
+      </tr>
+      <tr>
+        <td><span data-campo="acuerdo.que">Enviar a Ricardo Solís la propuesta de compras sugeridas.</span></td>
+        <td><span data-campo="acuerdo.responsable">Santiago</span></td>
+        <td><span data-campo="acuerdo.fecha">Jue 17 jun</span></td>
+        <td style="padding-right:0;"><span class="sem gris"><span data-campo="acuerdo.estado">Por hacer</span></span></td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr><td colspan="4" class="fuerte" style="padding-top:9pt;">Acuerdos del mes anterior <span class="muted" style="font-weight:400;">· revisión del <span data-campo="revision_anterior.fecha">jueves 6 de mayo de 2027</span></span></td></tr>
+    </tbody>
+    <tbody data-lista="acuerdos_anteriores">
+      <tr>
+        <td><span data-campo="acuerdo_anterior.que">Hacer el reporte de rotación de productos con la bolsa de mayo.</span></td>
+        <td><span data-campo="acuerdo_anterior.responsable">Santiago</span></td>
+        <td><span data-campo="acuerdo_anterior.fecha">Jue 13 may</span></td>
+        <td style="padding-right:0;"><span class="sem"><span data-campo="acuerdo_anterior.estado">Cumplido</span></span></td>
+      </tr>
+      <tr>
+        <td><span data-campo="acuerdo_anterior.que">Confirmar quiénes pueden reportar fallas urgentes.</span></td>
+        <td><span data-campo="acuerdo_anterior.responsable">Iván Torres</span></td>
+        <td><span data-campo="acuerdo_anterior.fecha">Vie 14 may</span></td>
+        <td style="padding-right:0;"><span class="sem"><span data-campo="acuerdo_anterior.estado">Cumplido</span></span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="nota" style="margin-top:6pt;">Solicitudes: <b><span data-campo="soporte.correo">soporte@sistemasalamedida.mx</span></b> · Fallas urgentes, además, al teléfono de guardia <b><span data-campo="soporte.telefono_guardia">55 5550 0112</span></b></div>
+
+  <div class="ftr"><span><b>Sistemas a la medida</b> · <span data-campo="documento.archivo">CE-INV-D09-reporte-mensual-2027-05-v1</span></span><span>2 / 2</span></div>
+</section>
+
+</body>
+</html>
