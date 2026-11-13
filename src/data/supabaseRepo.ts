@@ -120,7 +120,7 @@ export function fromRow<T>(row: Record<string, unknown>, keep?: Set<string>): T 
 
 function fail(error: PostgrestError | null, what: string): never {
   const code = error?.code ?? ''
-  if (code === '42P01' || code === 'PGRST205' || code === 'PGRST202')
+  if (code === '42P01' || code === 'PGRST205' || code === 'PGRST202' || code === '42703')
     throw new DataError(
       'La base de datos todavía no tiene las tablas o funciones del software: falta aplicar las migraciones de supabase/migrations.',
       'missing_schema',
@@ -201,6 +201,13 @@ export class SupabaseRepository implements Repository {
     const { data, error } = await this.db.rpc('sam_is_staff')
     if (error) fail(error, 'Comprobar el acceso')
     if (data !== true) return { staff: false, isAdmin: false, name: null }
+    // La tercera migración (CRM) es la última: si falta, se dice cuál en lugar de fallar en cada pantalla.
+    const probe = await this.db.from('sam_notifications').select('id').limit(1)
+    if (probe.error && ['42P01', 'PGRST205'].includes(probe.error.code))
+      throw new DataError(
+        'La base tiene las dos primeras migraciones, pero falta la tercera, la del CRM: supabase/migrations/20261113000000_sam_v5_crm.sql. Aplícala en el SQL Editor de Supabase, comprueba con supabase/verificar.sql y vuelve a entrar.',
+        'missing_schema',
+      )
     const { data: me } = await this.db.from('sam_staff').select('name, is_admin').eq('user_id', (await this.db.auth.getUser()).data.user?.id ?? '').maybeSingle()
     return { staff: true, isAdmin: Boolean(me?.is_admin), name: (me?.name as string) ?? null }
   }
