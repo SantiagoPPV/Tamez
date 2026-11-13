@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import handler from './factura.mts'
+import handler from '../functions/factura.mts'
 
 const fiscal = { rfc: 'CEJ150302AB4', legalName: 'Cliente Ejemplo', taxSystem: '601', zip: '06600', cfdiUse: 'G03', emails: 'facturas@clienteejemplo.mx', paymentMethod: 'PPD', paymentForm: '99' }
 const billing = { series: 'A', productKey: '81111500', unitKey: 'E48', unitName: 'Unidad de servicio', paymentForm: '03', paymentMethod: 'PPD', cfdiUse: 'G03', taxRate: 0.16 }

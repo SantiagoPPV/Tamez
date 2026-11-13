@@ -27,6 +27,8 @@
 #   Resumen con IA: ANTHROPIC_API_KEY.   Timbrado: FACTURAPI_KEY.
 #   Las funciones leen la URL y la clave publicable de Supabase de las mismas
 #   variables de la aplicación.
+# Cada archivo de netlify/functions se publica como función (nombre: letras, números,
+# guiones y guiones bajos): ahí solo van funciones. Las pruebas viven en netlify/tests.
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
