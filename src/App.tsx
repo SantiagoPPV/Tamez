@@ -1,11 +1,16 @@
 import type { ReactNode } from 'react'
-import { Link, NavLink, Navigate, Route, Routes } from 'react-router'
+import { Link, NavLink, Navigate, Route, Routes, useLocation, useParams } from 'react-router'
 import { useSession } from './app/session'
 import { Button, cx, Notice, Spinner } from './ui/kit'
 import { Login } from './pages/Login'
 import { Projects } from './pages/Projects'
-import { ProspectsPage } from './pages/Prospects'
 import { ProposalPage } from './pages/Proposal'
+import { CrmBoard } from './pages/crm/CrmBoard'
+import { ProspectPage } from './pages/crm/ProspectPage'
+import { CobranzaPage } from './pages/Cobranza'
+import { SharedPage } from './pages/Shared'
+import { NotificationsBell } from './pages/Notifications'
+import { ProcessPage } from './pages/project/Process'
 import { EstimatesPage } from './pages/Estimates'
 import { FirmPage } from './pages/Firm'
 import { PortalHome, PortalPage } from './pages/Portal'
@@ -36,7 +41,15 @@ const NOT_FOUND = (
 
 export default function App() {
   const { session, isDemo, signOut, leaveDemo, enterDemo } = useSession()
+  const location = useLocation()
 
+  // Una liga compartida se abre sin sesión.
+  if (location.pathname.startsWith('/compartido/'))
+    return (
+      <Routes>
+        <Route path="/compartido/:token" element={<SharedPage />} />
+      </Routes>
+    )
   if (session.status === 'loading') return <Spinner />
   if (session.status === 'signedOut') return <Login error={session.error} />
   if (session.status === 'notStaff' || session.status === 'noSchema')
@@ -87,22 +100,29 @@ export default function App() {
     <Shell
       nav
       right={
-        isDemo ? (
-          <Button variant="ghost" size="sm" onClick={leaveDemo}>
-            Salir<span className="hidden sm:inline"> de la demostración</span>
-          </Button>
-        ) : (
-          <Button variant="ghost" size="sm" onClick={() => void signOut()}>
-            Salir
-          </Button>
-        )
+        <>
+          <NotificationsBell />
+          {isDemo ? (
+            <Button variant="ghost" size="sm" onClick={leaveDemo}>
+              Salir<span className="hidden sm:inline"> de la demostración</span>
+            </Button>
+          ) : (
+            <Button variant="ghost" size="sm" onClick={() => void signOut()}>
+              Salir
+            </Button>
+          )}
+        </>
       }
       demo={isDemo}
     >
       <Routes>
         <Route path="/" element={<Projects />} />
-        <Route path="/prospectos" element={<ProspectsPage />} />
-        <Route path="/prospectos/:prospectId/:proposalId" element={<ProposalPage />} />
+        <Route path="/crm" element={<CrmBoard />} />
+        <Route path="/crm/:prospectId" element={<ProspectPage />} />
+        <Route path="/crm/:prospectId/propuesta/:proposalId" element={<ProposalPage />} />
+        <Route path="/cobranza" element={<CobranzaPage />} />
+        <Route path="/prospectos" element={<Navigate to="/crm" replace />} />
+        <Route path="/prospectos/:prospectId/:proposalId" element={<LegacyProposal />} />
         <Route path="/estimaciones" element={<EstimatesPage />} />
         <Route path="/despacho" element={<FirmPage />} />
         <Route path="/portal/:projectId" element={<PortalPage />} />
@@ -121,6 +141,7 @@ export default function App() {
           <Route path="documentos/:docId" element={<DocumentEditor />} />
           <Route path="imprimir/:what" element={<PrintView />} />
           <Route path="servicio" element={<ServicePage />} />
+          <Route path="proceso" element={<ProcessPage />} />
           <Route path="proyecto" element={<SettingsPage />} />
         </Route>
         <Route path="*" element={NOT_FOUND} />
@@ -130,11 +151,18 @@ export default function App() {
 }
 
 const MAIN_NAV = [
-  { to: '/', label: 'Proyectos', end: true },
-  { to: '/prospectos', label: 'Prospectos' },
+  { to: '/crm', label: 'CRM' },
+  { to: '/', label: 'Operaciones', end: true },
+  { to: '/cobranza', label: 'Cobranza' },
   { to: '/estimaciones', label: 'Estimaciones' },
   { to: '/despacho', label: 'Despacho' },
 ]
+
+/** Las ligas viejas de propuestas llevan ahora al CRM. */
+function LegacyProposal() {
+  const { prospectId = '', proposalId = '' } = useParams()
+  return <Navigate to={`/crm/${prospectId}/propuesta/${proposalId}`} replace />
+}
 
 function Shell({ children, right, demo, nav }: { children: ReactNode; right?: ReactNode; demo?: boolean; nav?: boolean }) {
   return (

@@ -57,6 +57,7 @@ export function emptyProject(init: { id?: string; key?: string; name?: string; c
     routines: STANDARD_ROUTINES.map((r) => ({ id: localId('rut'), ...r, ownerId: null, active: true })),
     routineRuns: [],
     portalAccess: [],
+    signatures: [],
   }
 }
 

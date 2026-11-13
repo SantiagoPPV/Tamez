@@ -1,6 +1,13 @@
 import { DEFAULT_PARAMS } from '../domain/defaults'
 import type {
   AcceptanceCriterion,
+  AiJob,
+  AppNotification,
+  DocData,
+  DocumentShare,
+  Signature,
+  Signer,
+  StoredFile,
   BaseHoursVersion,
   ChangeRequest,
   ClientContact,
@@ -50,6 +57,8 @@ export interface EntityMap {
   routines: Routine
   routineRuns: RoutineRun
   portalAccess: PortalAccess
+  /** Solo lectura: las firmas las crean signAsFirm y portalSign */
+  signatures: Signature
 }
 export type EntityName = keyof EntityMap
 
@@ -59,6 +68,11 @@ export interface GlobalMap {
   proposals: Proposal
   wbsTemplates: WbsTemplate
   baseHours: BaseHoursVersion
+  /* CRM vinculado a operaciones */
+  files: StoredFile
+  notifications: AppNotification
+  aiJobs: AiJob
+  shares: DocumentShare
 }
 export type GlobalName = keyof GlobalMap
 
@@ -67,7 +81,7 @@ export const LOG_ENTITIES = ['workLogs', 'decisions', 'changes', 'risks'] as con
 export type LogEntity = (typeof LOG_ENTITIES)[number]
 export const isLogEntity = (e: EntityName): e is LogEntity => (LOG_ENTITIES as readonly string[]).includes(e)
 /** Registros que tampoco se borran: rutinas hechas. */
-export const NO_DELETE = new Set<EntityName>([...LOG_ENTITIES, 'routineRuns'])
+export const NO_DELETE = new Set<EntityName>([...LOG_ENTITIES, 'routineRuns', 'signatures'])
 
 export interface ProjectSummary {
   id: string
@@ -75,13 +89,31 @@ export interface ProjectSummary {
   name: string
   client: string
   cutoffDate: string | null
+  /** Etapa guardada (sin dato en proyectos de antes del CRM) */
+  stage?: import('../domain/types').ProjectStage | null
 }
 
 /** Lo que ve el cliente en el portal: solo lo suyo y sin datos internos. */
 export interface PortalData {
   data: ProjectData
   me: { contactId: string | null; email: string; roleKey: ClientRole | null }
+  /** Archivos que el despacho le compartió */
+  files: StoredFile[]
 }
+
+/** Lo que abre una liga compartida, sin sesión. */
+export interface SharedDocument {
+  code: DocumentShare['code']
+  title: string
+  snapshot: DocData
+  signers: Signer[]
+  signatures: Signature[]
+  expiresOn: string
+  project: { key: string; name: string; client: string } | null
+}
+
+/** Datos de un archivo nuevo: el repositorio le pone id, ruta y fecha. */
+export type NewFile = Omit<StoredFile, 'id' | 'path' | 'uploadedOn' | 'size' | 'mime' | 'name'> & { name?: string }
 
 export interface Repository {
   readonly mode: 'demo' | 'supabase'
@@ -98,6 +130,7 @@ export interface Repository {
   remove(projectId: string, entity: EntityName, id: string): Promise<void>
   /* Versión 4 */
   listGlobal<G extends GlobalName>(entity: G): Promise<GlobalMap[G][]>
+  getGlobal<G extends GlobalName>(entity: G, id: string): Promise<GlobalMap[G] | null>
   saveGlobal<G extends GlobalName>(entity: G, row: GlobalMap[G]): Promise<GlobalMap[G]>
   removeGlobal(entity: GlobalName, id: string): Promise<void>
   getFirm(): Promise<FirmSettings>
@@ -108,6 +141,22 @@ export interface Repository {
   portalRequest(projectId: string, description: string, service: boolean, urgency: 'urgent' | 'normal' | null): Promise<number>
   portalAcceptMilestone(projectId: string, milestoneId: string, rating: number, comment: string): Promise<void>
   portalDecideChange(projectId: string, changeId: string, approve: boolean): Promise<void>
+  /* CRM vinculado a operaciones */
+  /** Sube un archivo (Storage en Supabase; el navegador en la demostración). */
+  uploadFile(meta: NewFile, file: Blob & { name?: string }): Promise<StoredFile>
+  /** Liga temporal para abrir o descargar el archivo. */
+  fileUrl(file: Pick<StoredFile, 'id' | 'path'>): Promise<string>
+  removeFile(file: StoredFile): Promise<void>
+  /** Firma del despacho sobre la versión enviada. */
+  signAsFirm(projectId: string, documentId: string, signerId: string, name: string, drawing: string | null): Promise<Signature>
+  /** Firma del cliente desde el portal, con su correo verificado. */
+  portalSign(projectId: string, documentId: string, signerId: string, name: string, drawing: string | null): Promise<void>
+  /** Abre una liga compartida (no requiere sesión). */
+  sharedDocument(token: string): Promise<SharedDocument | null>
+  /** Usuario en sesión (correo para firmar, id para avisos leídos). */
+  currentUser(): Promise<{ id: string | null; email: string | null }>
+  /** Token de la sesión, para las funciones del servidor. */
+  accessToken(): Promise<string | null>
 }
 
 export class DataError extends Error {
@@ -142,6 +191,7 @@ export function normalizeProject(d: Partial<ProjectData> & { project: Project })
         fields: { ...(d.project.facts?.fields ?? {}) },
         lists: { ...(d.project.facts?.lists ?? {}) },
       },
+      process: { ...(d.project.process ?? {}) },
     },
     segments: arr(d.segments),
     milestones: arr(d.milestones),
@@ -162,9 +212,11 @@ export function normalizeProject(d: Partial<ProjectData> & { project: Project })
       ...x,
       context: x.context ?? {},
       overrides: { fields: x.overrides?.fields ?? {}, lists: x.overrides?.lists ?? {} },
+      signers: arr(x.signers),
     })),
     routines: arr(d.routines),
     routineRuns: arr(d.routineRuns),
     portalAccess: arr(d.portalAccess),
+    signatures: arr(d.signatures),
   }
 }

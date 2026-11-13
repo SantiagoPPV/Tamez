@@ -7,13 +7,17 @@ import { DOCUMENTS, REQUEST_KIND, REQUEST_STATUS } from '../domain/catalogs'
 import { BusinessCalendar, todayInMexico } from '../domain/dates'
 import { fmtDate, fmtHours, fmtMoney, folio } from '../domain/format'
 import { monthlyService } from '../domain/service'
-import type { DocData, ProjectDocument } from '../domain/types'
+import type { DocData, ProjectDocument, Signature, Signer, StoredFile } from '../domain/types'
 import { fileBase } from '../docs/autofill'
 import { DocPreview, printDocument } from '../docs/DocPreview'
-import { fillTemplate, loadTemplate } from '../docs/engine'
+import { renderDocument } from '../docs/render'
+import { dLongCap } from '../docs/text'
+import { useFirm } from '../app/useGlobal'
+import { SignDialog } from './project/Documents'
 import { SelectField, TextArea } from '../ui/fields'
 import { Button, Card, cx, Drawer, Empty, Eyebrow, LightBadge, Notice, SectionTitle, Spinner } from '../ui/kit'
 import { useSaver } from './project/ctx'
+import { openStoredFile } from '../ui/openFile'
 
 const LIGHT_BY_TEXT: Record<string, 'green' | 'yellow' | 'red' | 'none'> = { Verde: 'green', Amarillo: 'yellow', Rojo: 'red' }
 
@@ -55,7 +59,8 @@ export function PortalPage() {
       if (preview) {
         const full = await repo.loadProject(projectId)
         const me = full.contacts.find((c) => c.roleKey === 'responsible') ?? full.contacts[0] ?? null
-        setPd({ data: clientSafe(full), me: { contactId: me?.id ?? null, email: me?.email ?? '', roleKey: me?.roleKey ?? null } })
+        const files = (await repo.listGlobal('files')).filter((f) => f.projectId === projectId && f.clientVisible)
+        setPd({ data: clientSafe(full), me: { contactId: me?.id ?? null, email: me?.email ?? '', roleKey: me?.roleKey ?? null }, files })
       } else setPd(await repo.portalData(projectId))
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e))
@@ -87,6 +92,11 @@ function PortalView({ pd, reload, preview, staff }: { pd: PortalData; reload: ()
   const [text, setText] = useState('')
   const [sent, setSent] = useState<string | null>(null)
   const [docOpen, setDocOpen] = useState<ProjectDocument | null>(null)
+  const [signing, setSigning] = useState<{ doc: ProjectDocument; signer: Signer } | null>(null)
+  const signedBy = (d: ProjectDocument, s: Signer) => data.signatures.some((x) => x.documentId === d.id && x.documentVersion === d.version && x.signerId === s.id)
+  const mineToSign = (d: ProjectDocument) =>
+    (d.signers ?? []).filter((s) => s.kind === 'client' && !signedBy(d, s) && (staff || repo.mode === 'demo' || s.email.toLowerCase() === me.email.toLowerCase()))
+  const toSign = data.documents.filter((d) => d.status === 'sent' && mineToSign(d).length > 0)
 
   const reports = data.documents.filter((d) => d.code === 'D06' && d.snapshot).sort((a, b) => (b.sentOn ?? '').localeCompare(a.sentOn ?? ''))
   const last = reports[0]?.snapshot ?? null
@@ -122,6 +132,30 @@ function PortalView({ pd, reload, preview, staff }: { pd: PortalData; reload: ()
       {(preview || staff) && <Notice tone="warn">Vista previa: así lo ve el cliente. {preview && 'Las acciones del cliente están desactivadas.'}</Notice>}
       {saver.error && <Notice tone="error">{saver.error}</Notice>}
       {sent && <Notice>{sent}</Notice>}
+
+      {toSign.length > 0 && (
+        <section>
+          <SectionTitle>Por firmar</SectionTitle>
+          <div className="space-y-2">
+            {toSign.map((d) => (
+              <Card key={d.id} className="flex flex-wrap items-center justify-between gap-3 border-ambar/40 p-4">
+                <div>
+                  <div className="font-semibold">
+                    {d.code} · {DOCUMENTS[d.code].title} · versión {d.version}
+                  </div>
+                  <div className="text-xs text-muted">Enviado el {fmtDate(d.sentOn)} · {(d.signers ?? []).map((s) => `${s.name}: ${signedBy(d, s) ? 'firmó' : 'pendiente'}`).join(' · ')}</div>
+                </div>
+                <div className="flex gap-2">
+                  <Button onClick={() => setDocOpen(d)}>Revisar</Button>
+                  <Button variant="primary" disabled={preview} onClick={() => setSigning({ doc: d, signer: mineToSign(d)[0] })}>
+                    Firmar
+                  </Button>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </section>
+      )}
 
       <section>
         <SectionTitle aside={last ? <LightBadge light={LIGHT_BY_TEXT[last.fields['semaforo.color']] ?? 'none'} size="lg" /> : undefined}>Cómo va el proyecto</SectionTitle>
@@ -377,7 +411,27 @@ function PortalView({ pd, reload, preview, staff }: { pd: PortalData; reload: ()
           </Card>
         )}
       </section>
-      {docOpen && <DocViewer doc={docOpen} snapshot={docOpen.snapshot} name={fileBase(docOpen, data)} header={`${p.key} · ${p.client}`} close={() => setDocOpen(null)} />}
+      {pd.files.length > 0 && (
+        <section>
+          <SectionTitle>Archivos</SectionTitle>
+          <Card className="divide-y divide-rule">
+            {pd.files.map((f) => (
+              <FileRow key={f.id} file={f} />
+            ))}
+          </Card>
+        </section>
+      )}
+      {docOpen && (
+        <DocViewer
+          doc={docOpen}
+          snapshot={docOpen.snapshot}
+          name={fileBase(docOpen, data)}
+          meta={{ projectKey: p.key, projectName: p.name, client: p.client }}
+          signatures={data.signatures.filter((x) => x.documentId === docOpen.id && x.documentVersion === docOpen.version)}
+          close={() => setDocOpen(null)}
+        />
+      )}
+      {signing && <SignDialog doc={signing.doc} signer={signing.signer} mode="client" projectId={p.id} close={() => setSigning(null)} onDone={reload} />}
     </main>
   )
 }
@@ -402,20 +456,58 @@ function AcceptForm({ disabled, onAccept }: { disabled: boolean; onAccept: (rati
   )
 }
 
-function DocViewer({ doc, snapshot, name, header, close }: { doc: ProjectDocument; snapshot: DocData | null; name: string; header: string; close: () => void }) {
+function FileRow({ file }: { file: StoredFile }) {
+  const repo = useRepo()
+  const saver = useSaver()
+  return (
+    <div className="flex items-center justify-between gap-3 px-4 py-3 text-sm">
+      <span>
+        <span className="font-semibold">{file.name}</span>
+        <span className="block text-xs text-muted">{fmtDate(file.uploadedOn)}</span>
+      </span>
+      <Button size="sm" disabled={saver.busy} onClick={() => void saver.run(() => openStoredFile(repo, file))}>
+        Descargar
+      </Button>
+    </div>
+  )
+}
+
+function DocViewer({
+  doc,
+  snapshot,
+  name,
+  meta,
+  signatures,
+  close,
+}: {
+  doc: ProjectDocument
+  snapshot: DocData | null
+  name: string
+  meta: { projectKey: string; projectName: string; client: string }
+  signatures: Signature[]
+  close: () => void
+}) {
+  const { firm } = useFirm()
   const [html, setHtml] = useState<string | null>(null)
   useEffect(() => {
-    const t = DOCUMENTS[doc.code].template
-    if (!t || !snapshot) return
-    void loadTemplate(t).then((tpl) => setHtml(fillTemplate(tpl, snapshot, { markMissing: false, headerRight: header }).html))
-  }, [doc, snapshot, header])
+    if (!snapshot) return
+    void renderDocument({
+      code: doc.code,
+      data: snapshot,
+      firm,
+      signers: doc.signers ?? [],
+      signatures,
+      hash: signatures[0]?.documentHash ?? null,
+      meta: { firmName: firm.name, ...meta, version: doc.version, dateText: dLongCap(doc.signedOn ?? doc.sentOn ?? doc.createdOn), fileName: name },
+    }).then((r) => setHtml(r.html))
+  }, [doc, snapshot, meta, firm, signatures, name])
   return (
     <Drawer open onClose={close} title={`${doc.code} · ${DOCUMENTS[doc.code].title}`} subtitle={`${name}.pdf`}>
       {!snapshot ? (
         <Notice tone="warn">Este documento se registró sin su versión enviada.</Notice>
       ) : html ? (
         <div className="space-y-3">
-          <Button onClick={() => printDocument(html, name)}>Imprimir o guardar PDF</Button>
+          <Button onClick={() => printDocument(html, name)}>Descargar PDF</Button>
           <DocPreview html={html} title={name} />
         </div>
       ) : (

@@ -1,16 +1,15 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router'
-import { useRepo } from '../app/session'
+import { Link, useParams } from 'react-router'
 import { useFirm, useGlobal } from '../app/useGlobal'
 import { BASE_HOURS, BLOCKS, PROJECT_SIZE, options } from '../domain/catalogs'
-import { projectFromProposal } from '../domain/conversion'
+import { DEFAULT_MIN_MONTHLY, emptyContent, emptyValidation, monthlyAmount } from '../domain/crm'
 import { STANDARD_TEMPLATE, UNIT_LABELS, estimate, suggestPayments, suggestSize } from '../domain/estimating'
-import { localId } from '../domain/factory'
 import { fmtHours, fmtMoney, fmtPct } from '../domain/format'
-import type { EstimateUnits, ProjectDocument, Proposal, UnitKey, WbsTemplate } from '../domain/types'
-import { resolveDoc } from '../docs/autofill'
+import type { EstimateUnits, Proposal, ProposalContent, UnitKey, WbsTemplate } from '../domain/types'
 import { DocPreview, printDocument } from '../docs/DocPreview'
 import { fillTemplate, loadTemplate } from '../docs/engine'
+import { proposalDocData } from './crm/proposalDoc'
+import { ValidationCard } from './crm/Validation'
 import { DateField, FormGrid, NumberField, SelectField, TextArea, TextField } from '../ui/fields'
 import { Button, Card, cx, Drawer, Eyebrow, Notice, SectionTitle, Spinner, Stat } from '../ui/kit'
 import { useSaver } from './project/ctx'
@@ -42,8 +41,7 @@ export function ProposalPage() {
   const [showLines, setShowLines] = useState(false)
   const [preview, setPreview] = useState(false)
   const saver = useSaver()
-  const repo = useRepo()
-  const navigate = useNavigate()
+  const { firm } = useFirm()
   useEffect(() => {
     if (original) setD(structuredClone(original))
   }, [original])
@@ -64,25 +62,14 @@ export function ProposalPage() {
   const dirty = JSON.stringify(d) !== JSON.stringify(original)
   const suggested = suggestSize(d.units)
   const paymentsSum = d.payments.reduce((s, p) => s + p.amount, 0)
+  const monthly = monthlyAmount(est.price, d.units.weeks)
+  const minMonthly = firm.minMonthlyAmount ?? DEFAULT_MIN_MONTHLY
 
-  async function convert() {
-    const key = prompt('Clave del proyecto nuevo (por ejemplo, CE-INV):')?.trim().toUpperCase()
-    if (!key) return
-    await saver.run(async () => {
-      const all = await repo.loadAllProjects()
-      const last = all[all.length - 1]
-      const { data } = projectFromProposal({ proposal: d!, prospect: prospect!, template, base: tb.base, key, members: last?.members, hats: last?.hats })
-      const id = await repo.createProject(data)
-      await prospects.save({ ...prospect!, projectId: id, stage: 'won' })
-      await proposals.save({ ...d!, status: 'accepted' })
-      navigate(`/p/${id}/proyecto`)
-    })
-  }
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-6 sm:py-8">
-      <Link to="/prospectos" className="text-sm font-semibold text-accent">
-        ← Prospectos
+      <Link to={`/crm/${prospect.id}`} className="text-sm font-semibold text-accent">
+        ← {prospect.company}
       </Link>
       <div className="mt-1 mb-5 flex flex-wrap items-end justify-between gap-3">
         <div>
@@ -92,11 +79,10 @@ export function ProposalPage() {
           <h1 className="text-2xl font-extrabold tracking-tight">{d.name || 'Propuesta'}</h1>
         </div>
         <div className="flex flex-wrap gap-2">
-          <Button variant="primary" disabled={!dirty || saver.busy} onClick={() => void saver.run(() => proposals.save(d))}>
+          <Button variant="primary" disabled={!dirty || saver.busy} onClick={() => void saver.run(() => proposals.save(resetIfChanged(original, d)))}>
             Guardar
           </Button>
           <Button onClick={() => setPreview(true)}>Ver la D01</Button>
-          {d.status === 'accepted' && !prospect.projectId && <Button onClick={() => void convert()}>Convertir en proyecto</Button>}
           {prospect.projectId && (
             <Link to={`/p/${prospect.projectId}`} className="self-center text-sm font-semibold text-accent">
               Ir al proyecto
@@ -118,6 +104,8 @@ export function ProposalPage() {
               <DateField label="Vigente hasta" help="Valor inicial: 15 días naturales." value={d.validUntil} onChange={(v) => set('validUntil', v)} />
             </FormGrid>
           </Card>
+
+          <ContentEditor content={{ ...emptyContent(), ...(d.content ?? {}) }} onChange={(c) => set('content', c)} />
 
           <section>
             <SectionTitle>Unidades</SectionTitle>
@@ -209,6 +197,7 @@ export function ProposalPage() {
         </div>
 
         <aside className="space-y-4 lg:sticky lg:top-20 lg:self-start">
+          <ValidationCard proposal={original} prospect={prospect} save={(p) => proposals.save(p)} />
           <Card className="p-4">
             <h3 className="mb-3 text-[11px] font-bold uppercase tracking-[0.14em] text-accent">De las horas al precio</h3>
             <div className="grid grid-cols-2 gap-3">
@@ -225,6 +214,11 @@ export function ProposalPage() {
               <Stat label="Precio sugerido" value={fmtMoney(est.suggestedPrice)} hint="Costo ÷ (1 − margen), al millar" />
               <Stat label="Margen" value={fmtPct(est.marginPct)} hint={fmtMoney(est.margin)} />
               <Stat label="Tarifa de cambios" value={est.changeRate ? fmtMoney(est.changeRate) : '—'} hint="Precio ÷ horas de actividades" />
+              <Stat
+                label="Venta por mes de creación"
+                value={<span className={monthly.perMonth != null && monthly.perMonth < minMonthly ? 'text-rojo' : 'text-accent-2'}>{monthly.perMonth == null ? '—' : fmtMoney(monthly.perMonth)}</span>}
+                hint={`${monthly.months} meses · mínimo ${fmtMoney(minMonthly)}`}
+              />
             </dl>
           </Card>
           <Card className="p-4">
@@ -268,16 +262,12 @@ function ProposalPreview({ proposal, close }: { proposal: Proposal; close: () =>
   const [html, setHtml] = useState<string | null>(null)
   const prospect = prospects.rows?.find((p) => p.id === proposal.prospectId)
   useEffect(() => {
-    if (!prospect || !proposals.rows) return
-    const template = tb.templates.find((t) => t.id === proposal.templateId) ?? STANDARD_TEMPLATE
-    const { data } = projectFromProposal({ proposal, prospect, template, base: tb.base, key: 'PROPUESTA' })
-    data.project.name = proposal.name
-    const doc: ProjectDocument = { id: localId('doc'), code: 'D01', version: proposal.version, status: 'draft', context: { proposalId: proposal.id, variant: proposal.variant }, overrides: { fields: {}, lists: {} }, snapshot: null, createdOn: proposal.date, sentOn: null, signedOn: null, notes: '' }
-    const env = { data, firm, proposals: [...proposals.rows.filter((p) => p.id !== proposal.id), proposal], prospects: prospects.rows ?? [] }
-    void loadTemplate('D01-propuesta').then((t) => setHtml(fillTemplate(t, resolveDoc(doc, env), { markMissing: true, headerRight: prospect.company }).html))
+    if (!prospect || !proposals.rows || !prospects.rows) return
+    const data = proposalDocData({ proposal, prospect, prospects: prospects.rows, proposals: proposals.rows, templates: tb.templates, base: tb.base, firm })
+    void loadTemplate('D01-propuesta').then((t) => setHtml(fillTemplate(t, data, { markMissing: true, headerRight: prospect.company }).html))
   }, [prospect, proposals.rows, prospects.rows, proposal, firm, tb.base, tb.templates])
   return (
-    <Drawer open onClose={close} title={`D01 · Propuesta ${proposal.variant}`} subtitle="Lo que no sale de la estimación se captura al pasar a proyecto o en el documento del proyecto">
+    <Drawer open onClose={close} title={`D01 · Propuesta ${proposal.variant}`} subtitle="Sale de la estimación y del contenido de la propuesta">
       {html ? (
         <div className="space-y-3">
           <Button onClick={() => printDocument(html.replace(/\.falta[^}]*}/g, ''), `D01-propuesta-${proposal.variant}-v${proposal.version}`)}>Imprimir o guardar PDF</Button>
@@ -287,5 +277,44 @@ function ProposalPreview({ proposal, close }: { proposal: Proposal; close: () =>
         <Spinner />
       )}
     </Drawer>
+  )
+}
+
+/** Si cambia lo que dirección general validó, se pide validar de nuevo. */
+function resetIfChanged(before: Proposal, after: Proposal): Proposal {
+  const v = before.validation
+  if (!v?.approvedOn) return after
+  const key = (p: Proposal) => JSON.stringify([p.units, p.size, p.price, p.payments, p.content, p.monthlyFee, p.hourlyCost, p.targetMargin, p.rowOverrides, p.directCosts])
+  if (key(before) === key(after)) return after
+  return { ...after, validation: { ...emptyValidation(), changesRequested: 'La propuesta cambió después de validarse: pide la validación de nuevo.' } }
+}
+
+const CONTENT_FIELDS: { k: keyof ProposalContent; label: string; help?: string; rows?: number }[] = [
+  { k: 'objective', label: 'Objetivo', rows: 2 },
+  { k: 'problem', label: 'El problema, con sus palabras', help: 'Una frase por renglón.' },
+  { k: 'approach', label: 'Cómo lo logramos', help: 'Un paso por renglón.' },
+  { k: 'result', label: 'El resultado: lo que podrán comprobar', help: 'Un resultado por renglón; «Nombre: cómo se comprueba».' },
+  { k: 'includes', label: 'Alcance: qué incluye', help: 'Uno por renglón.' },
+  { k: 'excludes', label: 'Alcance: qué no incluye', help: 'Uno por renglón.' },
+  { k: 'clientNeeds', label: 'Lo que se requiere del cliente', help: 'Uno por renglón: «qué | quién | cuándo».' },
+  { k: 'dataConfidentiality', label: 'Datos y confidencialidad', rows: 3 },
+  { k: 'thirdParties', label: 'Lo que depende de terceros', help: 'Uno por renglón: «servicio | quién lo contrata | a nombre de quién | quién lo paga».' },
+  { k: 'conditions', label: 'Condiciones y supuestos', help: 'Uno por renglón.' },
+]
+
+function ContentEditor({ content, onChange }: { content: ProposalContent; onChange: (c: ProposalContent) => void }) {
+  return (
+    <section>
+      <SectionTitle>Lo que dice la propuesta</SectionTitle>
+      <p className="mb-3 text-sm text-ink2">
+        Objetivo, problema, cómo lo logramos, resultado, alcance, lo que se requiere del cliente, datos y confidencialidad, terceros y condiciones. El plan de pagos y el
+        cronograma salen de la estimación. Esto mismo pasa al acta de inicio.
+      </p>
+      <Card className="grid gap-3 p-4 md:grid-cols-2">
+        {CONTENT_FIELDS.map((f) => (
+          <TextArea key={f.k} className={f.k === 'objective' || f.k === 'dataConfidentiality' ? 'md:col-span-2' : undefined} label={f.label} help={f.help} rows={f.rows ?? 3} value={content[f.k]} onChange={(v) => onChange({ ...content, [f.k]: v })} />
+        ))}
+      </Card>
+    </section>
   )
 }

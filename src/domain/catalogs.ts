@@ -1,19 +1,22 @@
 import type {
+  ActivityStatus,
+  ActivityType,
+  Answer3,
+  Billing,
+  BillingSettings,
+  Channel,
   ClientRole,
   CriterionClass,
   CriterionResult,
-  DocumentCode,
-  GateNumber,
-  ProjectSize,
-  ProspectStage,
-  RoutineFrequency,
-  Urgency,
-  ActivityStatus,
-  ActivityType,
-  Billing,
-  Channel,
+  CrmStep,
   DependsOn,
   DeviationCause,
+  DocumentCode,
+  FileKind,
+  FollowUpChannel,
+  FormatCode,
+  GateNumber,
+  GuideKey,
   HatLevel,
   HatName,
   HourClass,
@@ -21,12 +24,18 @@ import type {
   InvoiceConcept,
   Level,
   Light,
+  LostCategory,
+  ProjectSize,
+  ProjectStage,
+  ProspectStage,
   RequestKind,
   RequestStatus,
   RiskClass,
   RiskStatus,
+  RoutineFrequency,
   RowClass,
   Severity,
+  Urgency,
 } from './types'
 
 /** Etiquetas en español de cada catálogo, en el orden de la hoja de control. */
@@ -367,8 +376,12 @@ export type DocContextKind = 'none' | 'milestone' | 'change' | 'week' | 'month' 
 
 export const DOCUMENTS: Record<
   DocumentCode,
-  { title: string; folder: string; slug: string; client: boolean; context: DocContextKind; template: string | null; prepares: string }
+  { title: string; folder: string; slug: string; client: boolean; context: DocContextKind; template: string | null; prepares: string; format?: FormatCode }
 > = {
+  D15: { title: 'Resumen de la junta de descubrimiento', folder: '01-preventa', slug: 'resumen-de-descubrimiento', client: true, context: 'none', template: null, prepares: 'Venta y cuenta', format: 'D15' },
+  D16: { title: 'Análisis de factibilidad', folder: '01-preventa', slug: 'analisis-de-factibilidad', client: false, context: 'none', template: null, prepares: 'Arquitectura', format: 'D16' },
+  D17: { title: 'Minuta de la junta de arranque', folder: '02-inicio', slug: 'junta-de-arranque', client: true, context: 'none', template: null, prepares: 'Líder de proyecto', format: 'D17' },
+  D18: { title: 'Diagnóstico', folder: '03-planeacion', slug: 'diagnostico', client: true, context: 'none', template: null, prepares: 'Análisis', format: 'D18' },
   D01: { title: 'Propuesta preliminar y definitiva', folder: '01-preventa', slug: 'propuesta', client: true, context: 'proposal', template: 'D01-propuesta', prepares: 'Venta y cuenta' },
   D02: { title: 'Acta de inicio', folder: '02-inicio', slug: 'acta-de-inicio', client: true, context: 'none', template: 'D02-acta-de-inicio', prepares: 'Líder de proyecto' },
   D03: { title: 'Plan del proyecto (línea base)', folder: '03-planeacion', slug: 'plan-del-proyecto', client: true, context: 'none', template: 'D03-plan-del-proyecto', prepares: 'Líder de proyecto' },
@@ -427,12 +440,130 @@ export const STANDARD_ROUTINES: { name: string; frequency: RoutineFrequency; rev
  * Preventa y estimación
  * ------------------------------------------------------------------------- */
 export const PROSPECT_STAGE: Record<ProspectStage, string> = {
-  qualify: '1. Calificar',
-  discovery: '2. Junta de descubrimiento',
-  feasibility: '3. Factibilidad (D11 v0)',
-  proposal: '4. Propuesta (D01)',
-  won: 'Ganado',
-  lost: 'Perdido',
+  initial: 'Prospecto inicial',
+  feasible: 'Prospecto factible',
+  confirmed: 'Prospecto confirmado',
+  client: 'Cliente',
+  lost: 'Prospecto perdido',
+}
+
+/** Etapas del cliente una vez confirmada la venta (las puertas 2 a 5 marcan el paso). */
+export const PROJECT_STAGE: Record<ProjectStage, string> = {
+  confirmed: 'Por arrancar (falta el pago inicial)',
+  start: 'Cliente en Inicio',
+  planning: 'Cliente en Planeación',
+  execution: 'Cliente en Ejecución',
+  closing: 'Cliente en Cierre',
+  service: 'Cliente en Servicio',
+  closed: 'Proyecto cerrado',
+  cancelled: 'Cancelado',
+}
+export const STAGE_ORDER: ProjectStage[] = ['confirmed', 'start', 'planning', 'execution', 'closing', 'service', 'closed']
+
+export type Phase = 'preventa' | 'venta' | 'produccion'
+export const PHASE: Record<Phase, string> = { preventa: 'Preventa', venta: 'Venta', produccion: 'Producción' }
+
+/** Pasos del CRM (Excel de consultoría): proceso, estado, paso y cuándo está listo. */
+export const CRM_STEPS: { step: CrmStep; phase: Phase; status: ProspectStage; title: string; done: string; guide: GuideKey }[] = [
+  { step: 'alta', phase: 'preventa', status: 'initial', title: 'Alta del prospecto', done: 'Constan la empresa, el contacto, el tamaño de la empresa y del proyecto, y la junta de descubrimiento está programada.', guide: 'prospeccion' },
+  { step: 'descubrimiento', phase: 'preventa', status: 'initial', title: 'Junta de descubrimiento', done: 'La junta se tuvo, hay resumen, consta el problema en sus palabras y quién decide.', guide: 'descubrimiento' },
+  { step: 'factibilidad', phase: 'preventa', status: 'initial', title: 'Análisis de factibilidad', done: 'Se decidió si podemos, si nos conviene y si es rentable, con la estimación v0 y el mínimo mensual.', guide: 'factibilidad' },
+  { step: 'propuesta', phase: 'venta', status: 'feasible', title: 'Propuesta preliminar', done: 'Dirección general validó la propuesta y se presentó al cliente.', guide: 'presentacion' },
+  { step: 'segunda', phase: 'venta', status: 'feasible', title: 'Segunda entrevista con quien decide', done: 'Se decidió si hace falta; si sí, ya se tuvo.', guide: 'presentacion' },
+  { step: 'seguimiento', phase: 'venta', status: 'feasible', title: 'Seguimiento hasta un sí o un no', done: 'Hay un sí o un no concreto; con el sí, Santiago aprobó la puerta 1.', guide: 'cierre' },
+  { step: 'acta', phase: 'venta', status: 'confirmed', title: 'Acta de inicio firmada', done: 'La D02 está firmada por las dos partes y se envió a los involucrados.', guide: 'cita_cierre' },
+  { step: 'cierre', phase: 'venta', status: 'confirmed', title: 'Cita de cierre', done: 'Constan los involucrados, los accesos con fecha compromiso, el papeleo del cliente, los datos para facturar y el acuerdo de arrancar al pago.', guide: 'cita_cierre' },
+  { step: 'cobro', phase: 'venta', status: 'confirmed', title: 'Factura y cobro del pago inicial', done: 'La factura del pago inicial está cobrada: el prospecto pasa a cliente y nace en Operaciones.', guide: 'cita_cierre' },
+]
+
+export const LOST_CATEGORY: Record<LostCategory, string> = {
+  not_feasible: 'No pasó la factibilidad',
+  no_budget: 'Sin presupuesto',
+  competitor: 'Eligió a otro proveedor',
+  no_response: 'Dejó de responder',
+  postponed: 'Lo pospuso',
+  not_decider: 'No llegamos a quien decide',
+  other: 'Otro',
+}
+
+export const FOLLOW_UP_CHANNEL: Record<FollowUpChannel, string> = {
+  whatsapp: 'WhatsApp',
+  email: 'Correo',
+  phone: 'Llamada',
+  meeting: 'Presencial',
+  video: 'Videollamada',
+}
+
+export const PRESENTATION: Record<'in_person' | 'email' | 'video', string> = {
+  in_person: 'Presencial (lo preferido)',
+  video: 'Videollamada',
+  email: 'Por correo, con seguimiento por WhatsApp',
+}
+
+export const ANSWER3: Record<Answer3, string> = { yes: 'Sí', no: 'No', pending: 'Por confirmar' }
+
+export const PAPERWORK_STATUS: Record<'pending' | 'done' | 'na', string> = { pending: 'Pendiente', done: 'Listo', na: 'No aplica' }
+
+export const FILE_KIND: Record<FileKind, string> = {
+  audio: 'Grabación',
+  acta: 'Acta firmada',
+  nda: 'Confidencialidad',
+  vendor: 'Alta de proveedor',
+  purchase_order: 'Orden de compra',
+  invoice_pdf: 'Factura (PDF)',
+  invoice_xml: 'Factura (XML)',
+  payment_proof: 'Comprobante de pago',
+  closing: 'Documento de la cita de cierre',
+  other: 'Otro',
+}
+
+/* Catálogos del SAT (CFDI 4.0): los más usados en este negocio. */
+export const TAX_SYSTEM: Record<string, string> = {
+  '601': '601 General de Ley Personas Morales',
+  '603': '603 Personas Morales con Fines no Lucrativos',
+  '612': '612 Personas Físicas con Actividades Empresariales y Profesionales',
+  '626': '626 Régimen Simplificado de Confianza',
+  '621': '621 Incorporación Fiscal',
+  '625': '625 Actividades con Plataformas Tecnológicas',
+  '606': '606 Arrendamiento',
+  '605': '605 Sueldos y Salarios',
+  '616': '616 Sin obligaciones fiscales',
+}
+export const CFDI_USE: Record<string, string> = {
+  G03: 'G03 Gastos en general',
+  G01: 'G01 Adquisición de mercancías',
+  I04: 'I04 Equipo de cómputo y accesorios',
+  I08: 'I08 Otra maquinaria y equipo',
+  S01: 'S01 Sin efectos fiscales',
+}
+export const PAYMENT_FORM: Record<string, string> = {
+  '03': '03 Transferencia electrónica de fondos',
+  '02': '02 Cheque nominativo',
+  '01': '01 Efectivo',
+  '04': '04 Tarjeta de crédito',
+  '28': '28 Tarjeta de débito',
+  '99': '99 Por definir',
+}
+export const PAYMENT_METHOD: Record<'PUE' | 'PPD', string> = {
+  PUE: 'PUE Pago en una sola exhibición',
+  PPD: 'PPD Pago en parcialidades o diferido',
+}
+export const CANCEL_MOTIVE: Record<'01' | '02' | '03' | '04', string> = {
+  '01': '01 Con errores, con relación (se sustituye)',
+  '02': '02 Con errores, sin relación',
+  '03': '03 No se llevó a cabo la operación',
+  '04': '04 Operación nominativa en una factura global',
+}
+
+export const DEFAULT_BILLING: BillingSettings = {
+  series: 'A',
+  productKey: '81111500',
+  unitKey: 'E48',
+  unitName: 'Unidad de servicio',
+  paymentForm: '03',
+  paymentMethod: 'PPD',
+  cfdiUse: 'G03',
+  taxRate: 0.16,
 }
 
 export const PROJECT_SIZE: Record<ProjectSize, { label: string; factor: number; weeks: string; hint: string }> = {

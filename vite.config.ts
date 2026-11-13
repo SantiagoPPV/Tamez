@@ -20,7 +20,7 @@ export default defineConfig({
     },
   },
   test: {
-    include: ['src/**/*.test.ts'],
+    include: ['src/**/*.test.ts', 'netlify/**/*.test.ts'],
     environment: 'node',
   },
 })

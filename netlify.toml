@@ -17,6 +17,20 @@
   command = "npm run ci"
   publish = "dist"
 
+# --- Funciones del servidor -----------------------------------------------------
+# correo, factura (FacturAPI), integraciones y resumen-background (Claude).
+# Solo las usa un socio con sesión. Variables (Site configuration → Environment):
+#   Correo con Google Workspace: GOOGLE_CLIENT_EMAIL, GOOGLE_PRIVATE_KEY y
+#     GOOGLE_SENDER (cuenta de servicio con delegación de todo el dominio y el
+#     permiso gmail.send). Con Resend: RESEND_API_KEY y EMAIL_FROM.
+#     EMAIL_PROVIDER = google | resend elige uno si están los dos.
+#   Resumen con IA: ANTHROPIC_API_KEY.   Timbrado: FACTURAPI_KEY.
+#   Las funciones leen la URL y la clave publicable de Supabase de las mismas
+#   variables de la aplicación.
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
 [build.environment]
   NODE_VERSION = "22"
   # Vite, TypeScript, Tailwind y Vitest están en devDependencies: sin esto, un

@@ -6,7 +6,7 @@
 import { DOCUMENTS } from '../domain/catalogs'
 import { DEFAULT_PARAMS } from '../domain/defaults'
 import { folio } from '../domain/format'
-import type { DocumentCode, Params, ProjectData } from '../domain/types'
+import type { DocumentCode, Params, ProjectData, ProjectStage, StoredFile } from '../domain/types'
 import { normalizeProject, type PortalData } from './repository'
 
 const CLIENT_PARAMS: (keyof Params)[] = [
@@ -44,9 +44,14 @@ export function clientSafe(d: ProjectData): ProjectData {
       .map((l) => ({ ...l, personId: null, description: '', evidence: '', blocker: '', directCost: null })),
     routines: d.routines.map((r) => ({ ...r, ownerId: null })),
     routineRuns: d.routineRuns,
+    signatures: d.signatures
+      .filter((s) => d.documents.some((x) => x.id === s.documentId && DOCUMENTS[x.code].client))
+      .map((s) => ({ ...s, userAgent: '' })),
   })
 }
 
+/** Fechas y horas locales de la bitácora de cambios (sin zona). */
+const LOCAL_DATETIME = new Set(['receivedAt', 'firstResponseAt', 'resolvedAt'])
 const camel = (k: string) => k.replace(/_([a-z])/g, (_m, c: string) => c.toUpperCase())
 function rowsToCamel<T>(rows: unknown): T[] {
   if (!Array.isArray(rows)) return []
@@ -55,7 +60,7 @@ function rowsToCamel<T>(rows: unknown): T[] {
     for (const [k, v] of Object.entries(r as Record<string, unknown>)) {
       if (k === 'project_id' || k === 'created_at' || k === 'created_by' || k === 'updated_at') continue
       const key = camel(k)
-      out[key] = typeof v === 'string' && /At$/.test(key) && v.length > 16 ? v.slice(0, 16) : v
+      out[key] = typeof v === 'string' && LOCAL_DATETIME.has(key) && v.length > 16 ? v.slice(0, 16) : v
     }
     return out as T
   })
@@ -89,7 +94,9 @@ export function fromPortalRpc(json: Record<string, unknown>): PortalData {
     workLogs: rowsToCamel(json.work_logs),
     routines: rowsToCamel(json.routines),
     routineRuns: rowsToCamel(json.routine_runs),
+    signatures: rowsToCamel(json.signatures),
   })
+  if (typeof p.stage === 'string') data.project.stage = p.stage as ProjectStage
   return {
     data,
     me: {
@@ -97,6 +104,7 @@ export function fromPortalRpc(json: Record<string, unknown>): PortalData {
       email: String(me.email ?? ''),
       roleKey: (me.role_key as PortalData['me']['roleKey']) ?? null,
     },
+    files: rowsToCamel<StoredFile>(json.files).map((f) => ({ ...f, projectId: String(p.id), prospectId: null, clientVisible: true, notes: '' })),
   }
 }
 

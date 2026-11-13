@@ -5,6 +5,7 @@
  */
 import { ACTIVITY_TYPE, BASE_HOURS, BLOCKS, CHANNEL, CRITERION_CLASS, DOCUMENTS, LIGHT, QUALITY_LISTS, REQUEST_KIND, REQUEST_STATUS } from '../domain/catalogs'
 import { computeControl, type ControlResult } from '../domain/control'
+import { contentToDoc } from '../domain/crm'
 import { addDays, diffDays, maxDate, todayInMexico, type ISODate } from '../domain/dates'
 import { estimate, STANDARD_TEMPLATE } from '../domain/estimating'
 import { folio, pad } from '../domain/format'
@@ -389,10 +390,16 @@ function d01(c: Ctx) {
     lists.pagos = pr.payments.map((p) => ({ 'pago.disparador': p.trigger, 'pago.monto': money(p.amount), 'pago.concepto': p.label }))
   }
   if (pros && !f['cliente.decide.nombre']) {
-    f['cliente.decide.nombre'] = pros.contactName
-    f['cliente.decide.puesto'] = pros.contactRole
+    f['cliente.decide.nombre'] = pros.decisionMaker || pros.contactName
+    f['cliente.decide.puesto'] = pros.decisionMakerRole || pros.contactRole
   }
   if (pros && !f['cliente.nombre']) f['cliente.nombre'] = pros.company
+  // Lo que dice la propuesta (objetivo, problema, cómo, resultado, alcance, terceros, condiciones).
+  if (pr?.content) {
+    const cd = contentToDoc(pr.content, pros ?? null)
+    for (const [k, v] of Object.entries(cd.fields)) if (v) f[k] = v
+    for (const [k, v] of Object.entries(cd.lists)) if (v.length) lists[k] = v
+  }
 }
 
 function d02(c: Ctx) {

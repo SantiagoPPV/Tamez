@@ -180,3 +180,13 @@ export function FormSection({ title, children }: { title: ReactNode; children: R
     </fieldset>
   )
 }
+
+/** Fecha y hora «AAAA-MM-DDTHH:MM» (hora local del centro de México). */
+export function DateTimeField({ value, onChange, ...c }: Common & { value: string | null; onChange: (v: string | null) => void }) {
+  const id = useId()
+  return (
+    <FieldShell id={id} {...c}>
+      <input id={id} type="datetime-local" className={inputCls} value={value ?? ''} disabled={c.disabled} onChange={(e) => onChange(e.target.value || null)} />
+    </FieldShell>
+  )
+}

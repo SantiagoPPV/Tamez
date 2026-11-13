@@ -18,6 +18,8 @@ interface SessionApi {
   session: Session
   isDemo: boolean
   signIn: (email: string, password: string) => Promise<void>
+  /** Entrada sin contraseña: Supabase manda un enlace al correo (clientes del portal). */
+  sendMagicLink: (email: string) => Promise<string | null>
   signOut: () => Promise<void>
   enterDemo: () => void
   leaveDemo: () => void
@@ -92,6 +94,18 @@ export function SessionProvider({ children }: { children: ReactNode }) {
             status: 'signedOut',
             error: error.message === 'Invalid login credentials' ? 'Correo o contraseña incorrectos.' : error.message,
           })
+      },
+      async sendMagicLink(email) {
+        const db = getSupabase()
+        if (!db) return 'Sin base de datos conectada: entra a la demostración.'
+        const { error } = await db.auth.signInWithOtp({ email, options: { emailRedirectTo: `${window.location.origin}/portal`, shouldCreateUser: true } })
+        if (!error) return null
+        if (error.status === 429) return 'Se mandaron demasiados enlaces: espera unos minutos.'
+        // Con los registros abiertos apagados, solo entra quien el despacho ya dio de alta.
+        if (error.code === 'otp_disabled' || error.code === 'signup_disabled' || /signups? not allowed/i.test(error.message))
+          return 'Ese correo todavía no tiene acceso: pide al despacho que te dé de alta en el portal.'
+        if ((error.status ?? 0) >= 500) return 'No se pudo enviar el correo de acceso. Intenta más tarde o avisa al despacho.'
+        return error.message
       },
       async signOut() {
         await getSupabase()?.auth.signOut()

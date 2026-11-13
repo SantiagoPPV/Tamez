@@ -85,8 +85,8 @@ function Portal() {
     <section>
       <SectionTitle aside={<Link to={`/portal/${data.project.id}`} className="text-sm font-semibold text-accent">Ver el portal como el cliente</Link>}>Portal del cliente</SectionTitle>
       <p className="mb-3 text-sm text-ink2">
-        El cliente entra con su propio usuario y solo ve su proyecto: avance, hitos y su aceptación, pendientes, sus solicitudes y los documentos enviados. Nunca
-        costos, horas internas ni márgenes. Crea su usuario en Supabase (Authentication → Users) y pega aquí su identificador.
+        El cliente entra con su correo y solo ve su proyecto: avance, hitos y su aceptación, pendientes, sus solicitudes, los documentos enviados y lo que tiene
+        por firmar. Nunca costos, horas internas ni márgenes. Para entrar elige «Cliente» en la pantalla de entrada y recibe un enlace en su correo.
       </p>
       {saver.error && <Notice tone="error">{saver.error}</Notice>}
       <Card className="divide-y divide-rule">
@@ -95,7 +95,7 @@ function Portal() {
           <div key={a.id} className="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 text-sm">
             <span>
               <span className="font-semibold">{n.contact(a.contactId) || a.email}</span> <span className="text-muted">{a.email}</span>
-              <span className="block font-mono text-xs text-muted">{a.userId}</span>
+              {a.userId && <span className="block font-mono text-xs text-muted">{a.userId}</span>}
             </span>
             <Button size="sm" variant="ghost" onClick={() => void saver.run(() => remove('portalAccess', a.id))}>
               Quitar acceso
@@ -103,14 +103,23 @@ function Portal() {
           </div>
         ))}
         <div className="grid gap-3 p-4 sm:grid-cols-[1fr_1fr_1fr_auto] sm:items-end">
-          <TextField label="Usuario (id de Supabase Auth)" value={userId} onChange={setUserId} />
-          <TextField label="Correo" value={email} onChange={setEmail} />
-          <SelectField label="Persona del cliente" value={contactId} onChange={setContactId} options={n.contactOptions} />
+          <TextField label="Correo con el que entra" value={email} onChange={(v) => setEmail(v.trim())} />
+          <SelectField
+            label="Persona del cliente"
+            value={contactId}
+            onChange={(v) => {
+              setContactId(v)
+              const c = data.contacts.find((x) => x.id === v)
+              if (c?.email && !email) setEmail(c.email)
+            }}
+            options={n.contactOptions}
+          />
+          <TextField label="Id de usuario (opcional)" help="Solo si ya tiene usuario en Supabase." value={userId} onChange={setUserId} />
           <Button
-            disabled={!/^[0-9a-f-]{36}$/i.test(userId.trim()) || saver.busy}
+            disabled={!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()) || (userId.trim() !== '' && !/^[0-9a-f-]{36}$/i.test(userId.trim())) || saver.busy}
             onClick={() =>
               void saver
-                .run(() => save('portalAccess', { id: localId('acc'), userId: userId.trim(), email: email.trim(), contactId }))
+                .run(() => save('portalAccess', { id: localId('acc'), userId: userId.trim() || null, email: email.trim().toLowerCase(), contactId }))
                 .then((ok) => {
                   if (ok) {
                     setUserId('')

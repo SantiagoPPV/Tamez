@@ -19,6 +19,7 @@
     "ci": "npm run lint && npm run test && npm run build"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^1.8.0",
     "@supabase/supabase-js": "^2.57.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

@@ -1,7 +1,8 @@
 import { nextSeq } from '../domain/control'
+import { normalizeProposal, normalizeProspect } from '../domain/crm'
 import { todayInMexico } from '../domain/dates'
 import { localId } from '../domain/factory'
-import type { FirmSettings, Project, ProjectData } from '../domain/types'
+import type { FirmSettings, Project, ProjectData, Signature, StoredFile } from '../domain/types'
 import {
   DataError,
   NO_DELETE,
@@ -10,14 +11,18 @@ import {
   type EntityName,
   type GlobalMap,
   type GlobalName,
+  type NewFile,
   type PortalData,
   type ProjectSummary,
   type Repository,
+  type SharedDocument,
 } from './repository'
 import { clientSafe } from './portalView'
 import { freezeSent } from '../docs/autofill'
+import { canonicalJson, sha256 } from '../docs/formatDoc'
+import { deleteBlob, getBlob, putBlob } from './blobStore'
 
-const STORAGE_KEY = 'sam-demo-v2'
+const STORAGE_KEY = 'sam-demo-v3'
 
 interface DemoState {
   projects: ProjectData[]
@@ -44,7 +49,7 @@ export class DemoRepository implements Repository {
           const proposals = buildDemoProposals()
           this.state = {
             projects: [freezeSent({ data: buildCeInv(), firm: DEMO_FIRM, proposals, prospects })],
-            global: { prospects, proposals, wbsTemplates: [], baseHours: [] },
+            global: { prospects, proposals, wbsTemplates: [], baseHours: [], files: [], notifications: [], aiJobs: [], shares: [] },
             firm: DEMO_FIRM,
           }
         })
@@ -56,6 +61,10 @@ export class DemoRepository implements Repository {
       if (!raw) return null
       const s = JSON.parse(raw) as DemoState
       s.projects = s.projects.map((p) => normalizeProject(p))
+      const g = s.global as Partial<DemoState['global']>
+      s.global = { ...s.global, files: g.files ?? [], notifications: g.notifications ?? [], aiJobs: g.aiJobs ?? [], shares: g.shares ?? [] }
+      s.global.prospects = s.global.prospects.map(normalizeProspect)
+      s.global.proposals = s.global.proposals.map(normalizeProposal)
       return s
     } catch {
       return null
@@ -74,6 +83,7 @@ export class DemoRepository implements Repository {
     try {
       localStorage.removeItem(STORAGE_KEY)
       localStorage.removeItem('sam-demo-v1')
+      localStorage.removeItem('sam-demo-v2')
     } catch {
       /* nada que borrar */
     }
@@ -88,7 +98,7 @@ export class DemoRepository implements Repository {
 
   async listProjects(): Promise<ProjectSummary[]> {
     await this.ready
-    return this.state.projects.map(({ project: p }) => ({ id: p.id, key: p.key, name: p.name, client: p.client, cutoffDate: p.cutoffDate }))
+    return this.state.projects.map(({ project: p }) => ({ id: p.id, key: p.key, name: p.name, client: p.client, cutoffDate: p.cutoffDate, stage: p.stage ?? null }))
   }
 
   async loadProject(id: string): Promise<ProjectData> {
@@ -123,6 +133,7 @@ export class DemoRepository implements Repository {
   }
 
   async save<E extends EntityName>(projectId: string, entity: E, row: EntityMap[E]): Promise<EntityMap[E]> {
+    if (entity === 'signatures') throw new DataError('Las firmas solo se crean al firmar.')
     const p = await this.find(projectId)
     const list = p[entity] as unknown as EntityMap[E][]
     const saved = structuredClone(row)
@@ -152,7 +163,17 @@ export class DemoRepository implements Repository {
 
   async listGlobal<G extends GlobalName>(entity: G): Promise<GlobalMap[G][]> {
     await this.ready
-    return structuredClone(this.state.global[entity]) as GlobalMap[G][]
+    let rows = structuredClone(this.state.global[entity]) as GlobalMap[G][]
+    if (entity === 'prospects') rows = (rows as GlobalMap['prospects'][]).map(normalizeProspect) as GlobalMap[G][]
+    if (entity === 'proposals') rows = (rows as GlobalMap['proposals'][]).map(normalizeProposal) as GlobalMap[G][]
+    if (entity === 'notifications') return (rows as GlobalMap['notifications'][]).sort((a, b) => b.createdAt.localeCompare(a.createdAt)) as GlobalMap[G][]
+    return rows
+  }
+
+  async getGlobal<G extends GlobalName>(entity: G, id: string): Promise<GlobalMap[G] | null> {
+    await this.ready
+    const row = (this.state.global[entity] as { id: string }[]).find((x) => x.id === id)
+    return row ? (structuredClone(row) as GlobalMap[G]) : null
   }
 
   async saveGlobal<G extends GlobalName>(entity: G, row: GlobalMap[G]): Promise<GlobalMap[G]> {
@@ -192,8 +213,10 @@ export class DemoRepository implements Repository {
 
   async portalData(projectId: string): Promise<PortalData> {
     const d = await this.find(projectId)
-    const me = d.contacts.find((c) => c.roleKey === 'responsible') ?? d.contacts[0] ?? null
-    return { data: clientSafe(structuredClone(d)), me: { contactId: me?.id ?? null, email: me?.email ?? '', roleKey: me?.roleKey ?? null } }
+    // En la demostración se ve el portal como quien decide y paga (puede firmar y aprobar).
+    const me = d.contacts.find((c) => c.roleKey === 'decides') ?? d.contacts.find((c) => c.roleKey === 'responsible') ?? d.contacts[0] ?? null
+    const files = this.state.global.files.filter((f) => f.projectId === projectId && f.clientVisible)
+    return { data: clientSafe(structuredClone(d)), me: { contactId: me?.id ?? null, email: me?.email ?? '', roleKey: me?.roleKey ?? null }, files: structuredClone(files) }
   }
 
   async portalRequest(projectId: string, description: string, service: boolean, urgency: 'urgent' | 'normal' | null): Promise<number> {
@@ -254,5 +277,108 @@ export class DemoRepository implements Repository {
     c.decidedById = decides?.id ?? null
     c.responseDate = todayInMexico()
     this.write()
+  }
+
+  /* CRM vinculado a operaciones */
+  async uploadFile(meta: NewFile, file: Blob & { name?: string }): Promise<StoredFile> {
+    await this.ready
+    const id = localId('file')
+    const name = meta.name || file.name || 'archivo'
+    const row: StoredFile = { ...meta, id, name, mime: file.type || 'application/octet-stream', size: file.size, path: `demo/${id}/${name}`, uploadedOn: todayInMexico() }
+    await putBlob(id, file)
+    this.state.global.files.push(row)
+    this.write()
+    return structuredClone(row)
+  }
+
+  async fileUrl(file: Pick<StoredFile, 'id' | 'path'>): Promise<string> {
+    const blob = await getBlob(file.id)
+    if (!blob) throw new DataError('Ese archivo ya no está en este navegador.')
+    return URL.createObjectURL(blob)
+  }
+
+  async removeFile(file: StoredFile): Promise<void> {
+    await this.ready
+    await deleteBlob(file.id)
+    this.state.global.files = this.state.global.files.filter((f) => f.id !== file.id)
+    this.write()
+  }
+
+  private async sign(projectId: string, documentId: string, signerId: string, name: string, drawing: string | null, kind: 'client' | 'firm'): Promise<Signature> {
+    const p = await this.find(projectId)
+    const doc = p.documents.find((x) => x.id === documentId)
+    if (!doc) throw new DataError('No existe ese documento.')
+    if (doc.status !== 'sent' || !doc.snapshot) throw new DataError('El documento todavía no se envía para firma.')
+    const signer = (doc.signers ?? []).find((x) => x.id === signerId)
+    if (!signer || signer.kind !== kind) throw new DataError(kind === 'firm' ? 'Ese firmante no firma por el despacho.' : 'Ese firmante no firma por el cliente.')
+    if (name.trim().length < 3) throw new DataError('Escribe tu nombre completo para firmar.')
+    if (p.signatures.some((x) => x.documentId === doc.id && x.documentVersion === doc.version && x.signerId === signerId)) throw new DataError('Esa firma ya está registrada.')
+    const sig: Signature = {
+      id: localId('sig'),
+      documentId: doc.id,
+      documentVersion: doc.version,
+      documentHash: await sha256(canonicalJson(doc.snapshot)),
+      signerId,
+      signerName: name.trim(),
+      signerEmail: signer.email,
+      signerRole: signer.role,
+      kind,
+      signedAt: new Date().toISOString(),
+      method: kind === 'firm' ? 'staff' : 'portal',
+      drawing,
+      userAgent: navigator.userAgent.slice(0, 300),
+    }
+    p.signatures.push(sig)
+    const all = (doc.signers ?? []).every((s) => p.signatures.some((x) => x.documentId === doc.id && x.documentVersion === doc.version && x.signerId === s.id))
+    if (all) {
+      doc.status = 'signed'
+      doc.signedOn = todayInMexico()
+    }
+    if (kind === 'client')
+      this.state.global.notifications.push({
+        id: localId('ntf'),
+        kind: 'signature',
+        title: `${name.trim()} firmó ${doc.code}`,
+        body: 'Firma electrónica desde el portal del cliente.',
+        link: `/p/${projectId}/documentos/${doc.id}`,
+        projectId,
+        prospectId: null,
+        createdAt: new Date().toISOString(),
+        readBy: [],
+      })
+    this.write()
+    return structuredClone(sig)
+  }
+
+  signAsFirm(projectId: string, documentId: string, signerId: string, name: string, drawing: string | null) {
+    return this.sign(projectId, documentId, signerId, name, drawing, 'firm')
+  }
+
+  async portalSign(projectId: string, documentId: string, signerId: string, name: string, drawing: string | null): Promise<void> {
+    await this.sign(projectId, documentId, signerId, name, drawing, 'client')
+  }
+
+  async sharedDocument(token: string): Promise<SharedDocument | null> {
+    await this.ready
+    const sh = this.state.global.shares.find((x) => x.token === token && !x.revoked && x.expiresOn >= todayInMexico())
+    if (!sh) return null
+    const p = sh.projectId ? this.state.projects.find((x) => x.project.id === sh.projectId) : null
+    return {
+      code: sh.code,
+      title: sh.title,
+      snapshot: structuredClone(sh.snapshot),
+      signers: structuredClone(sh.signers),
+      signatures: p && sh.documentId ? structuredClone(p.signatures.filter((x) => x.documentId === sh.documentId)) : [],
+      expiresOn: sh.expiresOn,
+      project: p ? { key: p.project.key, name: p.project.name, client: p.project.client } : null,
+    }
+  }
+
+  async currentUser() {
+    return { id: 'demo', email: null }
+  }
+
+  async accessToken() {
+    return null
   }
 }

@@ -1,5 +1,7 @@
 import type { PostgrestError, SupabaseClient } from '@supabase/supabase-js'
-import type { FirmSettings, Project, ProjectData } from '../domain/types'
+import { normalizeProposal, normalizeProspect } from '../domain/crm'
+import { todayInMexico } from '../domain/dates'
+import type { FirmSettings, Project, ProjectData, Signature, StoredFile } from '../domain/types'
 import { fromPortalRpc } from './portalView'
 import {
   DataError,
@@ -11,10 +13,16 @@ import {
   type EntityName,
   type GlobalMap,
   type GlobalName,
+  type NewFile,
   type PortalData,
   type ProjectSummary,
   type Repository,
+  type SharedDocument,
 } from './repository'
+
+export const BUCKET = 'sam-archivos'
+/** Límite por archivo de Supabase Storage en el plan gratuito (en Pro se puede subir en Storage → Settings). */
+const MAX_UPLOAD_MB = 50
 
 const TABLE: Record<EntityName, string> = {
   segments: 'sam_segments',
@@ -36,6 +44,7 @@ const TABLE: Record<EntityName, string> = {
   routines: 'sam_routines',
   routineRuns: 'sam_routine_runs',
   portalAccess: 'sam_portal_access',
+  signatures: 'sam_signatures',
 }
 
 const GLOBAL_TABLE: Record<GlobalName, string> = {
@@ -43,6 +52,18 @@ const GLOBAL_TABLE: Record<GlobalName, string> = {
   proposals: 'sam_proposals',
   wbsTemplates: 'sam_wbs_templates',
   baseHours: 'sam_base_hours',
+  files: 'sam_files',
+  notifications: 'sam_notifications',
+  aiJobs: 'sam_ai_jobs',
+  shares: 'sam_shares',
+}
+
+/** Columnas que en estas colecciones sí se leen (en las demás las pone el servidor). */
+const GLOBAL_KEEP: Partial<Record<GlobalName, Set<string>>> = {
+  files: new Set(['project_id']),
+  notifications: new Set(['project_id', 'created_at']),
+  aiJobs: new Set(['created_at']),
+  shares: new Set(['project_id']),
 }
 
 /** Orden de inserción: primero lo que otros renglones referencian. */
@@ -67,6 +88,8 @@ const INSERT_ORDER: EntityName[] = [
   'routineRuns',
   'portalAccess',
 ]
+/** Al leer, también las firmas (no se insertan: las crean las funciones de firma). */
+const LOAD_ORDER: EntityName[] = [...INSERT_ORDER, 'signatures']
 
 /** Columnas que no se llaman igual que el campo (palabras reservadas). */
 const RENAME: Record<string, string> = { values: 'snapshot_values', lights: 'snapshot_lights', table: 'base_table' }
@@ -85,10 +108,10 @@ export function toRow(obj: object, projectId?: string): Record<string, unknown> 
   return out
 }
 
-export function fromRow<T>(row: Record<string, unknown>): T {
+export function fromRow<T>(row: Record<string, unknown>, keep?: Set<string>): T {
   const out: Record<string, unknown> = {}
   for (const [k, v] of Object.entries(row)) {
-    if (SERVER_ONLY.has(k)) continue
+    if (SERVER_ONLY.has(k) && !keep?.has(k)) continue
     const key = toCamel(k)
     out[key] = DATETIME.has(key) && typeof v === 'string' ? v.slice(0, 16) : v
   }
@@ -122,6 +145,8 @@ export function remapIds(data: ProjectData): ProjectData {
   const ref = (old: string | null | undefined) => (old ? (map.get(old) ?? null) : null)
   const d = structuredClone(data)
   d.project.id = id(d.project.id)!
+  // El prospecto vive fuera del proyecto: se conserva si es de la base (uuid); el de la demostración no.
+  if (d.project.prospectId && !/^[0-9a-f-]{36}$/i.test(d.project.prospectId)) d.project.prospectId = null
   for (const name of INSERT_ORDER) for (const row of d[name] as { id: string }[]) row.id = id(row.id)!
   for (const m of d.milestones) m.segmentId = ref(m.segmentId)!
   for (const w of d.wbs) {
@@ -181,7 +206,7 @@ export class SupabaseRepository implements Repository {
   }
 
   async listProjects(): Promise<ProjectSummary[]> {
-    const { data, error } = await this.db.from('sam_projects').select('id, key, name, client, cutoff_date').order('key')
+    const { data, error } = await this.db.from('sam_projects').select('id, key, name, client, cutoff_date, stage').order('key')
     if (error) fail(error, 'Leer los proyectos')
     return (data ?? []).map((r) => fromRow<ProjectSummary>(r))
   }
@@ -191,7 +216,7 @@ export class SupabaseRepository implements Repository {
     if (error) fail(error, 'Leer el proyecto')
     const project = fromRow<Project>(p)
     const lists = await Promise.all(
-      INSERT_ORDER.map(async (name) => {
+      LOAD_ORDER.map(async (name) => {
         const q = this.db.from(TABLE[name]).select('*').eq('project_id', id)
         const ordered = isLogEntity(name) ? q.order('seq') : name === 'snapshots' ? q.order('week') : q
         const { data, error: e } = await ordered
@@ -236,6 +261,7 @@ export class SupabaseRepository implements Repository {
   }
 
   async save<E extends EntityName>(projectId: string, entity: E, row: EntityMap[E]): Promise<EntityMap[E]> {
+    if (entity === 'signatures') throw new DataError('Las firmas solo se crean al firmar.')
     const payload = toRow(row, projectId)
     if (isLogEntity(entity) && !payload.seq) delete payload.seq
     const { data, error } = await this.db.from(TABLE[entity]).upsert(payload, { onConflict: 'id' }).select('*').single()
@@ -251,17 +277,35 @@ export class SupabaseRepository implements Repository {
   }
 
   async listGlobal<G extends GlobalName>(entity: G): Promise<GlobalMap[G][]> {
-    const { data, error } = await this.db.from(GLOBAL_TABLE[entity]).select('*').order('created_at')
+    const q = this.db.from(GLOBAL_TABLE[entity]).select('*')
+    const { data, error } = entity === 'notifications' ? await q.order('created_at', { ascending: false }).limit(200) : await q.order('created_at')
     if (error) fail(error, `Leer ${entity}`)
-    return (data ?? []).map((r) => fromRow<GlobalMap[G]>(r))
+    const rows = (data ?? []).map((r) => fromRow<GlobalMap[G]>(r, GLOBAL_KEEP[entity]))
+    if (entity === 'prospects') return (rows as GlobalMap['prospects'][]).map(normalizeProspect) as GlobalMap[G][]
+    if (entity === 'proposals') return (rows as GlobalMap['proposals'][]).map(normalizeProposal) as GlobalMap[G][]
+    return rows
+  }
+
+  async getGlobal<G extends GlobalName>(entity: G, id: string): Promise<GlobalMap[G] | null> {
+    const { data, error } = await this.db.from(GLOBAL_TABLE[entity]).select('*').eq('id', id).maybeSingle()
+    if (error) fail(error, `Leer ${entity}`)
+    if (!data) return null
+    const row = fromRow<GlobalMap[G]>(data, GLOBAL_KEEP[entity])
+    if (entity === 'prospects') return normalizeProspect(row as GlobalMap['prospects']) as GlobalMap[G]
+    if (entity === 'proposals') return normalizeProposal(row as GlobalMap['proposals']) as GlobalMap[G]
+    return row
   }
 
   async saveGlobal<G extends GlobalName>(entity: G, row: GlobalMap[G]): Promise<GlobalMap[G]> {
     const payload = toRow(row)
     delete payload.built_in
+    if (entity === 'notifications' || entity === 'aiJobs') delete payload.created_at
     const { data, error } = await this.db.from(GLOBAL_TABLE[entity]).upsert(payload, { onConflict: 'id' }).select('*').single()
     if (error) fail(error, 'Guardar')
-    return fromRow<GlobalMap[G]>(data)
+    const saved = fromRow<GlobalMap[G]>(data, GLOBAL_KEEP[entity])
+    if (entity === 'prospects') return normalizeProspect(saved as GlobalMap['prospects']) as GlobalMap[G]
+    if (entity === 'proposals') return normalizeProposal(saved as GlobalMap['proposals']) as GlobalMap[G]
+    return saved
   }
 
   async removeGlobal(entity: GlobalName, id: string): Promise<void> {
@@ -306,5 +350,84 @@ export class SupabaseRepository implements Repository {
   async portalDecideChange(_projectId: string, changeId: string, approve: boolean): Promise<void> {
     const { error } = await this.db.rpc('sam_portal_decide_change', { p_change: changeId, p_approve: approve })
     if (error) fail(error, 'Registrar la decisión')
+  }
+
+  /* CRM vinculado a operaciones */
+  async uploadFile(meta: NewFile, file: Blob & { name?: string }): Promise<StoredFile> {
+    const name = meta.name || file.name || 'archivo'
+    if (file.size > MAX_UPLOAD_MB * 1_048_576)
+      throw new DataError(
+        `«${name}» pesa ${(file.size / 1_048_576).toFixed(0)} MB y el límite por archivo es de ${MAX_UPLOAD_MB} MB. Si es una grabación, sube solo el audio o pega la liga a la grabación (Drive, Meet, Zoom).`,
+      )
+    const safe = name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^A-Za-z0-9._-]+/g, '-').slice(-80)
+    const folder = meta.projectId ? `p/${meta.projectId}` : `x/${meta.prospectId ?? 'sin-dueno'}`
+    const path = `${folder}/${crypto.randomUUID()}-${safe}`
+    const up = await this.db.storage.from(BUCKET).upload(path, file, { contentType: file.type || 'application/octet-stream', upsert: false })
+    if (up.error) throw new DataError(`Subir el archivo: ${up.error.message}`)
+    const row = { ...meta, name, mime: file.type || 'application/octet-stream', size: file.size, path, uploadedOn: todayInMexico() }
+    const { data, error } = await this.db.from('sam_files').insert(toRow(row)).select('*').single()
+    if (error) {
+      await this.db.storage.from(BUCKET).remove([path])
+      fail(error, 'Guardar el archivo')
+    }
+    return fromRow<StoredFile>(data, GLOBAL_KEEP.files)
+  }
+
+  async fileUrl(file: Pick<StoredFile, 'id' | 'path'>): Promise<string> {
+    const { data, error } = await this.db.storage.from(BUCKET).createSignedUrl(file.path, 600)
+    if (error || !data) throw new DataError(`Abrir el archivo: ${error?.message ?? 'sin liga'}`)
+    return data.signedUrl
+  }
+
+  async removeFile(file: StoredFile): Promise<void> {
+    const { error } = await this.db.from('sam_files').delete().eq('id', file.id)
+    if (error) fail(error, 'Borrar el archivo')
+    await this.db.storage.from(BUCKET).remove([file.path])
+  }
+
+  async signAsFirm(_projectId: string, documentId: string, signerId: string, name: string, drawing: string | null): Promise<Signature> {
+    const { data, error } = await this.db.rpc('sam_sign_document', { p_document: documentId, p_signer: signerId, p_name: name, p_drawing: drawing, p_user_agent: navigator.userAgent })
+    if (error) fail(error, 'Firmar')
+    const row = (Array.isArray(data) ? data[0] : data) as Record<string, unknown>
+    return fromRow<Signature>(row)
+  }
+
+  async portalSign(_projectId: string, documentId: string, signerId: string, name: string, drawing: string | null): Promise<void> {
+    const { error } = await this.db.rpc('sam_portal_sign', { p_document: documentId, p_signer: signerId, p_name: name, p_drawing: drawing, p_user_agent: navigator.userAgent })
+    if (error) fail(error, 'Firmar')
+  }
+
+  async sharedDocument(token: string): Promise<SharedDocument | null> {
+    const { data, error } = await this.db.rpc('sam_shared_document', { p_token: token })
+    if (error) fail(error, 'Abrir el documento')
+    if (!data) return null
+    const d = data as Record<string, unknown>
+    const sigs = (Array.isArray(d.signatures) ? d.signatures : []) as Record<string, unknown>[]
+    return {
+      code: d.code as SharedDocument['code'],
+      title: String(d.title ?? ''),
+      snapshot: (d.snapshot as SharedDocument['snapshot']) ?? { fields: {}, lists: {} },
+      signers: (d.signers as SharedDocument['signers']) ?? [],
+      signatures: sigs.map((r) => fromRow<Signature>(r)),
+      expiresOn: String(d.expires_on ?? ''),
+      project: (d.project as SharedDocument['project']) ?? null,
+    }
+  }
+
+  async currentUser() {
+    const { data } = await this.db.auth.getUser()
+    return { id: data.user?.id ?? null, email: data.user?.email ?? null }
+  }
+
+  async accessToken() {
+    const { data } = await this.db.auth.getSession()
+    const session = data.session
+    if (!session) return null
+    // Una función de fondo dura hasta 15 minutos y guarda con este token: debe durar más.
+    if (session.expires_at && session.expires_at * 1000 - Date.now() < 20 * 60_000) {
+      const { data: fresh } = await this.db.auth.refreshSession()
+      return fresh.session?.access_token ?? session.access_token
+    }
+    return session.access_token
   }
 }

@@ -4,10 +4,14 @@ import { useRepo, useSession } from '../app/session'
 import { DemoRepository } from '../data/demoRepo'
 import type { ProjectSummary } from '../data/repository'
 import { emptyProject } from '../domain/factory'
+import { PROJECT_STAGE } from '../domain/catalogs'
 import { freezeSent } from '../docs/autofill'
 import { fmtDate } from '../domain/format'
 import { TextField } from '../ui/fields'
 import { Button, Card, Drawer, Empty, Eyebrow, Notice, Spinner } from '../ui/kit'
+
+/** En Operaciones: todo menos los expedientes que esperan su pago inicial (siguen en el CRM). */
+const inOps = (p: ProjectSummary) => p.stage !== 'confirmed'
 
 export function Projects() {
   const repo = useRepo()
@@ -49,10 +53,10 @@ export function Projects() {
     <main className="mx-auto max-w-5xl px-4 py-6 sm:py-10">
       <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
         <div>
-          <Eyebrow>Proyectos</Eyebrow>
+          <Eyebrow>Operaciones</Eyebrow>
           <h1 className="text-2xl font-extrabold tracking-tight">El único lugar donde vive un proyecto</h1>
           <p className="mt-1 max-w-2xl text-sm text-ink2">
-            De sus datos salen los documentos, los reportes y los indicadores.
+            Los proyectos llegan del CRM al cobrarse el pago inicial, con todos sus datos. De ellos salen los documentos, los reportes y los indicadores.
           </p>
         </div>
         <Button variant="primary" onClick={() => setCreating(true)}>
@@ -68,7 +72,7 @@ export function Projects() {
 
       {!list ? (
         <Spinner />
-      ) : list.length === 0 ? (
+      ) : list.filter(inOps).length === 0 ? (
         <Empty>
           <p className="mb-3">Todavía no hay proyectos.</p>
           <Button onClick={loadExample} disabled={busy}>
@@ -77,19 +81,29 @@ export function Projects() {
         </Empty>
       ) : (
         <ul className="grid gap-3 sm:grid-cols-2">
-          {list.map((p) => (
+          {list.filter(inOps).map((p) => (
             <li key={p.id}>
               <Link to={`/p/${p.id}`} className="block h-full">
                 <Card className="h-full p-4 transition-colors hover:border-accent-mid">
                   <div className="text-xs font-bold tracking-wider text-accent">{p.key}</div>
                   <div className="mt-0.5 font-bold">{p.name || 'Sin nombre'}</div>
                   <div className="text-sm text-muted">{p.client}</div>
+                  {p.stage && <div className="mt-1 text-xs font-semibold text-accent-2">{PROJECT_STAGE[p.stage]}</div>}
                   {p.cutoffDate && <div className="mt-2 text-xs text-muted">Corte: {fmtDate(p.cutoffDate)}</div>}
                 </Card>
               </Link>
             </li>
           ))}
         </ul>
+      )}
+
+      {list && list.some((p) => p.stage === 'confirmed') && (
+        <p className="mt-6 text-sm text-muted">
+          {list.filter((p) => p.stage === 'confirmed').length} expediente(s) esperan su pago inicial:{' '}
+          <Link to="/crm" className="font-semibold text-accent">
+            ver en el CRM
+          </Link>
+        </p>
       )}
 
       {list && list.length > 0 && !list.some((p) => p.key === 'CE-INV') && (

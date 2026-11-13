@@ -158,6 +158,16 @@ export interface Project {
    * objetivo, alcance, supuestos, restricciones… (campos y listas de las plantillas).
    */
   facts?: DocData
+  /** Etapa del cliente (CRM vinculado a operaciones); sin dato, se deduce de puertas y cobros */
+  stage?: ProjectStage
+  /** Datos para facturar (CFDI 4.0) */
+  fiscal?: FiscalData
+  /** Cita de cierre de la venta: papeleo y acuerdo de arranque */
+  closing?: ClosingInfo
+  /** Prospecto del que nació */
+  prospectId?: string | null
+  /** Pasos del proceso marcados a mano (id del paso → fecha) */
+  process?: Record<string, ISODate>
 }
 
 /** Tramo del proyecto: «Hasta la puerta 3», «Hito 1»… (orden = position). */
@@ -344,6 +354,10 @@ export interface Invoice {
   purchaseOrder: string
   invoiceDate: ISODate | null
   paidDate: ISODate | null
+  /** CFDI timbrado con FacturAPI o subido (PDF y XML) */
+  cfdi?: CfdiInfo | null
+  /** Datos del cobro y su complemento de pago */
+  payment?: PaymentInfo | null
 }
 
 export interface Hat {
@@ -427,6 +441,10 @@ export interface AcceptanceCriterion {
  * Versión 2: documentos
  * ------------------------------------------------------------------------- */
 export type DocumentCode =
+  | 'D15'
+  | 'D16'
+  | 'D17'
+  | 'D18'
   | 'D01'
   | 'D02'
   | 'D03'
@@ -477,6 +495,8 @@ export interface ProjectDocument {
   sentOn: ISODate | null
   signedOn: ISODate | null
   notes: string
+  /** Quiénes firman (firma electrónica simple) */
+  signers?: Signer[]
 }
 
 /* ---------------------------------------------------------------------------
@@ -506,7 +526,8 @@ export interface RoutineRun {
 /** Usuario del cliente con acceso al portal de este proyecto. */
 export interface PortalAccess {
   id: string
-  userId: string
+  /** Vacío mientras la persona no entra: el acceso se da con su correo */
+  userId: string | null
   contactId: string | null
   email: string
 }
@@ -533,19 +554,30 @@ export interface ProjectData {
   routines: Routine[]
   routineRuns: RoutineRun[]
   portalAccess: PortalAccess[]
+  /** Firmas electrónicas de los documentos (las crean las funciones de firma) */
+  signatures: Signature[]
 }
 
 /* ---------------------------------------------------------------------------
  * Versión 4: aprendizaje (fuera de un proyecto)
  * ------------------------------------------------------------------------- */
-export type ProspectStage = 'qualify' | 'discovery' | 'feasibility' | 'proposal' | 'won' | 'lost'
+/** Estado del prospecto en el CRM. */
+export type ProspectStage = 'initial' | 'feasible' | 'confirmed' | 'client' | 'lost'
 
 export interface Prospect {
   id: string
   company: string
   contactName: string
   contactRole: string
+  contactEmail?: string
+  contactPhone?: string
   source: string
+  /** Giro de la empresa */
+  industry?: string
+  /** Empleados de la empresa (tamaño de la empresa) */
+  companyEmployees?: number | null
+  /** Empleados que usarían el sistema (tamaño del proyecto) */
+  projectUsers?: number | null
   stage: ProspectStage
   /** El problema, en palabras del cliente */
   problem: string
@@ -558,6 +590,15 @@ export interface Prospect {
   projectId: string | null
   createdOn: ISODate
   notes: string
+  decisionMakerRole?: string
+  /** Clave del proyecto (se fija antes del acta de inicio) */
+  projectKey?: string
+  discovery?: Discovery
+  feasibility?: Feasibility
+  sale?: SaleInfo
+  followUps?: FollowUp[]
+  lost?: LostInfo | null
+  gate1?: Gate1
 }
 
 export type ProjectSize = 'small' | 'medium' | 'large'
@@ -618,6 +659,10 @@ export interface Proposal {
   monthlyPoolHours: number
   status: 'draft' | 'sent' | 'accepted' | 'rejected'
   notes: string
+  /** Lo que dice la propuesta: objetivo, problema, alcance, datos y confidencialidad… */
+  content?: ProposalContent
+  /** Validación de dirección general antes de presentarla */
+  validation?: ProposalValidation
 }
 
 export type UnitKey = keyof EstimateUnits
@@ -672,4 +717,303 @@ export interface FirmSettings {
   contactPhone: string
   supportEmail: string
   supportPhone: string
+  /** Quien firma por el despacho las actas */
+  signerName?: string
+  signerRole?: string
+  signerEmail?: string
+  /** A quién se avisa cuando nace un cliente (separados por coma) */
+  opsEmails?: string
+  /** Mínimo de venta por mes de creación del proyecto */
+  minMonthlyAmount?: number
+  /** Tope de empleados de cada tamaño de empresa */
+  companySizes?: { micro: number; small: number; medium: number }
+  billing?: BillingSettings
+  /** Formatos base editados por el despacho (si no, los de fábrica) */
+  formats?: Partial<Record<FormatCode, FormatDef>>
+  /** Guías de venta editadas por el despacho */
+  guides?: Partial<Record<GuideKey, string>>
 }
+
+/* ---------------------------------------------------------------------------
+ * Versión 5: CRM vinculado a operaciones, cobranza, firma y formatos base
+ * ------------------------------------------------------------------------- */
+/** Etapa del cliente una vez que la venta se confirma. */
+export type ProjectStage = 'confirmed' | 'start' | 'planning' | 'execution' | 'closing' | 'service' | 'closed' | 'cancelled'
+
+/** Pasos del CRM, de la alta al cobro del pago inicial. */
+export type CrmStep = 'alta' | 'descubrimiento' | 'factibilidad' | 'propuesta' | 'segunda' | 'seguimiento' | 'acta' | 'cierre' | 'cobro'
+export type FollowUpChannel = 'whatsapp' | 'email' | 'phone' | 'meeting' | 'video'
+export type LostCategory = 'not_feasible' | 'no_budget' | 'competitor' | 'no_response' | 'postponed' | 'not_decider' | 'other'
+export type Answer3 = 'yes' | 'no' | 'pending'
+
+export interface Discovery {
+  /** Fecha y hora programada «AAAA-MM-DDTHH:MM» */
+  scheduledAt: string | null
+  heldOn: ISODate | null
+  /** Liga a la grabación (o archivo subido) */
+  recordingUrl: string
+  transcript: string
+  summary: string
+  /** Respuestas a las preguntas base (id de la pregunta → texto) */
+  answers: Record<string, string>
+  /** Resumen enviado al prospecto para que lo corrija */
+  sentOn: ISODate | null
+  aiJobId?: string | null
+}
+
+export interface Feasibility {
+  answers: Record<string, { value: Answer3 | null; note: string }>
+  decision: 'feasible' | 'not_feasible' | null
+  decidedOn: ISODate | null
+  decidedBy: string
+  reason: string
+}
+
+export interface SaleInfo {
+  presentation: 'in_person' | 'email' | 'video' | null
+  presentationOn: ISODate | null
+  presentedOn: ISODate | null
+  secondInterview: { required: boolean | null; withWhom: string; scheduledOn: ISODate | null; heldOn: ISODate | null; notes: string }
+  decision: 'yes' | 'no' | null
+  decidedOn: ISODate | null
+}
+
+export interface FollowUp {
+  id: string
+  date: ISODate
+  channel: FollowUpChannel
+  note: string
+  nextOn: ISODate | null
+}
+
+export interface LostInfo {
+  on: ISODate
+  step: CrmStep
+  category: LostCategory
+  reason: string
+}
+
+/** Puerta 1 (propuesta aceptada) antes de que exista el proyecto. */
+export interface Gate1 {
+  checklist: string[]
+  requestedOn: ISODate | null
+  approvedOn: ISODate | null
+  approvedBy: string
+}
+
+export interface ProposalContent {
+  objective: string
+  problem: string
+  approach: string
+  result: string
+  includes: string
+  excludes: string
+  clientNeeds: string
+  dataConfidentiality: string
+  thirdParties: string
+  conditions: string
+}
+
+export interface ProposalValidation {
+  requestedOn: ISODate | null
+  approvedOn: ISODate | null
+  approvedBy: string
+  changesRequested: string
+}
+
+export interface FiscalData {
+  rfc: string
+  /** Razón social sin régimen societario, tal como viene en la constancia */
+  legalName: string
+  taxSystem: string
+  zip: string
+  cfdiUse: string
+  /** Correos que reciben las facturas (separados por coma) */
+  emails: string
+  paymentMethod: 'PUE' | 'PPD'
+  paymentForm: string
+}
+
+export interface Paperwork {
+  status: 'pending' | 'done' | 'na'
+  reference: string
+}
+
+export interface ClosingInfo {
+  heldOn: ISODate | null
+  actaReviewed: boolean
+  /** Se pactó que el arranque comienza al recibir el pago */
+  startOnPayment: boolean
+  nda: Paperwork
+  vendor: Paperwork
+  purchaseOrder: Paperwork
+  notes: string
+}
+
+export interface CfdiInfo {
+  uuid: string
+  series: string
+  folio: string
+  issuedAt: string
+  subtotal: number | null
+  tax: number | null
+  total: number | null
+  status: 'valid' | 'canceled' | 'pending'
+  source: 'facturapi' | 'upload'
+  facturapiId?: string
+  paymentMethod?: 'PUE' | 'PPD'
+  paymentForm?: string
+  pdfFileId?: string | null
+  xmlFileId?: string | null
+  cancelMotive?: string
+  canceledAt?: string | null
+}
+
+export interface PaymentInfo {
+  amount: number | null
+  reference: string
+  form: string
+  proofFileId?: string | null
+  /** Complemento de recepción de pagos (facturas PPD) */
+  complement?: { uuid: string; facturapiId?: string; issuedAt: string } | null
+}
+
+export interface BillingSettings {
+  series: string
+  productKey: string
+  unitKey: string
+  unitName: string
+  paymentForm: string
+  paymentMethod: 'PUE' | 'PPD'
+  cfdiUse: string
+  taxRate: number
+}
+
+export type FileKind = 'audio' | 'acta' | 'nda' | 'vendor' | 'purchase_order' | 'invoice_pdf' | 'invoice_xml' | 'payment_proof' | 'closing' | 'other'
+
+export interface StoredFile {
+  id: string
+  projectId: string | null
+  prospectId: string | null
+  kind: FileKind
+  name: string
+  mime: string
+  size: number
+  path: string
+  /** El cliente lo ve y lo descarga en el portal */
+  clientVisible: boolean
+  uploadedOn: ISODate
+  notes: string
+}
+
+export interface Signer {
+  id: string
+  kind: 'client' | 'firm'
+  name: string
+  email: string
+  role: string
+  contactId?: string | null
+}
+
+/** Firma electrónica simple: quién, cuándo, con qué correo y sobre qué versión del documento. */
+export interface Signature {
+  id: string
+  documentId: string
+  documentVersion: number
+  documentHash: string
+  signerId: string
+  signerName: string
+  signerEmail: string
+  signerRole: string
+  kind: 'client' | 'firm'
+  signedAt: string
+  method: 'portal' | 'staff'
+  drawing: string | null
+  userAgent: string
+}
+
+/** Liga para ver un documento sin entrar al sistema (se manda por correo). Lleva lo congelado. */
+export interface DocumentShare {
+  id: string
+  token: string
+  projectId: string | null
+  documentId: string | null
+  proposalId: string | null
+  code: DocumentCode
+  title: string
+  snapshot: DocData
+  signers: Signer[]
+  createdOn: ISODate
+  expiresOn: ISODate
+  revoked: boolean
+}
+
+export type NotificationKind = 'new_client' | 'validation' | 'gate' | 'signature' | 'payment' | 'other'
+
+export interface AppNotification {
+  id: string
+  kind: NotificationKind
+  title: string
+  body: string
+  link: string
+  projectId: string | null
+  prospectId: string | null
+  createdAt: string
+  readBy: string[]
+}
+
+/** Lo que regresa Claude al resumir la junta de descubrimiento. */
+export interface DiscoveryAi {
+  resumen: string
+  problema: string
+  quien_decide: { nombre: string; puesto: string }
+  presupuesto: string
+  fechas: string
+  proceso_actual: string
+  usuarios: string
+  sistemas: string
+  riesgos: string[]
+  siguientes_pasos: string[]
+  respuestas: { id: string; respuesta: string }[]
+}
+
+export interface AiJob {
+  id: string
+  kind: 'discovery_summary'
+  prospectId: string
+  /** Lo que se manda a resumir: transcripción y preguntas base */
+  input?: { company: string; contact: string; questions: { id: string; label: string }[]; transcript: string }
+  status: 'queued' | 'running' | 'done' | 'error'
+  result: DiscoveryAi | null
+  error: string
+  createdAt: string
+  finishedAt: string | null
+}
+
+/** Formatos base: secciones con preguntas que se contestan en el sistema. */
+export type FormatCode = 'D15' | 'D16' | 'D17' | 'D18'
+export type QuestionKind = 'text' | 'long' | 'yesno' | 'date'
+export interface FormatQuestion {
+  id: string
+  label: string
+  help?: string
+  kind: QuestionKind
+  /** De dónde se llena sola (clave de autollenado) */
+  auto?: string
+  required?: boolean
+}
+export interface FormatSection {
+  id: string
+  title: string
+  hint?: string
+  questions: FormatQuestion[]
+}
+export interface FormatDef {
+  code: FormatCode
+  title: string
+  intro: string
+  client: boolean
+  sections: FormatSection[]
+}
+
+export type GuideKey = 'prospeccion' | 'descubrimiento' | 'factibilidad' | 'presentacion' | 'cierre' | 'cita_cierre' | 'arranque' | 'diagnostico'

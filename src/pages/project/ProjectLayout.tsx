@@ -1,10 +1,13 @@
-import { NavLink, Outlet, useParams } from 'react-router'
+import { Link, NavLink, Outlet, useParams } from 'react-router'
 import { useProject } from '../../app/useProject'
+import { PROJECT_STAGE } from '../../domain/catalogs'
 import { fmtDate } from '../../domain/format'
+import { effectiveStage } from '../../domain/stage'
 import { cx, LightBadge, Notice, Spinner } from '../../ui/kit'
 
 const TABS = [
   { to: '', label: 'Tablero', end: true },
+  { to: 'proceso', label: 'Proceso' },
   { to: 'desglose', label: 'Desglose' },
   { to: 'bitacora', label: 'Bitácora' },
   { to: 'cambios', label: 'Cambios' },
@@ -49,7 +52,15 @@ export function ProjectLayout() {
             <div className="min-w-0">
               <div className="text-xs font-bold tracking-wider text-accent">{project.key}</div>
               <h1 className="truncate text-xl font-extrabold tracking-tight sm:text-2xl">{project.name || 'Sin nombre'}</h1>
-              <div className="text-sm text-muted">{project.client}</div>
+              <div className="text-sm text-muted">
+                {project.client}
+                <span className="ml-2 rounded-full bg-accent-soft px-2 py-0.5 text-xs font-semibold text-accent-2">{PROJECT_STAGE[effectiveStage(api.data)]}</span>
+                {project.prospectId && (
+                  <Link to={`/crm/${project.prospectId}`} className="ml-2 text-xs font-semibold text-accent">
+                    Ver en el CRM
+                  </Link>
+                )}
+              </div>
             </div>
             <div className="flex flex-col items-start gap-1 sm:items-end sm:text-right">
               <LightBadge light={r.generalLight} size="lg" />
