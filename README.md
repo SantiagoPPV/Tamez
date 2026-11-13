@@ -50,6 +50,16 @@ escribe a mano y la factura hecha fuera se sube con su XML y su PDF.
 
 Los pasos de cada una están en [`docs/DEPLOY.md`](docs/DEPLOY.md).
 
+## Diseño
+
+Azul oscuro y blanco: barra lateral azul con los módulos, contenido en blanco, y el verde
+solo para lo que salió bien (semáforo verde, cobrado, firmado). Los colores viven como
+variables en [`src/index.css`](src/index.css) (y los de los documentos en
+`src/docs/plantillas/base.css`). Los componentes comunes están en `src/ui/`: encabezado de
+página, indicadores, etiquetas de estado, filtros, tablas que en celular se vuelven tarjetas,
+paneles laterales, estados vacíos, avisos breves y el diálogo de confirmación del software
+(no se usan los cuadros del navegador). Las pantallas secundarias se descargan al abrirse.
+
 ## Arranque rápido
 
 ```bash

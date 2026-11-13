@@ -15,6 +15,7 @@ export default defineConfig({
         manualChunks: {
           react: ['react', 'react-dom', 'react-dom/client', 'react-router'],
           supabase: ['@supabase/supabase-js'],
+          iconos: ['lucide-react'],
         },
       },
     },

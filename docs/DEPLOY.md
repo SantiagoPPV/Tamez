@@ -38,6 +38,28 @@ npx supabase db push
 Antes de aplicarlo en producción, haz un respaldo (Database → Backups) y anota la fecha y la
 hora (lista de calidad L3).
 
+**Comprobar que quedaron completas.** Pega [`supabase/verificar.sql`](../supabase/verificar.sql)
+en el SQL Editor y ejecútalo: solo lee, no cambia nada. La primera fila debe decir
+«608 de 608 en su lugar · Todo completo»; si algo falta aparece como FALTA (se vuelve a correr
+la migración que lo crea). Al final lista como AJENO lo que hay en la base y no es del
+software, con cuántos renglones tiene cada tabla.
+
+**Lo que dejó el sitio anterior.** Si el proyecto de Supabase es el del sitio de TAMEZ,
+verás como ajenos la tabla `leads`, los tipos `lead_status` y `lead_contact_method` y la
+función `set_updated_at()`. El software no los usa. `leads` guarda las solicitudes de
+valoración de pacientes del sitio: antes de borrarla, decide con el cliente si se conservan
+y expórtala (Table Editor → leads → Export → CSV). Para quitarlos:
+
+```sql
+drop table if exists public.leads;
+drop function if exists public.set_updated_at();
+drop type if exists public.lead_status;
+drop type if exists public.lead_contact_method;
+```
+
+Ninguna instrucción usa `cascade`: si algo más dependiera de esos objetos, Postgres se niega
+y no borra nada.
+
 ### 1.2 Dar acceso a los socios
 
 El acceso no lo da estar autenticado en el proyecto: lo da estar en la tabla `sam_staff`.

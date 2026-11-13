@@ -163,7 +163,7 @@ function ProjectForm() {
         Proyecto y parámetros
       </SectionTitle>
       {saver.error && <Notice tone="error">{saver.error}</Notice>}
-      {ok && !dirty && <Notice>Guardado.</Notice>}
+      {ok && !dirty && <Notice tone="success">Guardado.</Notice>}
       <Card className="mt-3 space-y-6 p-4 sm:p-5">
         <FormGrid>
           <TextField label="Clave del proyecto" value={draft.key} onChange={(v) => set('key', v.toUpperCase())} />

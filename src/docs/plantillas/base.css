@@ -1,7 +1,7 @@
 /* Sistema de diseño común de las plantillas D01–D14. Hoja carta, páginas fijas. */
 :root {
   --ink: #0F172A; --ink2: #334155; --muted: #64748B; --rule: #E2E8F0; --soft: #F1F5F9; --surface: #F8FAFC;
-  --accent: #0E7C66; --accent-2: #0B5E4E; --accent-soft: #E8F4F0; --accent-mid: #9ACFC1;
+  --accent: #1D3A6E; --accent-2: #132A52; --accent-soft: #EAF0FA; --accent-mid: #B6C7E6;
   --ambar: #B45309; --ambar-soft: #FEF3C7; --rojo: #B91C1C; --rojo-soft: #FEE2E2;
 }
 @page { size: Letter; margin: 0; }
@@ -99,12 +99,12 @@ table.compacta th { font-size: 7pt; }
 
 /* Estados: siempre con texto, nunca solo color */
 .sem { display: inline-flex; align-items: center; gap: 5pt; font-weight: 700; font-size: 9pt; white-space: nowrap; }
-.sem::before { content: ""; width: 8pt; height: 8pt; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+.sem::before { content: ""; width: 8pt; height: 8pt; border-radius: 50%; background: #16A34A; flex-shrink: 0; }
 .sem.amarillo::before { background: #D97706; }
 .sem.rojo::before { background: #DC2626; }
 .sem.gris::before { background: #94A3B8; }
 .chip { display: inline-block; font-size: 7.2pt; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; border-radius: 4px; padding: 1.5pt 5pt; background: var(--soft); color: var(--ink2); white-space: nowrap; }
-.chip.ok { background: var(--accent-soft); color: var(--accent-2); }
+.chip.ok { background: #DCFCE7; color: #15803D; }
 .chip.alerta { background: var(--ambar-soft); color: var(--ambar); }
 .chip.mal { background: var(--rojo-soft); color: var(--rojo); }
 

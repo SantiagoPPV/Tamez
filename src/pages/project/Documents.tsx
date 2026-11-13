@@ -21,6 +21,7 @@ import { SelectField, TextArea, TextField } from '../../ui/fields'
 import { SignaturePad } from '../../ui/SignaturePad'
 import { Button, Card, cx, Drawer, Eyebrow, Notice, SectionTitle, Spinner } from '../../ui/kit'
 import { useP, useSaver } from './ctx'
+import { useAsk, useConfirm } from '../../ui/feedback'
 
 const STAGES: { title: string; codes: DocumentCode[] }[] = [
   { title: 'Preventa', codes: ['D15', 'D16', 'D01', 'D10'] },
@@ -302,6 +303,8 @@ export function DocumentEditor() {
   const { docId = '' } = useParams()
   const { data, save, remove, updateProject, reload } = useP()
   const navigate = useNavigate()
+  const ask = useAsk()
+  const confirm = useConfirm()
   const env = useDocEnv(data)
   const { firm } = useFirm()
   const doc = data.documents.find((d) => d.id === docId) ?? null
@@ -343,7 +346,17 @@ export function DocumentEditor() {
   }
 
   async function send(forSignature: boolean) {
-    if (preview!.missing.length && !confirm(`Faltan ${preview!.missing.length} datos. ¿Enviar así?`)) return
+    if (
+      preview!.missing.length &&
+      !(await confirm({
+        title: `Faltan ${preview!.missing.length} datos`,
+        body: 'Lo que falta sale vacío en el documento enviado. Puedes llenarlo primero o enviarlo así.',
+        confirmLabel: 'Enviar así',
+        cancelLabel: 'Llenar primero',
+        tone: 'warn',
+      }))
+    )
+      return
     if (forSignature && clientSigners.some((s) => !s.email.includes('@'))) return saver.setError('Cada firmante del cliente necesita su correo.')
     const sent: ProjectDocument = { ...draft!, status: 'sent', sentOn: todayInMexico(), snapshot: freeze() }
     const ok = await persist(sent)
@@ -424,7 +437,7 @@ export function DocumentEditor() {
             </Button>
           )}
           {!locked && (
-            <Button variant="danger" onClick={() => confirm('¿Borrar este borrador?') && void saver.run(() => remove('documents', doc.id)).then((ok) => ok && navigate('..', { relative: 'path' }))}>
+            <Button variant="danger" onClick={() => ask('¿Borrar este borrador?', () => saver.run(() => remove('documents', doc.id)).then((ok) => ok && navigate('..', { relative: 'path' })))}>
               Borrar
             </Button>
           )}
@@ -920,7 +933,7 @@ function ShareDialog({ doc, data, close }: { doc: ProjectDocument; data: Project
     >
       <div className="space-y-4">
         {saver.error && <Notice tone="error">{saver.error}</Notice>}
-        {result && <Notice>{result}</Notice>}
+        {result && <Notice tone="success">{result}</Notice>}
         <TextArea label="Para (correos separados por coma)" rows={2} value={to} onChange={setTo} />
         <TextArea label="Mensaje" rows={3} value={note} onChange={setNote} />
         {sent.length > 0 && (

@@ -10,11 +10,13 @@ import { SelectField, TextField } from '../ui/fields'
 import { Button, Card, cx, Drawer, Eyebrow, Notice, SectionTitle, Spinner } from '../ui/kit'
 import { useSaver } from './project/ctx'
 import { useTemplatesAndBase } from './Proposal'
+import { useAsk } from '../ui/feedback'
 
 const LEVEL_LABEL = { simple: 'Simple', medium: 'Media', complex: 'Compleja' } as const
 
 export function EstimatesPage() {
   const repo = useRepo()
+  const ask = useAsk()
   const can = useCan()
   const tb = useTemplatesAndBase()
   const [projects, setProjects] = useState<ProjectData[] | null>(null)
@@ -198,7 +200,7 @@ export function EstimatesPage() {
                   Ver
                 </Button>
                 {!t.builtIn && (
-                  <Button size="sm" variant="ghost" onClick={() => confirm(`¿Borrar «${t.name}»?`) && void saver.run(() => tb.removeTemplate(t.id))}>
+                  <Button size="sm" variant="ghost" onClick={() => ask(`¿Borrar el desglose tipo «${t.name}»?`, () => saver.run(() => tb.removeTemplate(t.id)))}>
                     Borrar
                   </Button>
                 )}

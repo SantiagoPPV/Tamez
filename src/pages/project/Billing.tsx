@@ -5,6 +5,7 @@ import type { Invoice } from '../../domain/types'
 import { DateField, FormGrid, NumberField, SelectField, TextField } from '../../ui/fields'
 import { Button, Card, cx, DataTable, Drawer, Notice, Stat } from '../../ui/kit'
 import { useDraft, useP, useSaver } from './ctx'
+import { useAsk } from '../../ui/feedback'
 
 const STATUS_STYLE: Record<string, string> = {
   'Por facturar': 'bg-soft text-muted',
@@ -98,6 +99,7 @@ export function BillingPage() {
 
 function InvoiceForm({ draft, set, close }: { draft: Invoice; set: <K extends keyof Invoice>(k: K, v: Invoice[K]) => void; close: () => void }) {
   const { data, save, remove } = useP()
+  const ask = useAsk()
   const saver = useSaver()
   const isNew = !data.invoices.some((x) => x.id === draft.id)
   async function submit() {
@@ -118,7 +120,7 @@ function InvoiceForm({ draft, set, close }: { draft: Invoice; set: <K extends ke
           <Button onClick={close}>Cancelar</Button>
           <div className="flex-1" />
           {!isNew && (
-            <Button variant="danger" onClick={() => confirm('¿Borrar esta factura?') && void saver.run(() => remove('invoices', draft.id)).then((ok) => ok && close())}>
+            <Button variant="danger" onClick={() => ask('¿Borrar esta factura?', () => saver.run(() => remove('invoices', draft.id)).then((ok) => ok && close()))}>
               Borrar
             </Button>
           )}

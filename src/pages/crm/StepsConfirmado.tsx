@@ -286,7 +286,7 @@ export function CobroStep({ crm }: StepProps) {
     <div className="space-y-4">
       {saver.error && <Notice tone="error">{saver.error}</Notice>}
       {stage !== 'confirmed' && (
-        <Notice>
+        <Notice tone="success">
           El pago inicial está cobrado: {crm.prospect?.company} ya es cliente y su proyecto está en Operaciones.{' '}
           <Link to={`/p/${d.project.id}/proceso`} className="font-semibold underline">
             Ir al proyecto

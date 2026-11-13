@@ -1,11 +1,21 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router'
 import { useSession } from '../app/session'
 import { useGlobal } from '../app/useGlobal'
 import type { AppNotification } from '../domain/types'
-import { Button, cx, Drawer, Empty } from '../ui/kit'
+import { Bell, BellRing, CircleDollarSign, DoorOpen, FileSignature, ShieldCheck, Sparkles } from 'lucide-react'
+import { Button, cx, Drawer, EmptyState, IconBox, type Tone } from '../ui/kit'
 
 const when = (iso: string) => new Intl.DateTimeFormat('es-MX', { timeZone: 'America/Mexico_City', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }).format(new Date(iso))
+
+const KIND: Record<string, { icon: ReactNode; tone: Tone }> = {
+  new_client: { icon: <Sparkles />, tone: 'green' },
+  validation: { icon: <ShieldCheck />, tone: 'amber' },
+  gate: { icon: <DoorOpen />, tone: 'navy' },
+  signature: { icon: <FileSignature />, tone: 'navy' },
+  payment: { icon: <CircleDollarSign />, tone: 'green' },
+  other: { icon: <Bell />, tone: 'gray' },
+}
 
 /** Avisos para los socios: nuevo cliente para Operaciones, propuestas por validar, puertas, firmas. */
 export function NotificationsBell() {
@@ -23,12 +33,9 @@ export function NotificationsBell() {
   const read = (n: AppNotification) => (n.readBy.includes(me) ? Promise.resolve(n) : list.save({ ...n, readBy: [...n.readBy, me] }))
   return (
     <>
-      <button type="button" className="relative rounded-lg px-2 py-1.5 text-ink2 hover:bg-soft" onClick={() => setOpen(true)} aria-label={`Avisos${unread.length ? `: ${unread.length} sin leer` : ''}`}>
-        <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-          <path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
-          <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
-        </svg>
-        {unread.length > 0 && <span className="absolute -top-0.5 -right-0.5 rounded-full bg-rojo px-1.5 text-[10px] font-bold text-white">{unread.length}</span>}
+      <button type="button" className="relative rounded-lg p-2 text-ink2 transition-colors hover:bg-soft hover:text-ink" onClick={() => setOpen(true)} aria-label={`Avisos${unread.length ? `: ${unread.length} sin leer` : ''}`}>
+        {unread.length > 0 ? <BellRing className="size-5" aria-hidden /> : <Bell className="size-5" aria-hidden />}
+        {unread.length > 0 && <span className="num absolute -top-0.5 -right-0.5 grid min-w-[18px] place-items-center rounded-full bg-rojo px-1 text-[10px] font-bold leading-[18px] text-white ring-2 ring-white">{unread.length}</span>}
       </button>
       {open && (
         <Drawer
@@ -45,27 +52,41 @@ export function NotificationsBell() {
           }
         >
           {rows.length === 0 ? (
-            <Empty>Sin avisos.</Empty>
+            <EmptyState icon={<Bell />} title="Sin avisos">
+              Aquí llegan los clientes nuevos, las propuestas por validar, las puertas y las firmas.
+            </EmptyState>
           ) : (
             <ul className="space-y-2">
-              {rows.map((n) => (
-                <li key={n.id}>
-                  <button
-                    type="button"
-                    className={cx('w-full rounded-xl border px-4 py-3 text-left hover:border-accent-mid', n.readBy.includes(me) ? 'border-rule bg-white' : 'border-accent-mid bg-accent-soft/40')}
-                    onClick={() =>
-                      void read(n).then(() => {
-                        setOpen(false)
-                        if (n.link) navigate(n.link)
-                      })
-                    }
-                  >
-                    <div className="text-sm font-semibold">{n.title}</div>
-                    {n.body && <div className="text-xs text-ink2">{n.body}</div>}
-                    <div className="mt-1 text-[11px] text-muted">{when(n.createdAt)}</div>
-                  </button>
-                </li>
-              ))}
+              {rows.map((n) => {
+                const seen = n.readBy.includes(me)
+                const k = KIND[n.kind] ?? KIND.other
+                return (
+                  <li key={n.id}>
+                    <button
+                      type="button"
+                      className={cx('flex w-full items-start gap-3 rounded-xl border px-4 py-3 text-left transition-colors hover:border-accent-mid', seen ? 'border-rule bg-white' : 'border-accent-mid bg-accent-soft/50')}
+                      onClick={() =>
+                        void read(n).then(() => {
+                          setOpen(false)
+                          if (n.link) navigate(n.link)
+                        })
+                      }
+                    >
+                      <IconBox tone={k.tone} size="sm">
+                        {k.icon}
+                      </IconBox>
+                      <span className="min-w-0 flex-1">
+                        <span className="flex items-center gap-2 text-sm font-semibold text-ink">
+                          {n.title}
+                          {!seen && <span className="size-2 shrink-0 rounded-full bg-accent" aria-label="sin leer" />}
+                        </span>
+                        {n.body && <span className="block text-xs text-ink2">{n.body}</span>}
+                        <span className="mt-1 block text-[11px] text-muted">{when(n.createdAt)}</span>
+                      </span>
+                    </button>
+                  </li>
+                )
+              })}
             </ul>
           )}
         </Drawer>

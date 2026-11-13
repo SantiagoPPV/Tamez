@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { BookOpen, Building2, ClipboardList, PlugZap, ReceiptText, Save, Scale } from 'lucide-react'
 import { useRepo } from '../app/session'
 import { useFirm } from '../app/useGlobal'
 import { CFDI_USE, DEFAULT_BILLING, PAYMENT_FORM, PAYMENT_METHOD, options } from '../domain/catalogs'
@@ -7,16 +8,17 @@ import { DEFAULT_FORMATS, DEFAULT_GUIDES, GUIDE_TITLE, getFormat } from '../doma
 import type { BillingSettings, FirmSettings, FormatCode, FormatDef, GuideKey } from '../domain/types'
 import { integrations, type Integrations } from '../data/services'
 import { FormGrid, NumberField, SelectField, TextArea, TextField } from '../ui/fields'
-import { Button, Card, cx, Eyebrow, Notice, SectionTitle } from '../ui/kit'
+import { Badge, Button, Card, cx, Notice, PageHeader, SectionTitle } from '../ui/kit'
+import { useToast } from '../ui/feedback'
 import { useSaver } from './project/ctx'
 
 const TABS = [
-  { id: 'datos', label: 'Datos y firma' },
-  { id: 'venta', label: 'Reglas de venta' },
-  { id: 'facturacion', label: 'Facturación' },
-  { id: 'formatos', label: 'Formatos y preguntas base' },
-  { id: 'guias', label: 'Guías de venta' },
-  { id: 'integraciones', label: 'Integraciones' },
+  { id: 'datos', label: 'Datos y firma', hint: 'Despacho y quien firma', icon: Building2 },
+  { id: 'venta', label: 'Reglas de venta', hint: 'Mínimo y tamaños', icon: Scale },
+  { id: 'facturacion', label: 'Facturación', hint: 'Serie, claves e IVA', icon: ReceiptText },
+  { id: 'formatos', label: 'Formatos y preguntas base', hint: 'D15 a D18', icon: ClipboardList },
+  { id: 'guias', label: 'Guías de venta', hint: 'Una por paso del CRM', icon: BookOpen },
+  { id: 'integraciones', label: 'Integraciones', hint: 'Correo, IA y timbrado', icon: PlugZap },
 ] as const
 
 /** Datos del despacho, reglas de venta, facturación, formatos base, guías e integraciones. */
@@ -25,6 +27,7 @@ export function FirmPage() {
   const [d, setD] = useState<FirmSettings>(firm)
   const [tab, setTab] = useState<(typeof TABS)[number]['id']>('datos')
   const saver = useSaver()
+  const toast = useToast()
   useEffect(() => setD(firm), [firm])
   const set = <K extends keyof FirmSettings>(k: K, v: FirmSettings[K]) => setD((x) => ({ ...x, [k]: v }))
   const billing: BillingSettings = { ...DEFAULT_BILLING, ...(d.billing ?? {}) }
@@ -33,24 +36,48 @@ export function FirmPage() {
   const dirty = JSON.stringify(d) !== JSON.stringify(firm)
 
   return (
-    <main className="mx-auto max-w-5xl px-4 py-6 sm:py-10">
-      <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <Eyebrow>Despacho</Eyebrow>
-          <h1 className="text-2xl font-extrabold tracking-tight">Datos, reglas y formatos del despacho</h1>
-        </div>
-        <Button variant="primary" disabled={!dirty || saver.busy} onClick={() => void saver.run(() => save(d))}>
-          Guardar
-        </Button>
-      </div>
+    <main className="mx-auto max-w-[90rem] px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
+      <PageHeader
+        eyebrow="Despacho"
+        title="Datos, reglas y formatos del despacho"
+        subtitle="Lo que comparten todos los proyectos: quién firma, el mínimo de venta, cómo se factura, los formatos base de cada paso y las guías de venta."
+        actions={
+          <>
+            {dirty && (
+              <Badge tone="amber" dot>
+                Cambios sin guardar
+              </Badge>
+            )}
+            <Button variant="primary" icon={<Save />} disabled={!dirty} loading={saver.busy} onClick={() => void saver.run(() => save(d)).then((ok) => ok && toast('Datos del despacho guardados.'))}>
+              Guardar
+            </Button>
+          </>
+        }
+      />
       {saver.error && <Notice tone="error">{saver.error}</Notice>}
-      <nav className="-mx-4 mb-5 flex gap-1 overflow-x-auto px-4" aria-label="Secciones del despacho">
-        {TABS.map((t) => (
-          <button key={t.id} type="button" onClick={() => setTab(t.id)} className={cx('shrink-0 rounded-lg px-3 py-1.5 text-sm font-semibold whitespace-nowrap', tab === t.id ? 'bg-accent text-white' : 'text-ink2 hover:bg-soft')}>
-            {t.label}
-          </button>
-        ))}
+      <div className="grid gap-6 lg:grid-cols-[16rem_minmax(0,1fr)]">
+      <nav className="scroll-fino -mx-4 flex gap-1 overflow-x-auto px-4 lg:mx-0 lg:block lg:space-y-1 lg:self-start lg:overflow-visible lg:rounded-2xl lg:border lg:border-rule lg:bg-white lg:p-2 lg:shadow-card" aria-label="Secciones del despacho">
+        {TABS.map((t) => {
+          const Icon = t.icon
+          const on = tab === t.id
+          return (
+            <button
+              key={t.id}
+              type="button"
+              onClick={() => setTab(t.id)}
+              aria-pressed={on}
+              className={cx('flex shrink-0 items-center gap-3 rounded-lg px-3 py-2 text-left text-sm font-semibold whitespace-nowrap transition-colors lg:w-full lg:whitespace-normal', on ? 'bg-accent text-white lg:bg-accent-soft lg:text-accent-2' : 'text-ink2 hover:bg-soft')}
+            >
+              <Icon className="size-4 shrink-0" aria-hidden />
+              <span className="min-w-0">
+                <span className="block">{t.label}</span>
+                <span className={cx('hidden text-[11px] font-normal lg:block', on ? 'text-accent-2/70' : 'text-muted')}>{t.hint}</span>
+              </span>
+            </button>
+          )
+        })}
       </nav>
+      <div className="min-w-0">
 
       {tab === 'datos' && (
         <div className="space-y-6">
@@ -119,6 +146,8 @@ export function FirmPage() {
       {tab === 'formatos' && <FormatsEditor d={d} set={set} />}
       {tab === 'guias' && <GuidesEditor d={d} set={set} />}
       {tab === 'integraciones' && <IntegrationsPanel />}
+      </div>
+      </div>
     </main>
   )
 }
@@ -222,7 +251,9 @@ function IntegrationsPanel() {
         <span className="font-semibold">{label}</span>
         <span className="block text-xs text-muted">{detail}</span>
       </span>
-      <span className={cx('shrink-0 rounded-full px-2 py-0.5 text-xs font-semibold', ok ? 'bg-accent-soft text-accent-2' : 'bg-soft text-muted')}>{ok ? 'Lista' : 'Sin configurar'}</span>
+      <Badge tone={ok ? 'green' : 'gray'} dot className="shrink-0">
+        {ok ? 'Lista' : 'Sin configurar'}
+      </Badge>
     </li>
   )
   if (repo.mode === 'demo') return <Notice>En la demostración no hay servidor: las integraciones se configuran en Netlify y funcionan con la base de datos conectada.</Notice>

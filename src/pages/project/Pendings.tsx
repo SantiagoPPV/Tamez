@@ -6,6 +6,7 @@ import type { ClientPending } from '../../domain/types'
 import { DateField, FormGrid, SelectField, TextArea, TextField } from '../../ui/fields'
 import { Button, cx, DataTable, Drawer, Notice } from '../../ui/kit'
 import { names, useDraft, useP, useSaver } from './ctx'
+import { useAsk } from '../../ui/feedback'
 
 export function PendingsPage() {
   const { data, result } = useP()
@@ -95,6 +96,7 @@ export function PendingsPage() {
 
 function PendingForm({ draft, set, close }: { draft: ClientPending; set: <K extends keyof ClientPending>(k: K, v: ClientPending[K]) => void; close: () => void }) {
   const { data, save, remove } = useP()
+  const ask = useAsk()
   const n = names(data)
   const saver = useSaver()
   const listId = useId()
@@ -117,7 +119,7 @@ function PendingForm({ draft, set, close }: { draft: ClientPending; set: <K exte
           <Button onClick={close}>Cancelar</Button>
           <div className="flex-1" />
           {!isNew && (
-            <Button variant="danger" onClick={() => confirm('¿Borrar este pendiente?') && void saver.run(() => remove('pendings', draft.id)).then((ok) => ok && close())}>
+            <Button variant="danger" onClick={() => ask('¿Borrar este pendiente?', () => saver.run(() => remove('pendings', draft.id)).then((ok) => ok && close()))}>
               Borrar
             </Button>
           )}

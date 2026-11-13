@@ -63,7 +63,7 @@ export function Dashboard() {
         </div>
       </Card>
       {saver.error && <Notice tone="error">{saver.error}</Notice>}
-      {saved && <Notice>{saved}</Notice>}
+      {saved && <Notice tone="success">{saved}</Notice>}
 
       <section>
         <SectionTitle aside={<LightBadge light={r.generalLight} />}>Tablero al corte: once indicadores</SectionTitle>

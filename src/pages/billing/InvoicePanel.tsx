@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router'
+import { Ban, CircleCheck, FileCode2, FileText, HandCoins, Mail, Receipt, Stamp, Upload } from 'lucide-react'
 import { syncProjectStage } from '../../app/lifecycle'
 import { useRepo } from '../../app/session'
 import { useFirm, useGlobal } from '../../app/useGlobal'
@@ -9,8 +10,8 @@ import { addDays, todayInMexico } from '../../domain/dates'
 import { fmtDate, fmtMoney } from '../../domain/format'
 import type { CfdiInfo, Invoice, ProjectData, StoredFile } from '../../domain/types'
 import { base64File, cancelCfdi, emailCfdi, integrations, stampInvoice, stampPayment, type Integrations } from '../../data/services'
-import { DateField, NumberField, SelectField, TextField } from '../../ui/fields'
-import { Button, Card, cx, Notice } from '../../ui/kit'
+import { DateField, FileField, NumberField, SelectField, TextField } from '../../ui/fields'
+import { Badge, Button, Card, Notice, type Tone } from '../../ui/kit'
 import { useSaver } from '../project/ctx'
 import { openStoredFile } from '../../ui/openFile'
 
@@ -24,11 +25,12 @@ export const INVOICE_STATE: Record<InvoiceState, string> = {
 }
 export const STATE_STYLE: Record<InvoiceState, string> = {
   to_invoice: 'bg-soft text-muted',
-  receivable: 'bg-ambar-soft text-ambar',
+  receivable: 'bg-accent-soft text-accent-2',
   overdue: 'bg-rojo-soft text-rojo',
-  paid: 'bg-accent-soft text-accent-2',
+  paid: 'bg-verde-soft text-verde',
   canceled: 'bg-soft text-muted line-through',
 }
+export const STATE_TONE: Record<InvoiceState, Tone> = { to_invoice: 'gray', receivable: 'navy', overdue: 'red', paid: 'green', canceled: 'gray' }
 
 export function dueDate(inv: Invoice, creditDays: number | null | undefined) {
   return inv.invoiceDate ? addDays(inv.invoiceDate, creditDays ?? 0) : null
@@ -42,15 +44,6 @@ export function invoiceState(inv: Invoice, creditDays: number | null | undefined
   return due && today > due ? 'overdue' : 'receivable'
 }
 
-const pick = (accept: string) =>
-  new Promise<File | null>((resolve) => {
-    const input = document.createElement('input')
-    input.type = 'file'
-    input.accept = accept
-    input.onchange = () => resolve(input.files?.[0] ?? null)
-    input.click()
-  })
-
 /** Una factura del proyecto: timbrar o subir, cobrar, complemento, cancelar y archivos. */
 export function InvoicePanel({ data, invoice, onChanged, quiet }: { data: ProjectData; invoice: Invoice; onChanged: () => Promise<void> | void; quiet?: boolean }) {
   const repo = useRepo()
@@ -61,6 +54,8 @@ export function InvoicePanel({ data, invoice, onChanged, quiet }: { data: Projec
   const [paying, setPaying] = useState(false)
   const [pay, setPay] = useState({ date: todayInMexico(), amount: null as number | null, reference: '', form: '03' })
   const [canceling, setCanceling] = useState<'01' | '02' | '03' | '04' | null>(null)
+  const [outside, setOutside] = useState<{ xml: File | null; pdf: File | null; parsed: ReturnType<typeof parseCfdiXml>; warn: string[]; error: string | null } | null>(null)
+  const [proof, setProof] = useState<File | null>(null)
   const [note, setNote] = useState<string | null>(null)
   useEffect(() => {
     void integrations(repo).then(setReady)
@@ -110,18 +105,25 @@ export function InvoicePanel({ data, invoice, onChanged, quiet }: { data: Projec
     await saveInvoice({ ...invoice, cfdi: info, invoiceDate: (r.cfdi.issuedAt || todayInMexico()).slice(0, 10) })
   }
 
-  async function uploadOutside() {
-    const xmlFile = await pick('.xml,application/xml,text/xml')
-    if (!xmlFile) return
-    const parsed = parseCfdiXml(await xmlFile.text())
-    if (!parsed?.uuid) throw new Error('El archivo no parece un CFDI timbrado (no trae folio fiscal).')
+  /** Lee el XML elegido para mostrar lo que trae antes de guardarlo. */
+  async function readXml(xml: File | null) {
+    if (!xml) return setOutside((o) => (o ? { ...o, xml: null, parsed: null, warn: [], error: null } : o))
+    const parsed = parseCfdiXml(await xml.text())
     const warn: string[] = []
-    if (parsed.total != null && Math.abs(parsed.total - t.total) > 1) warn.push(`el total del XML (${fmtMoney(parsed.total)}) no coincide con ${fmtMoney(t.total)}`)
-    if (fiscal?.rfc && parsed.receiverRfc && parsed.receiverRfc.toUpperCase() !== fiscal.rfc.toUpperCase()) warn.push(`el RFC del cliente en el XML es ${parsed.receiverRfc}`)
-    if (warn.length && !confirm(`Revisa: ${warn.join('; ')}. ¿Guardar de todos modos?`)) return
-    const pdfFile = await pick('.pdf,application/pdf')
-    const xml = await upload(xmlFile, 'invoice_xml')
-    const pdf = pdfFile ? await upload(pdfFile, 'invoice_pdf') : null
+    let error: string | null = null
+    if (!parsed?.uuid) error = 'El archivo no parece un CFDI timbrado (no trae folio fiscal).'
+    else {
+      if (parsed.total != null && Math.abs(parsed.total - t.total) > 1) warn.push(`el total del XML (${fmtMoney(parsed.total)}) no coincide con ${fmtMoney(t.total)}`)
+      if (fiscal?.rfc && parsed.receiverRfc && parsed.receiverRfc.toUpperCase() !== fiscal.rfc.toUpperCase()) warn.push(`el RFC del cliente en el XML es ${parsed.receiverRfc}`)
+    }
+    setOutside((o) => ({ pdf: o?.pdf ?? null, xml, parsed, warn, error }))
+  }
+
+  async function saveOutside() {
+    const parsed = outside?.parsed
+    if (!outside?.xml || !parsed?.uuid) throw new Error('Elige el XML timbrado de la factura.')
+    const xml = await upload(outside.xml, 'invoice_xml')
+    const pdf = outside.pdf ? await upload(outside.pdf, 'invoice_pdf') : null
     await saveInvoice({
       ...invoice,
       invoiceDate: parsed.issuedAt.slice(0, 10) || todayInMexico(),
@@ -141,14 +143,15 @@ export function InvoicePanel({ data, invoice, onChanged, quiet }: { data: Projec
         xmlFileId: xml.id,
       },
     })
+    setOutside(null)
   }
 
   async function registerPayment() {
     let proofId: string | null = null
-    const proof = confirm('¿Subir el comprobante de pago? (Aceptar para elegir el archivo)') ? await pick('.pdf,image/*') : null
     if (proof) proofId = (await upload(proof, 'payment_proof', false)).id
     await saveInvoice({ ...invoice, paidDate: pay.date, payment: { amount: pay.amount ?? cfdi?.total ?? t.total, reference: pay.reference, form: pay.form, proofFileId: proofId, complement: invoice.payment?.complement ?? null } })
     setPaying(false)
+    setProof(null)
   }
 
   async function complement() {
@@ -176,7 +179,7 @@ export function InvoicePanel({ data, invoice, onChanged, quiet }: { data: Projec
   return (
     <div className="space-y-4">
       {saver.error && <Notice tone="error">{saver.error}</Notice>}
-      {note && <Notice>{note}</Notice>}
+      {note && <Notice tone="success">{note}</Notice>}
       <Card className="p-4">
         <div className="flex flex-wrap items-start justify-between gap-2">
           <div>
@@ -186,7 +189,9 @@ export function InvoicePanel({ data, invoice, onChanged, quiet }: { data: Projec
               {data.project.key} · {data.project.client}
             </div>
           </div>
-          <span className={cx('rounded-full px-2.5 py-0.5 text-xs font-semibold', STATE_STYLE[state])}>{INVOICE_STATE[state]}</span>
+          <Badge tone={STATE_TONE[state]} dot>
+            {INVOICE_STATE[state]}
+          </Badge>
         </div>
         <dl className="mt-3 grid grid-cols-3 gap-2 text-sm">
           <div>
@@ -212,17 +217,17 @@ export function InvoicePanel({ data, invoice, onChanged, quiet }: { data: Projec
             <div className="break-all font-mono text-xs text-muted">{cfdi.uuid}</div>
             <div className="mt-2 flex flex-wrap gap-2">
               {fileOf(cfdi.pdfFileId) && (
-                <Button size="sm" variant="ghost" onClick={() => void saver.run(() => open(fileOf(cfdi.pdfFileId)))}>
+                <Button size="sm" icon={<FileText />} onClick={() => void saver.run(() => open(fileOf(cfdi.pdfFileId)))}>
                   PDF
                 </Button>
               )}
               {fileOf(cfdi.xmlFileId) && (
-                <Button size="sm" variant="ghost" onClick={() => void saver.run(() => open(fileOf(cfdi.xmlFileId)))}>
+                <Button size="sm" icon={<FileCode2 />} onClick={() => void saver.run(() => open(fileOf(cfdi.xmlFileId)))}>
                   XML
                 </Button>
               )}
               {fileOf(invoice.payment?.proofFileId) && (
-                <Button size="sm" variant="ghost" onClick={() => void saver.run(() => open(fileOf(invoice.payment?.proofFileId)))}>
+                <Button size="sm" icon={<Receipt />} onClick={() => void saver.run(() => open(fileOf(invoice.payment?.proofFileId)))}>
                   Comprobante de pago
                 </Button>
               )}
@@ -256,13 +261,48 @@ export function InvoicePanel({ data, invoice, onChanged, quiet }: { data: Projec
             </Notice>
           )}
           <div className="flex flex-wrap gap-2">
-            <Button variant="primary" disabled={!ready?.facturapi || missing.length > 0 || saver.busy || !(invoice.amount && invoice.amount > 0)} onClick={() => void saver.run(stamp)}>
+            <Button variant="primary" icon={<Stamp />} disabled={!ready?.facturapi || missing.length > 0 || !(invoice.amount && invoice.amount > 0)} loading={saver.busy && !outside} onClick={() => void saver.run(stamp)}>
               Timbrar con FacturAPI{ready?.facturapi === 'test' ? ' (pruebas)' : ''}
             </Button>
-            <Button disabled={saver.busy} onClick={() => void saver.run(uploadOutside)}>
+            <Button icon={<Upload />} disabled={saver.busy} onClick={() => setOutside((o) => (o ? null : { xml: null, pdf: null, parsed: null, warn: [], error: null }))}>
               Subir factura hecha fuera (XML y PDF)
             </Button>
           </div>
+          {outside && (
+            <div className="space-y-3 rounded-xl border border-accent-mid bg-accent-soft/30 p-4">
+              <div className="grid gap-3 sm:grid-cols-2">
+                <FileField label="XML del CFDI" accept=".xml,application/xml,text/xml" file={outside.xml} onChange={(f) => void readXml(f)} required />
+                <FileField label="PDF de la factura" accept=".pdf,application/pdf" file={outside.pdf} onChange={(f) => setOutside((o) => (o ? { ...o, pdf: f } : o))} help="Opcional, pero conviene para el cliente." />
+              </div>
+              {outside.error && <Notice tone="error">{outside.error}</Notice>}
+              {outside.parsed?.uuid && (
+                <dl className="grid grid-cols-2 gap-x-4 gap-y-1 rounded-lg bg-white p-3 text-sm sm:grid-cols-4">
+                  <div className="col-span-2">
+                    <dt className="text-xs text-muted">Folio fiscal</dt>
+                    <dd className="break-all font-mono text-xs text-ink">{outside.parsed.uuid}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs text-muted">Serie y folio</dt>
+                    <dd className="font-semibold text-ink">
+                      {outside.parsed.series}
+                      {outside.parsed.folio}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs text-muted">Total</dt>
+                    <dd className="num font-semibold text-ink">{outside.parsed.total == null ? '—' : fmtMoney(outside.parsed.total)}</dd>
+                  </div>
+                </dl>
+              )}
+              {outside.warn.length > 0 && <Notice tone="warn" title="Revisa antes de guardar">{outside.warn.join('; ')}.</Notice>}
+              <div className="flex flex-wrap gap-2">
+                <Button variant="primary" disabled={!outside.parsed?.uuid} loading={saver.busy} onClick={() => void saver.run(saveOutside)}>
+                  {outside.warn.length ? 'Guardar de todos modos' : 'Guardar la factura'}
+                </Button>
+                <Button onClick={() => setOutside(null)}>Cancelar</Button>
+              </div>
+            </div>
+          )}
           {!ready?.facturapi && (
             <p className="text-xs text-muted">
               {repo.mode === 'demo' ? 'En la demostración no se timbra: sube el XML y el PDF de una factura de prueba.' : 'El timbrado se activa al guardar FACTURAPI_KEY en Netlify; mientras tanto, sube la factura hecha fuera.'}
@@ -279,11 +319,12 @@ export function InvoicePanel({ data, invoice, onChanged, quiet }: { data: Projec
           <h3 className="text-sm font-bold">Cobro</h3>
           {!paying ? (
             <div className="flex flex-wrap gap-2">
-              <Button variant="primary" onClick={() => setPaying(true)}>
+              <Button variant="primary" icon={<HandCoins />} onClick={() => setPaying(true)}>
                 Registrar cobro
               </Button>
               {cfdi.facturapiId && (
                 <Button
+                  icon={<Mail />}
                   disabled={saver.busy}
                   onClick={() =>
                     void saver.run(async () => {
@@ -295,7 +336,7 @@ export function InvoicePanel({ data, invoice, onChanged, quiet }: { data: Projec
                   Enviar factura por correo
                 </Button>
               )}
-              <Button variant="ghost" onClick={() => setCanceling('02')}>
+              <Button variant="ghost" icon={<Ban />} onClick={() => setCanceling('02')}>
                 Cancelar factura
               </Button>
             </div>
@@ -305,11 +346,19 @@ export function InvoicePanel({ data, invoice, onChanged, quiet }: { data: Projec
               <NumberField label="Monto cobrado (con IVA)" value={pay.amount ?? cfdi.total ?? t.total} onChange={(v) => setPay((x) => ({ ...x, amount: v }))} suffix="$" />
               <TextField label="Referencia o rastreo" value={pay.reference} onChange={(v) => setPay((x) => ({ ...x, reference: v }))} />
               <SelectField label="Forma de pago" value={pay.form} onChange={(v) => setPay((x) => ({ ...x, form: v ?? '03' }))} options={options(PAYMENT_FORM).filter((o) => o.value !== '99')} allowEmpty={false} />
+              <FileField className="sm:col-span-2" label="Comprobante de pago" accept=".pdf,image/*" file={proof} onChange={setProof} help="Opcional: PDF o imagen de la transferencia. Solo lo ve el despacho." />
               <div className="flex gap-2 sm:col-span-2">
-                <Button variant="primary" disabled={saver.busy} onClick={() => void saver.run(registerPayment)}>
+                <Button variant="primary" icon={<CircleCheck />} loading={saver.busy} onClick={() => void saver.run(registerPayment)}>
                   Guardar cobro
                 </Button>
-                <Button onClick={() => setPaying(false)}>Cancelar</Button>
+                <Button
+                  onClick={() => {
+                    setPaying(false)
+                    setProof(null)
+                  }}
+                >
+                  Cancelar
+                </Button>
               </div>
             </div>
           )}
@@ -332,7 +381,7 @@ export function InvoicePanel({ data, invoice, onChanged, quiet }: { data: Projec
           <Card className="space-y-2 p-4">
             <h3 className="text-sm font-bold">Complemento de pago</h3>
             <p className="text-sm text-ink2">La factura es PPD: al cobrarla se emite el complemento de recepción de pagos.</p>
-            <Button variant="primary" disabled={!ready?.facturapi || missing.length > 0 || saver.busy} onClick={() => void saver.run(complement)}>
+            <Button variant="primary" icon={<Stamp />} disabled={!ready?.facturapi || missing.length > 0} loading={saver.busy} onClick={() => void saver.run(complement)}>
               Emitir complemento con FacturAPI
             </Button>
             {!ready?.facturapi && (

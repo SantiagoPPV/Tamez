@@ -67,7 +67,7 @@ export function ProposalStep({ crm, go }: StepProps) {
   return (
     <div className="space-y-4">
       {saver.error && <Notice tone="error">{saver.error}</Notice>}
-      {sent && <Notice>{sent}</Notice>}
+      {sent && <Notice tone="success">{sent}</Notice>}
       {!pr ? (
         <Card className="space-y-2 p-4">
           <p className="text-sm text-ink2">La propuesta preliminar sale de la estimación y lleva objetivo, problema, cómo lo logramos, resultado, pagos, cronograma, alcance, datos y confidencialidad, terceros y condiciones.</p>

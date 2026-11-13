@@ -4,6 +4,7 @@ import { localId } from '../../domain/factory'
 import type { AcceptanceCriterion, Milestone } from '../../domain/types'
 import { Button, Notice } from '../../ui/kit'
 import { useP, useSaver } from './ctx'
+import { useAsk } from '../../ui/feedback'
 
 /** Criterios de aceptación del hito: se escriben en la D04 y se prueban con el guion de la D07. */
 export function CriteriaSection({ milestone }: { milestone: Milestone }) {
@@ -50,6 +51,7 @@ export function CriteriaSection({ milestone }: { milestone: Milestone }) {
 
 function CriterionRow({ c, isNew, onDone }: { c: AcceptanceCriterion; isNew?: boolean; onDone?: () => void }) {
   const { save, remove } = useP()
+  const ask = useAsk()
   const [d, setD] = useState(c)
   const saver = useSaver()
   const dirty = JSON.stringify(d) !== JSON.stringify(c)
@@ -98,7 +100,7 @@ function CriterionRow({ c, isNew, onDone }: { c: AcceptanceCriterion; isNew?: bo
             Cancelar
           </Button>
         ) : (
-          <Button size="sm" variant="ghost" onClick={() => confirm(`¿Borrar ${c.code}?`) && void saver.run(() => remove('criteria', c.id))}>
+          <Button size="sm" variant="ghost" onClick={() => ask(`¿Borrar el criterio ${c.code}?`, () => saver.run(() => remove('criteria', c.id)))}>
             Borrar
           </Button>
         )}

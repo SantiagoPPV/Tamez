@@ -17,6 +17,7 @@ import { Check, DateField, FormGrid, FormSection, NumberField, SelectField, Text
 import { Alert, Button, cx, DataTable, Drawer, Notice } from '../../ui/kit'
 import { CriteriaSection } from './Criteria'
 import { names, useDraft, useP, useSaver } from './ctx'
+import { useAsk } from '../../ui/feedback'
 
 const STATUS_STYLE: Record<string, string> = {
   todo: 'bg-soft text-muted',
@@ -204,6 +205,7 @@ function WbsTable({ rows, onOpen }: { rows: WbsItem[]; onOpen: (w: WbsItem) => v
 
 function WbsForm({ draft, set, close }: { draft: WbsItem; set: <K extends keyof WbsItem>(k: K, v: WbsItem[K]) => void; close: () => void }) {
   const { data, result, save, remove } = useP()
+  const ask = useAsk()
   const p = data.project.params
   const n = names(data)
   const saver = useSaver()
@@ -250,10 +252,7 @@ function WbsForm({ draft, set, close }: { draft: WbsItem; set: <K extends keyof 
           {!isNew && loggedHours === 0 && (
             <Button
               variant="danger"
-              onClick={() => {
-                if (confirm(`¿Borrar ${draft.key}? No tiene horas en la bitácora.`))
-                  void saver.run(() => remove('wbs', draft.id)).then((ok) => ok && close())
-              }}
+              onClick={() => ask(`¿Borrar ${draft.key}?`, () => saver.run(() => remove('wbs', draft.id)).then((ok) => ok && close()), { body: 'No tiene horas en la bitácora; se quita del desglose.' })}
             >
               Borrar
             </Button>
@@ -422,6 +421,7 @@ function WbsForm({ draft, set, close }: { draft: WbsItem; set: <K extends keyof 
 
 export function MilestoneForm({ draft, set, close }: { draft: Milestone; set: <K extends keyof Milestone>(k: K, v: Milestone[K]) => void; close: () => void }) {
   const { data, result, save, remove } = useP()
+  const ask = useAsk()
   const n = names(data)
   const saver = useSaver()
   const isNew = !data.milestones.some((m) => m.id === draft.id)
@@ -444,7 +444,7 @@ export function MilestoneForm({ draft, set, close }: { draft: Milestone; set: <K
           <Button onClick={close}>Cancelar</Button>
           <div className="flex-1" />
           {!isNew && (
-            <Button variant="danger" onClick={() => confirm('¿Borrar el hito?') && void saver.run(() => remove('milestones', draft.id)).then((ok) => ok && close())}>
+            <Button variant="danger" onClick={() => ask(`¿Borrar el hito ${draft.key}?`, () => saver.run(() => remove('milestones', draft.id)).then((ok) => ok && close()))}>
               Borrar
             </Button>
           )}
